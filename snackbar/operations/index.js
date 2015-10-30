@@ -16,7 +16,7 @@ Snackbar.prototype._addToQueue = function (text, button, buttonFn, options) {
 Snackbar.prototype._show = function (text, button, buttonFn, options) {
   var model = this.model;
   var self = this;
-  var options = getOptions(options);
+  var options = getOptions(options, globalOptions);
 
   model.set('showing', true);
   model.set('text', text);
@@ -35,7 +35,7 @@ Snackbar.prototype._show = function (text, button, buttonFn, options) {
 
 Snackbar.prototype._hide = function (options) {
   var self = this;
-  var options = getOptions(options);
+  var options = getOptions(options, globalOptions);
 
   this.model.del('showing');
 
@@ -43,7 +43,7 @@ Snackbar.prototype._hide = function (options) {
     self.model.del('timeout');
 
     self._showNext();
-  }, options.timeSliding));
+  }, 300));
 };
 
 Snackbar.prototype._showNext = function (force) {
@@ -67,9 +67,9 @@ Snackbar.prototype._close = function () {
   if(next.type === 'hide') this._showNext(true);
 };
 
-function getOptions(options) {
+function getOptions(options, globalOptions) {
   return _.assign({
-    timeShowing: 3800,
-    timeSliding: 300
-  }, this.globalOptions, options);
+    timeShowing: 3800
+    // timeSliding: 300
+  }, globalOptions, options);
 }
