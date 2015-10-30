@@ -16,7 +16,7 @@ Snackbar.prototype._addToQueue = function (text, button, buttonFn, options) {
 Snackbar.prototype._show = function (text, button, buttonFn, options) {
   var model = this.model;
   var self = this;
-  var options = getOptions(options, globalOptions);
+  var options = getOptions(options, this.globalOptions);
 
   model.set('showing', true);
   model.set('text', text);
@@ -35,7 +35,7 @@ Snackbar.prototype._show = function (text, button, buttonFn, options) {
 
 Snackbar.prototype._hide = function (options) {
   var self = this;
-  var options = getOptions(options, globalOptions);
+  var options = getOptions(options, this.globalOptions);
 
   this.model.del('showing');
 
