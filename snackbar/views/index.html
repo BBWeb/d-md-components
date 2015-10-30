@@ -1,0 +1,9 @@
+<index:>
+  <div class="snackbar-container {{if showing}}showing{{/if}}">
+    <div class="snackbar">
+      <div class="snackbar-text">{{text}}</div>
+      {{if button}}
+        <button class="snackbar-btn {{if buttonClass}}{{buttonClass}}{{/if}}" on-click="buttonClick()">{{button}}</button>
+      {{/if}}
+    </div>
+  </div>

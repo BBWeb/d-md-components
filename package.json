@@ -1,0 +1,29 @@
+{
+  "name": "d-md-components",
+  "version": "0.1.0",
+  "description": "A pack of components for Derby according to Google's Material Design based upon mdl (getmdl.io).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "derby": "^0.6.0-alpha31"
+  },
+  "author": "cjblomqvist <carl@cjblomqvist.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BBWeb/derby-validator.git"
+  },
+  "keywords": [
+    "derby",
+    "mdl",
+    "material design",
+    "components"
+  ],
+  "bugs": {
+    "url": "https://github.com/BBWeb/d-md-components/issues"
+  },
+  "homepage": "https://github.com/BBWeb/d-md-components",
+  "readmeFilename": "README.md"
+}

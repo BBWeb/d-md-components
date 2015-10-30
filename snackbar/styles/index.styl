@@ -1,0 +1,46 @@
+// Wrap in body for higher specificity
+body
+  .snackbar-container
+    height                                  48px
+    position                                fixed
+    bottom                                  -48px
+    left                                    0
+    right                                   0
+    display                                 flex
+    z-index                                 999
+    transition                              bottom 0.3s ease-in
+
+  .snackbar
+    display                                 flex
+    justify-content                         space-between
+    background                              #323232
+    border-radius                           2px
+    min-width                               288px
+    max-width                               568px
+    padding                                 14px 24px
+    margin                                  auto
+    color                                   rgba(255, 255, 255, 0.87)
+
+    .snackbar-btn
+      outline                               0
+      padding                               0
+      border                                none
+      background                            none
+      text-transform                        uppercase
+      margin-left                           48px
+      float                                 right
+      
+    .snackbar-text
+      overflow                              hidden
+      white-space                           nowrap
+      text-overflow                         ellipsis
+  
+  .snackbar-container.showing 
+    bottom                                  0
+    transition                              bottom 0.3s ease-out
+    
+
+      
+      
+    
+    
