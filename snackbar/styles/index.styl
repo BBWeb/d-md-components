@@ -8,7 +8,7 @@ body
     right                                   0
     display                                 flex
     z-index                                 999
-    transition                              bottom 0.3s ease-in
+    transition                              bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1)
 
   .snackbar
     display                                 flex
@@ -37,7 +37,7 @@ body
   
   .snackbar-container.showing 
     bottom                                  0
-    transition                              bottom 0.3s ease-out
+    transition                              bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     
 
       
