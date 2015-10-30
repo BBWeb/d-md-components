@@ -1,0 +1,6 @@
+<index: attributes="value validator fieldName">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {{if isFocused}}is-focused{{/if}} {{if value}}is-dirty{{/if}} {{if invalid}}is-invalid{{/if}}">
+    <input class="mdl-textfield__input" type="{{type}}" name="{{fieldName}}" value="{{value}}" on-focus="toggleFocus()" on-blur="toggleFocus(), validate()"/>
+    {{if label}}<label class="mdl-textfield__label" for="{{fieldName}}">{{label}}</label>{{/if}}
+    <span class="mdl-textfield__error">{{invalidMessage}}</span>
+  </div>
