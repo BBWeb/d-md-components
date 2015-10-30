@@ -51,7 +51,7 @@ Snackbar.prototype._showNext = function (force) {
 
   var data = this.model.shift('queue');
 
-  // We're reached the end of the queue
+  // We've reached the end of the queue
   if(!data) return;
 
   this['_' + data.type].apply(this, data.params);
@@ -71,5 +71,5 @@ function getOptions(options) {
   return _.assign({
     timeShowing: 3800,
     timeSliding: 300
-  }, options)
+  }, this.globalOptions, options);
 }

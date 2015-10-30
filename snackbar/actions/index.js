@@ -1,13 +1,29 @@
 var Snackbar = require('./../index');
 
+/**
+ * Adds a toast message to the snackbar queue.
+ * @param {String} message - The toast message, has to be short ~60 characters depending on button text.
+ * @param {String} [button] - The button text.
+ * @param {Function} [buttonFn] - A function to run when button is pressed.
+   * @param {Object} [options] - An options object.
+   * @param {Number} [options.timeShowing] - Time in ms to show the toast, default 3800.
+   * @param {Number} [options.timeSliding] - Time in ms for the toast to slide in and out of the screen, default 300.
+   * @param {String} [options.buttonClass] - A class name if you want to color the button text with your own styling (ex. material design accent color). Default is white.
+ */
 Snackbar.prototype.add = Snackbar.prototype._addToQueue;
 
 Snackbar.prototype.buttonClick = function () {
   if(this.buttonFn) this.buttonFn.apply(this, arguments);
 };
 
+/**
+ * Forces the next toast in the queue to show.
+ */
 Snackbar.prototype.next = function () {
   this._showNext(true);
 };
 
+/** 
+ * Force the currently showing snackbar to close. 
+ */
 Snackbar.prototype.close = Snackbar.prototype._close;
