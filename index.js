@@ -1,3 +1,4 @@
-module.exports = Components;
-
-function Components() {};
+module.exports = {
+  Snackbar: require('./snackbar'),
+  Textfield: require('./textfield')
+};
