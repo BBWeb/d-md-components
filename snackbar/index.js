@@ -12,7 +12,6 @@ Snackbar.prototype.components = [];
 
 require('./operations');
 require('./actions');
-require('./viewhelpers');
 
 Snackbar.prototype.init = function(model) {
   this.globalOptions = this.getAttribute('options');
