@@ -2,12 +2,16 @@ var Snackbar = require('./../index');
 var _ = require('lodash');
 
 Snackbar.prototype._addToQueue = function (text, button, buttonFn, options) {
+  if(arguments.length === 2) {
+    options = arguments[1];
+    button = undefined;
+  }
+
   this.model.push('queue', {
       params: [text, button, buttonFn, options],
       type: 'show'
     });
   this.model.push('queue', {
-      params: [options],
       type: 'hide'
     });
   this._showNext();
@@ -33,9 +37,8 @@ Snackbar.prototype._show = function (text, button, buttonFn, options) {
   }, options.timeShowing));
 };
 
-Snackbar.prototype._hide = function (options) {
+Snackbar.prototype._hide = function () {
   var self = this;
-  var options = getOptions(options, this.globalOptions);
 
   this.model.del('showing');
 
@@ -70,6 +73,5 @@ Snackbar.prototype._close = function () {
 function getOptions(options, globalOptions) {
   return _.assign({
     timeShowing: 3800
-    // timeSliding: 300
   }, globalOptions, options);
 }
