@@ -3,7 +3,7 @@ var Snackbar = require('./../index');
 /**
  * Adds a toast message to the snackbar queue.
  * @param {String} message - The toast message, has to be short ~60 characters depending on button text.
- * @param {String} [button] - The button text.
+ * @param {String} [button] - The button text. If this argument is passed, the buttonFn argument needs to be passed as well.
  * @param {Function} [buttonFn] - A function to run when button is pressed.
  * @param {Object} [options] - An options object.
    * @param {Number} [options.timeShowing] - Time in ms to show the toast, default 3800.
