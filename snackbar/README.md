@@ -1,5 +1,7 @@
-# d-md-components Snackbar
+# Snackbar
 A snackbar/toast component.
+
+[Back to d-md-components](../)
 
 Features
 --------
@@ -11,12 +13,14 @@ Usage
 -----
 ### Including
 ```javascript
-var Validator = require('d-md-components/snackbar');
+var mdlComponents = require('d-md-components');
+
+app.component(mdlComponents.Snackbar);
 ```
 
 #### Template
 ```html
-  // Note that the options here are optional and will be overwritten if passed in the 'add' method.
+  <!-- Options are optional and will be overwritten if passed in the 'add' method. -->
   <view 
     is="snackbar" 
     as="snackbar" 
