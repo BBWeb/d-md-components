@@ -7,13 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "derby": "^0.6.0-alpha31"
+    "derby": "^0.6.0-alpha31",
+    "lodash": "*"
   },
   "author": "cjblomqvist <carl@cjblomqvist.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BBWeb/derby-validator.git"
+    "url": "https://github.com/BBWeb/d-md-components.git"
   },
   "keywords": [
     "derby",
