@@ -1,7 +1,7 @@
 # Snackbar
 A snackbar/toast component.
 
-[Back to d-md-components](../)
+[Back to d-md-components](/)
 
 Features
 --------
