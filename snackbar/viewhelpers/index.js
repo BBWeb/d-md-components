@@ -1,1 +1,0 @@
-var Snackbar = require('./../index');

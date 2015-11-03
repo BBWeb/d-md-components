@@ -2,12 +2,16 @@ var Snackbar = require('./../index');
 var _ = require('lodash');
 
 Snackbar.prototype._addToQueue = function (text, button, buttonFn, options) {
+  if(arguments.length === 2) {
+    options = arguments[1];
+    button = undefined;
+  }
+
   this.model.push('queue', {
       params: [text, button, buttonFn, options],
       type: 'show'
     });
   this.model.push('queue', {
-      params: [options],
       type: 'hide'
     });
   this._showNext();
@@ -16,7 +20,7 @@ Snackbar.prototype._addToQueue = function (text, button, buttonFn, options) {
 Snackbar.prototype._show = function (text, button, buttonFn, options) {
   var model = this.model;
   var self = this;
-  var options = getOptions(options);
+  var options = getOptions(options, this.globalOptions);
 
   model.set('showing', true);
   model.set('text', text);
@@ -33,9 +37,8 @@ Snackbar.prototype._show = function (text, button, buttonFn, options) {
   }, options.timeShowing));
 };
 
-Snackbar.prototype._hide = function (options) {
+Snackbar.prototype._hide = function () {
   var self = this;
-  var options = getOptions(options);
 
   this.model.del('showing');
 
@@ -43,7 +46,7 @@ Snackbar.prototype._hide = function (options) {
     self.model.del('timeout');
 
     self._showNext();
-  }, options.timeSliding));
+  }, 300));
 };
 
 Snackbar.prototype._showNext = function (force) {
@@ -51,7 +54,7 @@ Snackbar.prototype._showNext = function (force) {
 
   var data = this.model.shift('queue');
 
-  // We're reached the end of the queue
+  // We've reached the end of the queue
   if(!data) return;
 
   this['_' + data.type].apply(this, data.params);
@@ -67,9 +70,8 @@ Snackbar.prototype._close = function () {
   if(next.type === 'hide') this._showNext(true);
 };
 
-function getOptions(options) {
+function getOptions(options, globalOptions) {
   return _.assign({
-    timeShowing: 3800,
-    timeSliding: 300
-  }, options)
+    timeShowing: 3800
+  }, globalOptions, options);
 }
