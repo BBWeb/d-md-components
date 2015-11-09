@@ -22,3 +22,4 @@ Components
 ----------
 - [Snackbar/Toast](snackbar/)
 - [Textfield](textfield/)
+- [Checkbox](checkbox/)
