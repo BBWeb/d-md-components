@@ -1,0 +1,18 @@
+<index: attributes="pages activePage">
+  <div class="material-pagination">
+    <ul style="white-space: nowrap">
+      <li class="mdl-button" on-click="previousPage()"><i class="material-icons">chevron_left</i></li>
+      <div class="numbers">
+        {{if visibleNumbers[0] > 2}}
+          <li class="mdl-button" on-click="goToPage(1)">1</li><div class="ellipsis">...</div>
+        {{/if}}
+        {{each visibleNumbers as #number}}
+          <li class="mdl-button {{if activePage == #number}}active{{/if}}" on-click="goToPage(#number)">{{#number}}</li>
+        {{/each}}
+        {{if pages.length -1 > visibleNumbers[visibleNumbers.length -1]}}
+          <div class="ellipsis">...</div><li class="mdl-button" on-click="goToPage(pages.length)">{{pages.length}}</li> 
+        {{/if}}
+      </div>
+      <li class="mdl-button" on-click="nextPage()"><i class="material-icons">chevron_right</i></li>
+    </ul>
+  </div>
