@@ -1,0 +1,54 @@
+// Wrap in body for higher specificity
+body
+  .tabs
+  width                           100%
+  position                        relative
+  overflow                        hidden
+  transition                      height 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+
+  .tab-header
+    display                       inline-block
+    cursor                        pointer
+    padding                       24px
+    color                         mdl-medium-full
+    text-transform                uppercase
+    
+    
+  .tab-header-selected
+    font-weight                   500
+    
+  .tab-content
+    width                         100%
+    position                      absolute
+
+  .tab-selected
+    left                          0
+    z-index                       2
+    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    
+  .tab-before-selected
+    left                          -100%
+    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+        
+  .tab-after-selected
+    left                          100%
+    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+
+  .tabs-underline
+    width                         0px
+    background                    #ff4081
+    height                        2px
+    top                           60px
+    left                          0
+    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    
+  .tabs-border
+    top                           61px
+    width                         100%
+    border-top                    1px solid mdl-light-light-full
+    
+  .tabs-underline
+  .tabs-border
+    position                      absolute
+    pointer-events                none
+    z-index                       3

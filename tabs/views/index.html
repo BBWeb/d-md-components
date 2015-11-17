@@ -1,0 +1,20 @@
+<index: arrays="tab" attributes="selectedTab">
+  <div class="tabs" style="height:{{selectedTab.height}}px">
+    <div class="tabs-border"></div>
+    <div class="tabs-underline" 
+         style="width: {{tabsUnderline.width}}px; left: {{tabsUnderline.left}}px"></div>
+    {{each @tab as #tab, #index}}
+      <div id="tab-header-{{#index}}"
+           class="tab-header {{if #index === selectedTab.index}}tab-header-selected{{/if}}"
+           on-click="selectTab(#index, $element)">
+        {{#tab.label}}
+      </div>
+      <div class="tab-content 
+                  {{if #index === selectedTab.index}}tab-selected{{/if}}
+                  {{if #index > selectedTab.index}}tab-after-selected{{/if}}
+                  {{if selectedTab.index > #index}}tab-before-selected{{/if}}">
+        {{#tab.content}}
+      </div>
+    {{/each}}
+    {{@content}}
+  </div>
