@@ -1,20 +1,32 @@
 <index: arrays="tab" attributes="selectedTab">
-  <div class="tabs" style="height:{{selectedTab.height}}px">
+  <div class="tabs">
     <div class="tabs-border"></div>
     <div class="tabs-underline" 
          style="width: {{tabsUnderline.width}}px; left: {{tabsUnderline.left}}px"></div>
     {{each @tab as #tab, #index}}
       <div id="tab-header-{{#index}}"
-           class="tab-header {{if #index === selectedTab.index}}tab-header-selected{{/if}}"
+           class="tab-header {{if #index === selectedTab}}tab-header-selected{{/if}}"
            on-click="selectTab(#index, $element)">
         {{#tab.label}}
       </div>
-      <div class="tab-content 
-                  {{if #index === selectedTab.index}}tab-selected{{/if}}
-                  {{if #index > selectedTab.index}}tab-after-selected{{/if}}
-                  {{if selectedTab.index > #index}}tab-before-selected{{/if}}">
-        {{#tab.content}}
-      </div>
     {{/each}}
-    {{@content}}
+    <div class="tab-content-container" style="position: relative; width: {{100 * tab.length}}%; left: -100%">
+      {{each @tab as #tab, #index}}
+        <div id="tab-content-{{#index}}"
+             class="tab-content 
+                    {{if #index === selectedTab}}tab-selected{{/if}}
+                    {{if #index > selectedTab}}tab-after-selected{{/if}}
+                    {{if selectedTab > #index}}tab-before-selected{{/if}}
+                    {{if animating}}animating{{/if}}"
+             style="width:calc(100% /{{tab.length}});
+                    max-height:{{if animating}}{{viewHeight}}px{{/if}};
+                    left:
+                      {{if #index === selectedTab}}{{tabPositions[#index].selected}}%{{/if}}
+                      {{if #index > selectedTab}}{{tabPositions[#index].after}}%{{/if}}
+                      {{if selectedTab > #index}}{{tabPositions[#index].before}}%{{/if}}">
+          {{#tab.content}}
+        </div>
+      {{/each}}
+      {{@content}}
+    </div>
   </div>

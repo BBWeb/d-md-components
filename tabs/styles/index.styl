@@ -2,7 +2,6 @@
   width                           100%
   position                        relative
   overflow                        hidden
-  transition                      height 0.3s cubic-bezier(0.4, 0, 0.2, 1)
 
   .tab-header
     display                       inline-block
@@ -11,26 +10,29 @@
     color                         mdl-medium-full
     text-transform                uppercase
     
-    
   .tab-header-selected
     font-weight                   500
     
   .tab-content
-    width                         100%
-    position                      absolute
+    position                      relative
+    display                       inline-block
+    vertical-align                top
+    overflow                      hidden
+    transition                    all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
 
   .tab-selected
-    left                          0
     z-index                       2
-    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1)
-    
-  .tab-before-selected
-    left                          -100%
-    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    opacity                       1    
+    transition                    all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
         
+  .tab-before-selected
   .tab-after-selected
-    left                          100%
-    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    opacity                       0
+    transition                    all 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s linear
+    
+  .tab-after-selected:not(.animating)
+  .tab-before-selected:not(.animating)
+    max-height                    0px
 
   .tabs-underline
     width                         0px
@@ -50,3 +52,6 @@
     position                      absolute
     pointer-events                none
     z-index                       3
+
+  .no-transition
+    transition                    none !important
