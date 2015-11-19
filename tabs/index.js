@@ -19,7 +19,7 @@ Tabs.prototype.init = function(model) {
 
 Tabs.prototype.create = function(model) {
   var index = this.getAttribute('selectedTab') || 0;
-  var el = document.getElementById('tab-header-' + index);
+  var el = document.getElementById(model.get('id') + '-tab-header-' + index);
 
   if (el) this._selectTab(index, el);
 };

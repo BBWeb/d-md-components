@@ -11,8 +11,9 @@ Tabs.prototype._selectTab = function (index, el) {
 };
 
 Tabs.prototype._animateTab = function (index, leavingIndex) {
-  var selectedTab = document.getElementById('tab-content-' + index);
-  var leavingTab = document.getElementById('tab-content-' + leavingIndex);
+  var componentId = this.model.get('id');
+  var selectedTab = document.getElementById(componentId + '-tab-content-' + index);
+  var leavingTab = document.getElementById(componentId + '-tab-content-' + leavingIndex);
 
   var reset = selectedTab.className;
   var leavingMax = leavingTab.scrollHeight + 'px';
