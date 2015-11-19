@@ -21,9 +21,18 @@ Textfield.prototype.init = function(model) {
     var isInvalid = model.at('validator.' + this.fieldName + '.isInvalid');
     var errorMsg = model.at('validator.' + this.fieldName + '.messages.0');
 
-
     model.ref('value', value);
     model.ref('invalid', isInvalid);
     model.ref('invalidMessage', errorMsg);
+  }
+};
+
+Textfield.prototype.create = function(model) {
+  var type = model.get('type');
+
+  if (type === 'textarea') {
+    var componentId = model.get('id')
+    var textArea = document.getElementById('textarea-' + componentId);
+    this._maybeExpand(textArea);
   }
 };
