@@ -1,8 +1,5 @@
 <index: arrays="tab" attributes="selectedTab">
   <div class="tabs">
-    <div class="tabs-border"></div>
-    <div class="tabs-underline" 
-         style="width: {{tabsUnderline.width}}px; left: {{tabsUnderline.left}}px"></div>
     {{each @tab as #tab, #index}}
       <div id="{{id + '-'}}tab-header-{{#index}}"
            class="tab-header {{if #index === selectedTab}}tab-header-selected{{/if}}"
@@ -10,6 +7,9 @@
         {{#tab.label}}
       </div>
     {{/each}}
+    <div class="tabs-border"></div>
+    <div class="tabs-underline" 
+         style="width: {{tabsUnderline.width}}px; left: {{tabsUnderline.left}}px"></div>
     <div class="tab-content-container" style="position: relative; width: {{100 * tab.length}}%; left: -100%">
       {{each @tab as #tab, #index}}
         <div id="{{id + '-'}}tab-content-{{#index}}"
