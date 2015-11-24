@@ -10,7 +10,7 @@
     "lodash": "*"
   },
   "peerDependencies": {
-    "derby": "^0.7.1",
+    "derby": "^0.7.1"
   },
   "author": "cjblomqvist <carl@cjblomqvist.com>",
   "license": "MIT",
