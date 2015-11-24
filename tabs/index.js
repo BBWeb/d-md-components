@@ -11,15 +11,19 @@ require('./operations');
 require('./actions');
 
 Tabs.prototype.init = function(model) {
-  var tabs = this.getAttribute('tab')
+  var tabs = this.getAttribute('tab');
+  var selectedIndex = this.getAttribute('selectedTab') || 0;
 
-  if (tabs) this._assignPositions(tabs);
+  if (tabs) {
+    this._assignPositions(tabs);
+    this.model.set('selectedTab', selectedIndex);
+  }
 }
 
 
 Tabs.prototype.create = function(model) {
-  var index = this.getAttribute('selectedTab') || 0;
-  var el = document.getElementById(model.get('id') + '-tab-header-' + index);
+  var selectedIndex = this.getAttribute('selectedTab') || 0;
+  var el = document.getElementById('tab-header-' + selectedIndex);
 
-  if (el) this._selectTab(index, el);
+  if (el) this._setTabUnderline(el);
 };

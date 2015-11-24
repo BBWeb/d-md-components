@@ -1,19 +1,24 @@
 var Tabs = require('./../index');
 var _ = require('lodash');
 
-Tabs.prototype._selectTab = function (index, el) {
+Tabs.prototype._selectTab = function (selectedIndex, el) {
   // Only animate if another tab is leaving view.
   var leavingIndex = this.model.get('selectedTab');
-  if (leavingIndex !== undefined) this._animateTab(index, leavingIndex);
+  if (leavingIndex !== undefined) {
+    this._animateTab(selectedIndex, leavingIndex);
+    this._setTabUnderline(el);
+  }
 
-  this.model.set('selectedTab', index);
+  this.model.set('selectedTab', selectedIndex);
+};
+
+Tabs.prototype._setTabUnderline = function (el) {
   this.model.setEach('tabsUnderline', { left: el.offsetLeft, width: el.clientWidth });
 };
 
-Tabs.prototype._animateTab = function (index, leavingIndex) {
-  var componentId = this.model.get('id');
-  var selectedTab = document.getElementById(componentId + '-tab-content-' + index);
-  var leavingTab = document.getElementById(componentId + '-tab-content-' + leavingIndex);
+Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
+  var selectedTab = document.getElementById('tab-content-' + selectedIndex);
+  var leavingTab = document.getElementById('tab-content-' + leavingIndex);
 
   var reset = selectedTab.className;
   var leavingMax = leavingTab.scrollHeight + 'px';
