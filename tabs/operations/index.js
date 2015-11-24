@@ -17,9 +17,10 @@ Tabs.prototype._setTabUnderline = function (el) {
 };
 
 Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
-  var selectedTab = document.getElementById('tab-content-' + selectedIndex);
-  var leavingTab = document.getElementById('tab-content-' + leavingIndex);
-
+  var idPrefix = this.model.get('id') + '-tab-content-';
+  var selectedTab = document.getElementById(idPrefix + selectedIndex);
+  var leavingTab = document.getElementById(idPrefix + leavingIndex);
+  
   var reset = selectedTab.className;
   var leavingMax = leavingTab.scrollHeight + 'px';
   

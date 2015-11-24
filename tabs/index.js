@@ -22,7 +22,8 @@ Tabs.prototype.init = function(model) {
 
 Tabs.prototype.create = function(model) {
   var selectedIndex = this.getAttribute('selectedTab') || 0;
-  var el = document.getElementById('tab-header-' + selectedIndex);
+  var componentId = model.get('id');
+  var el = document.getElementById(componentId + '-tab-header-' + selectedIndex);
 
   if (el) this._setTabUnderline(el);
 };
