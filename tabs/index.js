@@ -18,8 +18,7 @@ Tabs.prototype.init = function(model) {
     this._assignPositions(tabs);
     this.model.set('selectedTab', selectedIndex);
   }
-}
-
+};
 
 Tabs.prototype.create = function(model) {
   var selectedIndex = this.getAttribute('selectedTab') || 0;
