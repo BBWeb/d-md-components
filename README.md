@@ -20,5 +20,6 @@ app.component(mdlComponents.ComponentName);
 
 Components
 ----------
+- [Select](snackbar/)
 - [Snackbar/Toast](snackbar/)
 - [Textfield](textfield/)

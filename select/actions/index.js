@@ -1,0 +1,1 @@
+var Select = require('./../index');

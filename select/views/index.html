@@ -1,0 +1,13 @@
+<index: attributes="optionList value key text">
+  <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty">
+    <input class="d-md-select-selected mdl-textfield__input" on-click="willSelect()" value="{{selected[text]}}" />
+    <i class="material-icons d-md-select-icon">arrow_drop_down</i>
+      <ul as="optionListDropdown" class="d-md-select-options-list mdl-shadow--2dp{{if selectOptionsVisible}} d-md-select-options-list--showing{{/if}}" 
+          style="{{if selectedIndex === 1 && optionList.length > 1}}top: -25px; transform-origin: 10px 40px{{/if}}
+                 {{if selectedIndex > 1 && optionList.length > 2}}top: -65px; transform-origin: 10px 80px{{/if}}">
+        {{each optionList as #option, #index}}
+          <li class="d-md-select-option{{if #option[key] === selected[key]}} d-md-select-option-selected{{/if}}" value="{{#option[key]}}" on-click="select(#option, #index)">{{#option[text]}}</li>
+        {{/each}}
+      </ul>
+    <label class="mdl-textfield__label" for="team-select">{{label}}</label>
+  </div>
