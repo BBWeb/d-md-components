@@ -1,0 +1,20 @@
+<index: attributes="id groupHeader group checked label">
+  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded {{if checked}}is-checked{{/if}} {{if undecided}}is-undecided{{/if}}" 
+         for="{{id}}"
+         data-upgraded=",MaterialCheckbox,MaterialRipple"
+         on-mousedown="click($event)"
+         on-mouseup="mouseUp()">
+    <input type="checkbox" id="{{id}}" class="mdl-checkbox__input" checked="{{checked}}">
+    <span class="mdl-checkbox__label">{{label}}</span>
+    <span class="mdl-checkbox__focus-helper"></span>
+    <span class="mdl-checkbox__box-outline">
+      {{if undecided}}
+        <span class="mdl-checkbox__square-outline"></span>
+      {{else}}
+        <span class="mdl-checkbox__tick-outline"></span>
+      {{/if}}
+    </span>
+    <span class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple">
+      <span class="{{if visible}}is-visible{{/if}} mdl-ripple {{if animating}}is-animating{{/if}}" style="width: 103.823px; height: 103.823px; transform: {{transformString}};"></span>
+    </span>
+  </label>
