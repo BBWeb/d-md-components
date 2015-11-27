@@ -14,3 +14,9 @@ Textfield.prototype._validate = function () {
 Textfield.prototype._removeInvalid = function () {
   this.model.set('invalid', false);
 };
+
+Textfield.prototype._maybeExpand = function (el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px'
+};
+
