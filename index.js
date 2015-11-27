@@ -1,5 +1,6 @@
 module.exports = {
+  Checkbox: require('./checkbox'),
   Snackbar: require('./snackbar'),
-  Textfield: require('./textfield'),
-  Checkbox: require('./checkbox')
+  Tabs: require('./tabs'),
+  Textfield: require('./textfield')
 };

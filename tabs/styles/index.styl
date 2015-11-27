@@ -1,0 +1,56 @@
+.tabs
+  width                           100%
+  position                        relative
+  white-space                     nowrap
+
+  .tab-header
+    display                       inline-block
+    cursor                        pointer
+    padding                       24px
+    color                         mdl-medium-full
+    text-transform                uppercase
+    
+  .tab-header-selected
+    color                         mdl-dark-full
+    font-weight                   500
+    
+  .tab-content
+    position                      relative
+    display                       inline-block
+    vertical-align                top
+    overflow                      hidden
+    transition                    all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+
+  .tab-selected
+    opacity                       1    
+    transition                    all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+        
+  .tab-before-selected
+  .tab-after-selected
+    opacity                       0
+    transition                    all 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s linear
+    
+  .tab-after-selected:not(.animating)
+  .tab-before-selected:not(.animating)
+    max-height                    0px
+
+  .tabs-underline
+    width                         0px
+    background                    #ff4081
+    height                        2px
+    top                           60px
+    left                          0
+    transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    
+  .tabs-border
+    top                           61px
+    width                         100%
+    border-top                    1px solid mdl-light-light-full
+    
+  .tabs-underline
+  .tabs-border
+    position                      absolute
+    pointer-events                none
+
+  .no-transition
+    transition                    none !important

@@ -21,5 +21,6 @@ app.component(mdlComponents.ComponentName);
 Components
 ----------
 - [Snackbar/Toast](snackbar/)
+- [Tabs](tabs/)
 - [Textfield](textfield/)
 - [Checkbox](checkbox/)
