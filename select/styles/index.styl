@@ -1,0 +1,56 @@
+.d-md-select
+  position                          relative
+
+  .d-md-select-selected
+    width                           100%
+    padding-right                   20px
+    overflow                        hidden
+    white-space                     nowrap
+    text-overflow                   ellipsis
+    cursor                          pointer
+    
+  .d-md-select-options-list
+    width                           calc(100% + 10px)
+    background                      white
+    position                        absolute
+    top                             15px
+    left                            -10px
+    z-index                         50
+    line-height                     inherit
+    font-size                       inherit
+    max-height                      200px
+    overflow-y                      auto
+    overflow-x                      hidden
+    opacity                         0
+    transform                       scale(0, 0)
+    transform-origin                10px 0
+    transition                      transform 1ms linear 0.4s, opacity 0.2s ease-out, top 1ms linear 0.4s
+    
+    &.d-md-select-options-list--showing
+      opacity                       1
+      transform                     scale(1, 1);
+      transition                    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)
+    
+    .d-md-select-option
+      width                         100%
+      overflow                      hidden
+      white-space                   nowrap
+      text-overflow                 ellipsis
+      padding                       10px
+      cursor                        pointer
+      
+      &:focus
+        background                  mdl-light-light-full
+        color                       rgb(63, 81, 181)
+      
+    .d-md-select-option-selected
+      color                         rgb(63, 81, 181)
+  
+.d-md-select-icon
+  margin-top                        4px
+  color                             mdl-medium-full
+  position                          absolute
+  right                             0
+  pointer-events                    none
+  
+
