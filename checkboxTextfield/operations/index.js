@@ -1,0 +1,1 @@
+var CheckboxTextfield = require('./../index');
