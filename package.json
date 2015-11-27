@@ -1,6 +1,6 @@
 {
   "name": "d-md-components",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A pack of components for Derby according to Google's Material Design based upon mdl (getmdl.io).",
   "main": "index.js",
   "scripts": {
