@@ -1,0 +1,49 @@
+.d-md-dialog
+  display                             none
+  position                            fixed
+  top                                 50%
+  left                                50%
+  transform-origin                    0 0
+  background                          #fff
+  border-radius                       2px
+  min-width                           280px
+  
+  &.animating
+    display                           block
+    transform                         scale(0, 0) translate(-50%, -50%)
+    transition                        all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+
+  &.showing
+    display                           block
+    transform                         scale(1, 1) translate(-50%, -50%)
+    top                               50%
+    left                              50%
+    transition                        all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    
+  .d-md-dialog-inner
+    padding                           24px
+    
+    .d-md-dialog-title
+      font-size                       20px
+      font-weight                     500
+      padding-bottom                  20px
+      
+    .d-md-dialog-content
+      color                           rgb(109, 109, 109)
+      font-size                       16px
+    
+  .d-md-dialog-actions
+    margin-left                       24px
+    
+    .mdl-button
+      margin                          8px 8px 8px 0
+    
+  .d-md-dialog-narrow
+    max-width                         280px
+    
+  .d-md-dialog-medium
+    max-width                         600px
+  
+  .d-md-dialog-wide
+    max-width                         1240px
+    
