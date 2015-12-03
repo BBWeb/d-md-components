@@ -1,0 +1,28 @@
+<index:>
+  <div class="d-md-dialog mdl-shadow--16dp{{if animating}} animating{{/if}}{{if show}} showing{{/if}}"
+       style="z-index: {{options.zIndex || 300}};{{if origin && !show}}top: {{origin.y}}px; left: {{origin.x}}px{{/if}}">
+    <div class="d-md-dialog-inner">
+      {{if title}}
+        <div class="d-md-dialog-title">
+          {{title}}
+        </div>
+      {{/if}}
+      <div class="d-md-dialog-content">
+        {{@content}}
+      </div>
+    </div>
+    <div class="d-md-dialog-actions text-right">
+      {{each actions as #action}}
+        <button class="mdl-button mdl-button--accent" on-click="_maybeHide(#action)">
+          {{#action}}
+        </button>
+      {{/each}}
+    </div>
+  </div>
+  {{if options.overlay}}
+    <view is="overlay" as="overlay" options="{{
+        {autohide: false,
+         class:    options.overlay.class || 'd-md-dialog-overlay'}
+      }}" zIndex="{{options.zIndex -1 || 299}}" 
+          on-click="overlayClicked()" />
+  {{/if}}
