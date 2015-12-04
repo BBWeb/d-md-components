@@ -6,7 +6,7 @@ Tabs.prototype._selectTab = function (selectedIndex) {
   var leavingIndex = this.model.get('selectedTab');
   if (leavingIndex !== undefined) {
     this._animateTab(selectedIndex, leavingIndex);
-    this._setTabUnderline(index);
+    this._setTabUnderline(selectedIndex);
   }
 
   this.model.set('selectedTab', selectedIndex);
@@ -18,8 +18,8 @@ Tabs.prototype._setTabUnderline = function (index) {
 };
 
 Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
-  var $selectedTab = this.tabContent.map[selectedIndex];
-  var $leavingTab = this.tabContent.map[leavingIndex];
+  var $selectedTab = this.tabContents.map[selectedIndex];
+  var $leavingTab = this.tabContents.map[leavingIndex];
   
   var reset = $selectedTab.className;
   var leavingMax = $leavingTab.scrollHeight + 'px';
