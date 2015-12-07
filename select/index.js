@@ -16,7 +16,7 @@ Select.prototype.init = function(model) {
   this.key = this.getAttribute('key');
 
   if (currentValue) {
-    for (var i = 0; i < optionList.length; i++) {
+    for (var i = 0, len = optionList.length; i < len; i++) {
       if (optionList[i][this.key] === currentValue) this.select(optionList[i], i);
     };
   };
