@@ -1,3 +1,5 @@
+var DerbyElList = require('derby-el-list');
+
 module.exports = Tabs;
 
 function Tabs() {}
@@ -18,12 +20,13 @@ Tabs.prototype.init = function(model) {
     this._assignPositions(tabs);
     this.model.set('selectedTab', selectedIndex);
   }
+
+  this.tabHeaders = new DerbyElList();
+  this.tabContents = new DerbyElList();
 };
 
 Tabs.prototype.create = function(model) {
   var selectedIndex = this.getAttribute('selectedTab') || 0;
-  var componentId = model.get('id');
-  var el = document.getElementById(componentId + '-tab-header-' + selectedIndex);
 
-  if (el) this._setTabUnderline(el);
+  this._setTabUnderline(selectedIndex);
 };

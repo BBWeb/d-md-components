@@ -1,38 +1,38 @@
 var Tabs = require('./../index');
 var _ = require('lodash');
 
-Tabs.prototype._selectTab = function (selectedIndex, el) {
+Tabs.prototype._selectTab = function (selectedIndex) {
   // Only animate if another tab is leaving view.
   var leavingIndex = this.model.get('selectedTab');
   if (leavingIndex !== undefined) {
     this._animateTab(selectedIndex, leavingIndex);
-    this._setTabUnderline(el);
+    this._setTabUnderline(selectedIndex);
   }
 
   this.model.set('selectedTab', selectedIndex);
 };
 
-Tabs.prototype._setTabUnderline = function (el) {
-  this.model.setEach('tabsUnderline', { left: el.offsetLeft, width: el.clientWidth });
+Tabs.prototype._setTabUnderline = function (index) {
+  var $tabHeader = this.tabHeaders.map[index];
+  this.model.setEach('tabsUnderline', { left: $tabHeader.offsetLeft, width: $tabHeader.clientWidth });
 };
 
 Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
-  var idPrefix = this.model.get('id') + '-tab-content-';
-  var selectedTab = document.getElementById(idPrefix + selectedIndex);
-  var leavingTab = document.getElementById(idPrefix + leavingIndex);
+  var $selectedTab = this.tabContents.map[selectedIndex];
+  var $leavingTab = this.tabContents.map[leavingIndex];
   
-  var reset = selectedTab.className;
-  var leavingMax = leavingTab.scrollHeight + 'px';
+  var reset = $selectedTab.className;
+  var leavingMax = $leavingTab.scrollHeight + 'px';
   
-  selectedTab.className += ' no-transition';
-  leavingTab.style.maxHeight = leavingMax;
-  selectedTab.style.maxHeight = leavingMax;
+  $selectedTab.className += ' no-transition';
+  $leavingTab.style.maxHeight = leavingMax;
+  $selectedTab.style.maxHeight = leavingMax;
   // Force style recalculation for transitions to work. See http://stackoverflow.com/questions/18564942/clean-way-to-programmatically-use-css-transitions-from-js/31862081
-  window.getComputedStyle(selectedTab).maxHeight
-  selectedTab.className = reset;
+  window.getComputedStyle($selectedTab).maxHeight
+  $selectedTab.className = reset;
 
   this._setAnimation();  
-  this.model.set('viewHeight', selectedTab.scrollHeight);
+  this.model.set('viewHeight', $selectedTab.scrollHeight);
 };
 
 Tabs.prototype._assignPositions = function (tabs) {
