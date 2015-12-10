@@ -1,0 +1,1 @@
+var Slider = require('./../index');
