@@ -51,7 +51,7 @@ Labels is a list of strings that can be used to represent the steps in order. If
     background                        red
   }
   .bubble {
-    background                        routecare-green
+    background                        red
   }
   .bubble:after {
     border-color                      red
