@@ -10,7 +10,7 @@
             on-destroy="removeCloseListener()"
             >
           {{each optionList as #option, #index}}
-            <li class="d-md-select-option{{if #option[key] === selected[key]}} d-md-select-option-selected{{/if}}" value="{{#option[key]}}" on-click="select(#option, #index)">{{#option[text]}}</li>
+            <li class="d-md-select-option{{if #option[key] === selected[key]}} d-md-select-option-selected{{/if}}" on-click="select(#option, #index)">{{#option[text]}}</li>
           {{/each}}
         </ul>
       {{/if}}
