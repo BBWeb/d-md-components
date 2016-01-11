@@ -19,17 +19,15 @@ Tabs.prototype._setTabUnderline = function (index) {
 
 Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
   var $selectedTab = this.tabContents.map[selectedIndex];
-  var $leavingTab = this.tabContents.map[leavingIndex];
-  
-  var reset = $selectedTab.className;
+  var $leavingTab = this.tabContents.map[leavingIndex];  
   var leavingMax = $leavingTab.scrollHeight + 'px';
   
-  $selectedTab.className += ' no-transition';
+  $selectedTab.classList.add('no-transition');
   $leavingTab.style.maxHeight = leavingMax;
   $selectedTab.style.maxHeight = leavingMax;
   // Force style recalculation for transitions to work. See http://stackoverflow.com/questions/18564942/clean-way-to-programmatically-use-css-transitions-from-js/31862081
   window.getComputedStyle($selectedTab).maxHeight
-  $selectedTab.className = reset;
+  $selectedTab.classList.remove('no-transition');
 
   this._setAnimation();  
   this.model.set('viewHeight', $selectedTab.scrollHeight);
