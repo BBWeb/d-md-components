@@ -19,4 +19,3 @@ Textfield.prototype._maybeExpand = function (el) {
   el.style.height = 'auto';
   el.style.height = el.scrollHeight + 'px'
 };
-
