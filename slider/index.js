@@ -12,14 +12,10 @@ require('./actions');
 require('./viewhelpers');
 
 Slider.prototype.init = function(model) {
-  this.min = this.getAttribute('min') || 0;
-  this.max = this.getAttribute('max') || 100;
-  this.steps = (this.max - this.min);
-
-  var self = this;
-  model.fn('getThumbPosition', function (value) {
-    return (100 / self.steps) * (value - self.min);
+  model.fn('getThumbPosition', function (value, max, min) {
+    var steps = (max || 100) - (min || 0);
+    return (100 / steps) * (value - (min || 0));
   });
 
-  model.start('thumbPosition', 'value', 'getThumbPosition');
+  model.start('thumbPosition', 'value', 'max', 'min', 'getThumbPosition');
 };
