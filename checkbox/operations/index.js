@@ -80,7 +80,7 @@ Checkbox.prototype._checkSubgroupCheckboxes = function() {
   var self = this;
   var checked = self.model.get('checked');
 
-  Array.forEach.call(this.model.get('group'), function(item, index) {
+  this.model.get('group').forEach(function(item, index) {
     self.model.set('group.' + index + '.' + self.groupHeader, !checked);
   });
 };
