@@ -20,8 +20,12 @@ app.component(mdlComponents.ComponentName);
 
 Components
 ----------
+- [Checkbox](checkbox/)
+- [CheckboxTextfield](checkboxTextfield/)
+- [Dialog](dialog/)
+- [Pagination](pagination/)
 - [Select](snackbar/)
+- [Slider](slider/)
 - [Snackbar/Toast](snackbar/)
 - [Tabs](tabs/)
 - [Textfield](textfield/)
-- [Checkbox](checkbox/)
