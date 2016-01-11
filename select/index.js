@@ -22,16 +22,8 @@ Select.prototype.init = function(model) {
   };
 
   var self = this;
-  model.on('all', 'optionList**', function (captures, event, optionList) {
-    var selected = self.getAttribute('value');
-    var inList = false;
-    
-    for (var i = 0; i < optionList.length; i++) {
-      if (optionList[i][self.key] === selected) {
-        inList = true;
-      };
-    };
-    
-    if (!inList) self._select({}, undefined);
+  // If the optionsLists changes and the value isn't in the new list, this will deselect.
+  model.on('all', 'optionList**', function (captures, event, optionList) {    
+    if(!_.some(optionList, self.key, self.getAttribute('value'))) self._select({}, 0);    
   });
 };
