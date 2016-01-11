@@ -4,7 +4,7 @@
          data-upgraded=",MaterialCheckbox,MaterialRipple"
          on-mousedown="click($event)"
          on-mouseup="mouseUp()">
-    <input type="checkbox" id="{{id}}" class="mdl-checkbox__input" checked="{{checked}}">
+    <input type="checkbox" id="{{id}}" class="mdl-checkbox__input" checked="{{checked}}" on-change="emit('checked', checked)">
     <span class="mdl-checkbox__label">{{label}}</span>
     <span class="mdl-checkbox__focus-helper"></span>
     <span class="mdl-checkbox__box-outline">
