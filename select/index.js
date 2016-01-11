@@ -17,7 +17,7 @@ Select.prototype.init = function(model) {
 
   if (currentValue) {
     for (var i = 0, len = optionList.length; i < len; i++) {
-      if (optionList[i][this.key] === currentValue) this.select(optionList[i], i);
+      if (optionList[i][this.key] === currentValue) this._select(optionList[i], i);
     };
   };
 
@@ -32,6 +32,6 @@ Select.prototype.init = function(model) {
       };
     };
     
-    if (!inList) self.select({}, undefined);
+    if (!inList) self._select({}, undefined);
   });
 };
