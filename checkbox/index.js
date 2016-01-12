@@ -37,4 +37,14 @@ Checkbox.prototype.init = function(model) {
       return undecided;
     });
   }
+
+  this.validator = this.getAttribute('validator');
+
+  if (this.validator) {
+    this.fieldName = this.getAttribute('fieldName');
+    
+    var value = model.at('validator.' + this.fieldName + '.value');
+
+    model.ref('value', value);
+  }
 };
