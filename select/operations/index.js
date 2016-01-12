@@ -39,3 +39,8 @@ Select.prototype._removeCloseListener = function() {
   document.body.removeEventListener('mouseup', this.listener);
 };
 
+Select.prototype._validate = function () {
+  if(this.validator && typeof this.validator[this.fieldName].validate === 'function') {
+    this.validator[this.fieldName].validate();
+  }
+};

@@ -26,4 +26,18 @@ Select.prototype.init = function(model) {
   model.on('all', 'optionList**', function (captures, event, optionList) {    
     if(!_.some(optionList, self.key, self.getAttribute('value'))) self._select({}, 0);    
   });
+
+  this.validator = this.getAttribute('validator');
+
+  if (this.validator) {
+    this.fieldName = this.getAttribute('fieldName');
+    
+    var value = model.at('validator.' + this.fieldName + '.value');
+    var isInvalid = model.at('validator.' + this.fieldName + '.isInvalid');
+    var errorMsg = model.at('validator.' + this.fieldName + '.messages.0');
+
+    model.ref('value', value);
+    model.ref('invalid', isInvalid);
+    model.ref('invalidMessage', errorMsg);
+  }
 };
