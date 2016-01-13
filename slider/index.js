@@ -14,8 +14,8 @@ require('./viewhelpers');
 Slider.prototype.init = function(model) {
   var self = this;
   this.step = this.getAttribute('step') || 1;
-  model.set('min', model.get('min') || 0);
-  model.set('max', model.get('max') || 100);
+  model.setNull('min', 0);
+  model.setNull('max', 100);
 
   model.start('thumbPosition', 'value', 'steps', function (value, steps) {
     return (100 / steps) * ((value - model.get('min')) / self.step);
