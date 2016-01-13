@@ -1,5 +1,5 @@
 <index: attributes="checked label value">
   <div class="d-md-checkbox-textfield">
-    <view is="checkbox" checked="{{checked}}" />
+    <view is="checkbox" checked="{{checked}}" on-checked="emit('checked')" />
     <view is="textfield" as="inputField" label="{{label}}" value="{{value}}" disabled="{{disabled}}" />
   </div>

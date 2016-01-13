@@ -17,21 +17,27 @@ Select.prototype.init = function(model) {
 
   if (currentValue) {
     for (var i = 0, len = optionList.length; i < len; i++) {
-      if (optionList[i][this.key] === currentValue) this.select(optionList[i], i);
+      if (optionList[i][this.key] === currentValue) this._select(optionList[i], i);
     };
   };
 
   var self = this;
-  model.on('all', 'optionList**', function (captures, event, optionList) {
-    var selected = self.getAttribute('value');
-    var inList = false;
-    
-    for (var i = 0; i < optionList.length; i++) {
-      if (optionList[i][self.key] === selected) {
-        inList = true;
-      };
-    };
-    
-    if (!inList) self.select({}, undefined);
+  // If the optionsLists changes and the value isn't in the new list, this will deselect.
+  model.on('all', 'optionList**', function (captures, event, optionList) {    
+    if(!_.some(optionList, self.key, self.getAttribute('value'))) self._select({}, 0);    
   });
+
+  this.validator = this.getAttribute('validator');
+
+  if (this.validator) {
+    this.fieldName = this.getAttribute('fieldName');
+    
+    var value = model.at('validator.' + this.fieldName + '.value');
+    var isInvalid = model.at('validator.' + this.fieldName + '.isInvalid');
+    var errorMsg = model.at('validator.' + this.fieldName + '.messages.0');
+
+    model.ref('value', value);
+    model.ref('invalid', isInvalid);
+    model.ref('invalidMessage', errorMsg);
+  }
 };

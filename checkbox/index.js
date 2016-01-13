@@ -1,8 +1,5 @@
 module.exports = Checkbox;
 
-/**
- * Creates a snackbar component. It is possible to pass a global options object as an attribute. For public methods, see ./actions.
- */
 function Checkbox() {}
 
 Checkbox.prototype.view = __dirname + '/views';
@@ -39,5 +36,15 @@ Checkbox.prototype.init = function(model) {
 
       return undecided;
     });
+  }
+
+  this.validator = this.getAttribute('validator');
+
+  if (this.validator) {
+    this.fieldName = this.getAttribute('fieldName');
+    
+    var value = model.at('validator.' + this.fieldName + '.value');
+
+    model.ref('value', value);
   }
 };

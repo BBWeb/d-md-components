@@ -16,9 +16,15 @@ require('d-md-components/textfield');
 #### Template
 ```html
   <!-- All attributes exept label are optional. 
-      'fieldName' will be set to the input>name attribute.
+      'fieldName' will be set to the inputs name attribute. This is useful for browser autofill reasons.
+      If type="textarea", a self-expanding textarea will be used instead.
       'validator' will only work if derby-validator library is used. -->
-  <view is="textfield" fieldName="email" label="E-mail" validator="{{validator}}" type="email"></view>
+  <view is="textfield" 
+        fieldName="email" 
+        label="E-mail" 
+        validator="{{validator}}" 
+        type="email" 
+        disabled="{{disabled}}" />
 ```
 
-See readme of derby-validator for usage of validation.
+See readme of [Derby-validator](https://github.com/BBWeb/derby-validator) for usage of validation.

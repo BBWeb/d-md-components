@@ -7,7 +7,7 @@ var Checkbox = require('./../index');
 Checkbox.prototype._triggerAnimation = function (event) {
   this.model.set('visible', true);
 
-  this.frameCount_ = 1;
+  this.frameCount = 1;
   var bound = event.currentTarget.lastChild.getBoundingClientRect();
   var x;
   var y;
@@ -32,10 +32,10 @@ Checkbox.prototype._removeAnimation = function () {
  * Handles an animation frame.
  */
 Checkbox.prototype._animationFrameHandler = function () {
-  if (this.frameCount_-- > 0) {
-      window.requestAnimationFrame(this._animationFrameHandler.bind(this));
+  if (this.frameCount-- > 0) {
+    window.requestAnimationFrame(this._animationFrameHandler.bind(this));
   } else {
-      this._setRippleStyles(false);
+    this._setRippleStyles(false);
   }
 };
 
@@ -45,8 +45,8 @@ Checkbox.prototype._animationFrameHandler = function () {
  * @param  {number} newY the new Y coordinate
  */
 Checkbox.prototype._setRippleXY = function (newX, newY) {
-  this.x_ = newX;
-  this.y_ = newY;
+  this.x = newX;
+  this.y = newY;
 };
 
 /**
@@ -57,14 +57,14 @@ Checkbox.prototype._setRippleStyles = function (start) {
   var transformString;
   var scale;
   var size;
-  var offset = 'translate(' + this.x_ + 'px, ' + this.y_ + 'px) ';
+  var offset = 'translate(' + this.x + 'px, ' + this.y + 'px) ';
   if (start) {
-      scale = 'scale(0.0001, 0.0001)';
-      size = '1px';
+    scale = 'scale(0.0001, 0.0001)';
+    size = '1px';
   } else {
-      scale = '';
-      size = 103.823 + 'px';
-      offset = 'translate(18px, 18px) ';
+    scale = '';
+    size = 103.823 + 'px';
+    offset = 'translate(18px, 18px) ';
   }
   transformString = 'translate(-50%, -50%) ' + offset + scale;
   this.model.set('transformString', transformString);
@@ -80,7 +80,7 @@ Checkbox.prototype._checkSubgroupCheckboxes = function() {
   var self = this;
   var checked = self.model.get('checked');
 
-  Array.prototype.forEach.call(this.model.get('group'), function(item, index) {
+  this.model.get('group').forEach(function(item, index) {
     self.model.set('group.' + index + '.' + self.groupHeader, !checked);
   });
 };

@@ -31,8 +31,6 @@ Textfield.prototype.create = function(model) {
   var type = model.get('type');
 
   if (type === 'textarea') {
-    var componentId = model.get('id')
-    var textArea = document.getElementById('textarea-' + componentId);
-    this._maybeExpand(textArea);
+    this._maybeExpand(this.textarea);
   }
 };
