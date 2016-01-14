@@ -11,7 +11,7 @@
     "derby-el-list": "^0.1.1"
   },
   "peerDependencies": {
-    "derby": "^0.7.1 - 0.8"
+    "derby": ">=0.7.1 <0.9"
   },
   "author": "cjblomqvist <carl@cjblomqvist.com>",
   "license": "MIT",
