@@ -22,7 +22,7 @@ app.component(mdlComponents.Tabs);
     <tab label="tab1">
       Arbitrary content of the tab
     </tab>
-    <tab label="tab2">
+    <tab label="tab2" hide="{{hideMe}}">
       content...
     </tab>
     <tab label="tab3">
