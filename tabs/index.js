@@ -1,4 +1,5 @@
 var DerbyElList = require('derby-el-list');
+var _ = require('lodash');
 
 module.exports = Tabs;
 
@@ -13,12 +14,29 @@ require('./operations');
 require('./actions');
 
 Tabs.prototype.init = function(model) {
+  var self = this;
   var tabs = this.getAttribute('tab');
   var selectedIndex = this.getAttribute('selectedTab') || 0;
 
   if (tabs) {
     this._assignPositions(tabs);
     this.model.set('selectedTab', selectedIndex);
+
+    _.each(tabs, function (tab, index) {
+      if(tab.hasOwnProperty('hide')) {
+        var context = self.parent.context;
+        var attribute = model.get('tab.' + index + '.hide');
+        var segments = (
+          attribute.expression &&
+          attribute.expression.pathSegments(context)
+        );
+        if (segments) {
+          model.scope('').ref(model._at + '.tab.' + index + '.hide', segments.join('.'), {updateIndices: true});
+        } else {
+          model.set('tab.' + index + '.hide', self.getAttribute('tab.' + index));
+        }
+      };
+    });
   }
 
   this.tabHeaders = new DerbyElList();
