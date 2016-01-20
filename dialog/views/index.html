@@ -13,8 +13,8 @@
     </div>
     <div class="d-md-dialog-actions text-right">
       {{each actions as #action}}
-        <button class="mdl-button mdl-button--accent" on-click="_maybeHide(#action)">
-          {{#action}}
+        <button class="mdl-button {{typeof #action.class === 'string' ? #action.class : 'mdl-button--accent'}}" on-click="_maybeHide(#action.text || #action)">
+          {{#action.text || #action}}
         </button>
       {{/each}}
     </div>
