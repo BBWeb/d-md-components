@@ -1,5 +1,5 @@
-<index: attributes="optionList value key text">
-  <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty{{if invalid}} is-invalid{{/if}}">
+<index: attributes="optionList value key text class">
+  <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty{{if invalid}} is-invalid{{/if}}{{if class}} {{class}}{{/if}}">
     <input class="d-md-select-selected mdl-textfield__input" on-click="willSelect()" on-blur="validate()" value="{{selected[text]}}" />
     <i class="material-icons d-md-select-icon">arrow_drop_down</i>
       {{if selectOptionsVisible}}
