@@ -1,5 +1,5 @@
-<index: arrays="tab" attributes="selectedTab">
-  <div class="tabs">
+<index: arrays="tab" attributes="selectedTab class">
+  <div class="tabs{{if class}} {{class}}{{/if}}">
     {{each @tab as #tab, #index}}
       <div on-create="tabHeaders.create($element, #index)"
            class="tab-header{{if #index === selectedTab}} tab-header-selected{{/if}}{{if tab[#index].hide}} invisible{{/if}}"

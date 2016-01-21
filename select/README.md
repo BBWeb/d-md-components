@@ -20,6 +20,7 @@ app.component(mdlComponents.Select);
   <view 
     is="select"
     label="Options"
+    class="extraClass" 
     optionList="{{optionList}}"
     value="{{selectedValue}}"
     key="key"

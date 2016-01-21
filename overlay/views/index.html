@@ -1,5 +1,5 @@
-<index: attributes="options zIndex">
-  <div class="overlay {{@options.class}} {{if show}}show{{/if}}"
+<index: attributes="options zIndex class">
+  <div class="overlay {{@options.class}} {{if show}}show{{/if}}{{if class}} {{class}}{{/if}}"
        on-click="click()"
        style="{{if zIndexExists(@zIndex)}}z-index: {{@zIndex}}{{/if}}"
     ></div>

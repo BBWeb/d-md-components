@@ -22,6 +22,7 @@ app.component(mdlComponents.Checkbox);
   <view 
     is="checkboxTextfield" 
     label="Label" 
+    class="extraClass" 
     checked="{{isChecked}}"
     value="{{textValue}}" 
     on-checked="checkboxClicked()"

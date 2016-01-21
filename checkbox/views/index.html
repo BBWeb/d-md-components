@@ -1,5 +1,5 @@
-<index: attributes="id groupHeader group checked label">
-  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded {{if checked}}is-checked{{/if}} {{if undecided}}is-undecided{{/if}}" 
+<index: attributes="id groupHeader group checked label class">
+  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded {{if checked}}is-checked{{/if}} {{if undecided}}is-undecided{{/if}}{{if class}} {{class}}{{/if}}" 
          for="{{id}}"
          data-upgraded=",MaterialCheckbox,MaterialRipple"
          on-mousedown="click($event)"
