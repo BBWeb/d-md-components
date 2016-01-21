@@ -17,7 +17,7 @@ app.component(mdlComponents.Pagination);
 
 #### Template
 ```html
-  <view is="pagination" pages="{{pagination.pages}}" activePage="{{pagination.activePage}}" />
+  <view is="pagination" pages="{{pagination.pages}}" activePage="{{pagination.activePage}}" class="extraClass" />
 ```
 
 Note: Style button-background-color by overriding .mdl-button::before background-color.

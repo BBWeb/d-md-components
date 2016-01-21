@@ -21,6 +21,7 @@ app.component(mdlComponents.Checkbox);
   <view 
     is="checkbox" 
     label="Check this" 
+    class="extraClass" 
     checked="{{isChecked}}" 
     on-checked="checkboxClicked()"
     validator="{{validator}}"

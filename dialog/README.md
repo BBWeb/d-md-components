@@ -24,6 +24,7 @@ app.component(mdlComponents.Dialog);
     title="Discard changes?"
     actions="{{['No', 'Yes']}}"
     on-hide="dialogWillHide(action, cancel)"
+    class="extraClass" 
     options="{{{ 
       overlay: {
         clickToHide: true

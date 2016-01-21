@@ -26,6 +26,7 @@ app.component(mdlComponents.Slider);
     max="{{rangeMax}}"
     step="1"
     value="{{rangeData}}"
+    class="extraClass" 
     labels="['one', 'two', 'three']"
      />
 ```

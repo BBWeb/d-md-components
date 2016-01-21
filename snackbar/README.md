@@ -24,6 +24,7 @@ app.component(mdlComponents.Snackbar);
   <view 
     is="snackbar" 
     as="snackbar" 
+    class="extraClass" 
     options="{{
       {
         buttonClass: 'button-accent-color'
