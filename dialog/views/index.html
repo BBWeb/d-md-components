@@ -1,5 +1,5 @@
-<index:>
-  <div class="d-md-dialog mdl-shadow--16dp{{if animating}} animating{{/if}}{{if show}} showing{{/if}}"
+<index: attributes="class">
+  <div class="d-md-dialog mdl-shadow--16dp{{if animating}} animating{{/if}}{{if show}} showing{{/if}}{{if class}} {{class}}{{/if}}"
        style="z-index: {{options.zIndex || 300}};{{if origin && !show}}top: {{origin.y}}px; left: {{origin.x}}px{{/if}}">
     <div class="d-md-dialog-inner">
       {{if title}}
@@ -13,8 +13,8 @@
     </div>
     <div class="d-md-dialog-actions text-right">
       {{each actions as #action}}
-        <button class="mdl-button mdl-button--accent" on-click="_maybeHide(#action)">
-          {{#action}}
+        <button class="mdl-button {{typeof #action.class === 'string' ? #action.class : 'mdl-button--accent'}}" on-click="_maybeHide(#action.text || #action)">
+          {{#action.text || #action}}
         </button>
       {{/each}}
     </div>

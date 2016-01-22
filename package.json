@@ -1,6 +1,6 @@
 {
   "name": "d-md-components",
-  "version": "0.5.6",
+  "version": "0.5.11",
   "description": "A pack of components for Derby according to Google's Material Design based upon mdl (getmdl.io).",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "derby-el-list": "^0.1.1"
   },
   "peerDependencies": {
-    "derby": "^0.7.1 - 0.8"
+    "derby": ">=0.7.1 <0.9"
   },
   "author": "cjblomqvist <carl@cjblomqvist.com>",
   "license": "MIT",

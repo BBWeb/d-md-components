@@ -18,7 +18,7 @@ app.component(mdlComponents.Tabs);
 #### Template
 ```html
   <!-- selectedTab is optional index of selectedTab, 0 as default -->
-  <view is="tabs" selectedTab="1">
+  <view is="tabs" selectedTab="1" class="extraClass">
     <tab label="tab1">
       Arbitrary content of the tab
     </tab>

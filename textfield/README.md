@@ -22,6 +22,7 @@ require('d-md-components/textfield');
   <view is="textfield" 
         fieldName="email" 
         label="E-mail" 
+        class="extraClass" 
         validator="{{validator}}" 
         type="email" 
         disabled="{{disabled}}" />

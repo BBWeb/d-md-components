@@ -1,5 +1,5 @@
-<index: attributes="value validator fieldName disabled">
-  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {{if isFocused}}is-focused{{/if}} {{if value}}is-dirty{{/if}} {{if invalid}}is-invalid{{/if}}{{if disabled}} disabled{{/if}}">
+<index: attributes="value validator fieldName disabled class">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {{if isFocused}}is-focused{{/if}} {{if value}}is-dirty{{/if}} {{if invalid}}is-invalid{{/if}}{{if disabled}} disabled{{/if}}{{if class}} {{class}}{{/if}}">
     {{if type === 'textarea'}}
       <textarea as="textarea" class="mdl-textfield__input" type="{{type}}" name="{{fieldName}}" on-focus="toggleFocus()" on-blur="toggleFocus(), validate()" rows="1" on-input="maybeExpand($element)" disabled="{{disabled}}">{{value}}</textarea>
     {{else}}
