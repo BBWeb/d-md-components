@@ -25,6 +25,7 @@ require('d-md-components/textfield');
         class="extraClass" 
         validator="{{validator}}" 
         type="email" 
+        helper="persistant helper text"
         disabled="{{disabled}}" />
 ```
 
