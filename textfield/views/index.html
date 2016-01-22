@@ -6,5 +6,6 @@
       <input class="mdl-textfield__input" type="{{type}}" name="{{fieldName}}" value="{{value}}" on-focus="toggleFocus()" on-blur="toggleFocus(), validate()" disabled="{{disabled}}" />
     {{/if}}
     {{if label}}<label class="mdl-textfield__label {{if type === 'textarea'}}textarea-label{{/if}}" for="{{fieldName}}">{{label}}</label>{{/if}}
+    {{unless invalidMessage && invalid}}<span class="mdl-textfield__helper">{{helper}}</span>{{/unless}}
     <span class="mdl-textfield__error">{{invalidMessage}}</span>
   </div>
