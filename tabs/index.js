@@ -31,9 +31,9 @@ Tabs.prototype.init = function(model) {
           attribute.expression.pathSegments(context)
         );
         if (segments) {
-          model.scope('').ref(model._at + '.tab.' + index + '.hide', segments.join('.'), {updateIndices: true});
+          model.scope('').ref(model._at + '.tabs.' + index + '.hide', segments.join('.'), {updateIndices: true});
         } else {
-          model.set('tab.' + index + '.hide', self.getAttribute('tab.' + index));
+          model.set('tabs.' + index + '.hide', tab.hide);
         }
       };
     });
