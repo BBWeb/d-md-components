@@ -2,9 +2,13 @@ var Dialog = require('./../index');
 var _ = require('lodash');
 
 Dialog.prototype._show = function(e) {
-  if (e) {
+  // Animate from click if event is passed
+  if (e && typeof e.pageX === 'number') {
     this.model.setEach('origin', { x: e.pageX, y: e.pageY });
   }
+
+  // Save params so we can return them in emit.
+  this.params = arguments;
 
   var self = this;
   this._maybeShowOverlay();
@@ -15,7 +19,7 @@ Dialog.prototype._show = function(e) {
 };
 
 Dialog.prototype._maybeHide = function(action) {
-  var cancelled = this.emitCancellable('hide', action);
+  var cancelled = this.emitCancellable('hide', action, this.params);
   if (cancelled) return;
 
   this._hide()

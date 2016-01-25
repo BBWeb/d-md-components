@@ -2,7 +2,7 @@
   <div class="tabs{{if class}} {{class}}{{/if}}">
     {{each @tab as #tab, #index}}
       <div on-create="tabHeaders.create($element, #index)"
-           class="tab-header{{if #index === selectedTab}} tab-header-selected{{/if}}{{if tab[#index].hide}} invisible{{/if}}"
+           class="tab-header{{if #index === selectedTab}} tab-header-selected{{/if}}{{if tabs[#index].hide}} invisible{{/if}}"
            on-click="selectTab(#index)">
         {{#tab.label}}
       </div>
