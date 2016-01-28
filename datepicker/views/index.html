@@ -1,3 +1,80 @@
 <index: attributes="class">
   <div class="dmd-datepicker">
+    <header class="header{{if accent}} accent{{/if}}">
+      <div class="header---year">
+        <h2 class="header---yeartext{{if pickingYear}} header---yeartext--active{{/if}}">{{year}}</h2>
+      </div>
+      <div class="header---date">
+        <h1 class="header---datetext{{if pickingDay}} header---datetext--active{{/if}}">{{date}}</h1>
+      </div>
+    </header>
+    {{if pickingMonth}}
+      <view is="monthpicker" />
+    {{else if pickingYear}}
+      <view is="yearpicker" />
+    {{else}}
+      <view is="daypicker" />
+    {{/if}}
+    <actionbar class="actionbar">
+      {{unless nocancel}}
+        <button class="actionbar---button{{if accent}} accent{{/if}}">
+          {{cancelText || 'Cancel'}}
+        </button>
+      {{/unless}}
+      {{unless autoclose}}
+        <button class="actionbar---button{{if accent}} accent{{/if}}">
+          Ok
+        </button>
+      {{/unless}}
+    </actionbar>
+  </div>
+
+<daypicker:>
+  <div class="daypicker">
+    <div class="monthswitch">
+      <div class="monthswitch---left"></div>
+      <div class="monthswitch---text"></div>
+      <div class="monthswitch---right"></div> 
+    </div>
+    <div class="days">
+      <div class="days---days">
+        <span class="days---dayheader">M</span>
+        <span class="days---dayheader">T</span>
+        <span class="days---dayheader">O</span>
+        <span class="days---dayheader">T</span>
+        <span class="days---dayheader">F</span>
+        <span class="days---dayheader">L</span>
+        <span class="days---dayheader">S</span>
+      </div>
+      <div class="days---weeks">
+        {{each week}}
+          <span class="days---weeknumber">{{weekNumber}}</span>
+        {{/each}}
+      </div>
+      <div class="days---dates">
+        {{each weeks as #week}}
+          <!--
+          {{each #week.days as #day}}
+            <div class="days---date{{if #day === selectedDate}} days---date--selected{{if #day === currentDate}} days---date--current{{/if}}{{if accent}} accent{{/if}}">
+              {{#day.number}}
+            </div>
+          {{/each}}
+          -->
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+<monthpicker:>
+  <div class="monthpicker">
+    <div>
+      
+    </div>
+  </div>
+
+<yearpicker:>
+  <div class="yearpicker">
+    <div>
+    
+    </div>
   </div>
