@@ -1,0 +1,133 @@
+mdl-dark                      = rgb(34, 34, 34)
+mdl-medium                    = rgb(109, 109, 109)
+mdl-light                     = rgb(182, 182, 182)
+default-accent                = #009688
+timing                        = 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+
+.dmd-datepicker
+  color                       mdl-dark
+  width                       360px
+  max-height                  720px
+  
+  .header
+    padding                   24px
+    background-color          default-accent
+    
+    &---year
+      margin-bottom           12px
+    
+    &---yeartext,
+    &---datetext
+      color                   #fff
+      opacity                 0.7
+      cursor                  pointer
+
+    &---yeartext
+      font-size               15px
+      
+      &--active
+        font-size             16px
+        opacity               1
+        
+    &---datetext
+      font-size               34px
+      
+      &--active
+        opacity               1
+        
+  .monthswitch
+    height                    56px
+    margin-bottom             8px
+    display                   flex
+    justify-content           space-between
+    
+    &---arrow,
+    &---text
+      cursor                  pointer
+      display                 inline-block
+      
+    &---arrow
+      color                   mdl-medium
+      font-size               24px
+      padding                 12px
+      
+      &:hover
+        color                 mdl-dark
+      
+    &---text
+      line-height             48px
+      font-size               14px
+      font-weight             500
+      
+  .days
+    cursor                    default
+    user-select               none
+    position                  relative
+    z-index                   1
+    
+    &---days
+    &---week
+      margin                  0
+      display                 flex
+      justify-content         space-between
+      list-style-type         none
+      padding                 0 12px
+      
+    &---header
+    &---date
+      font-size               12px
+      width                   40px
+      display                 flex
+      justify-content         center
+      align-items             center
+      
+    &---header
+      color                   mdl-light
+      font-weight             500
+    
+      &--week
+        width                 24px
+        text-align            right
+        
+    &---date
+      font-weight             500
+      position                relative
+      cursor                  pointer
+      height                  40px
+      transition              color timing;
+        
+      &--current
+        color                 default-accent
+      
+      &:hover,
+      &--selected
+        color                 #fff
+        
+      &:hover >.days---date-circle,
+      &--selected >.days---date-circle
+        transform             scale(1, 1)
+        
+      &--selected >.days---date-circle
+        opacity               1
+             
+    &---date-circle
+      position                absolute
+      height                  36px
+      width                   36px
+      top                     2px
+      left                    2px
+      z-index                 -1
+      transform               scale(0,0)
+      border-radius           20px
+      background-color        default-accent
+      transition              all timing;
+      opacity                 0.53
+        
+        
+  .actionbar
+    display                   block
+    padding                   0 8px 12px
+    text-align                right
+    
+    &---button
+      color                   default-accent

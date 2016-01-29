@@ -1,11 +1,11 @@
 <index: attributes="class">
-  <div class="dmd-datepicker">
-    <header class="header{{if accent}} accent{{/if}}">
+  <div class="dmd-datepicker mdl-shadow--8dp">
+    <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
       <div class="header---year">
-        <h2 class="header---yeartext{{if pickingYear}} header---yeartext--active{{/if}}">{{year}}</h2>
+        <span class="header---yeartext{{if pickingYear}} header---yeartext--active{{/if}}">{{year}}</span>
       </div>
       <div class="header---date">
-        <h1 class="header---datetext{{if pickingDay}} header---datetext--active{{/if}}">{{date}}</h1>
+        <span class="header---datetext{{if pickingDay}} header---datetext--active{{/if}}">{{date}}</span>
       </div>
     </header>
     {{if pickingMonth}}
@@ -17,12 +17,12 @@
     {{/if}}
     <actionbar class="actionbar">
       {{unless nocancel}}
-        <button class="actionbar---button{{if accent}} accent{{/if}}">
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}">
           {{cancelText || 'Cancel'}}
         </button>
       {{/unless}}
       {{unless autoclose}}
-        <button class="actionbar---button{{if accent}} accent{{/if}}">
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}">
           Ok
         </button>
       {{/unless}}
@@ -32,34 +32,32 @@
 <daypicker:>
   <div class="daypicker">
     <div class="monthswitch">
-      <div class="monthswitch---left"></div>
-      <div class="monthswitch---text"></div>
-      <div class="monthswitch---right"></div> 
+      <div class="monthswitch---arrow monthswitch---arrow--left"><i class="material-icons">keyboard_arrow_left</i></div>
+      <div class="monthswitch---text">{{month}}</div>
+      <div class="monthswitch---arrow monthswitch---arrow--right"><i class="material-icons">keyboard_arrow_right</i></div> 
     </div>
     <div class="days">
-      <div class="days---days">
-        <span class="days---dayheader">M</span>
-        <span class="days---dayheader">T</span>
-        <span class="days---dayheader">O</span>
-        <span class="days---dayheader">T</span>
-        <span class="days---dayheader">F</span>
-        <span class="days---dayheader">L</span>
-        <span class="days---dayheader">S</span>
-      </div>
-      <div class="days---weeks">
-        {{each week}}
-          <span class="days---weeknumber">{{weekNumber}}</span>
-        {{/each}}
-      </div>
+      <ul class="days---days">
+        <li class="days---header days---header--week"></li>
+        <li class="days---header">M</li>
+        <li class="days---header">T</li>
+        <li class="days---header">O</li>
+        <li class="days---header">T</li>
+        <li class="days---header">F</li>
+        <li class="days---header">L</li>
+        <li class="days---header">S</li>
+      </ul>
       <div class="days---dates">
         {{each weeks as #week}}
-          <!--
-          {{each #week.days as #day}}
-            <div class="days---date{{if #day === selectedDate}} days---date--selected{{if #day === currentDate}} days---date--current{{/if}}{{if accent}} accent{{/if}}">
-              {{#day.number}}
-            </div>
-          {{/each}}
-          -->
+          <ul class="days---week">
+            <li class="days---header days---header--week">{{#week.number}}</li>
+            {{each #week.days as #day}}
+              <li class="days---date{{if #day.date === selectedDate}} days---date--selected{{/if}}{{if #day.date === currentDate}} days---date--current{{/if}}" style="{{if accent && selectedDate !== currentDate && #day.date === currentDate}}color: {{accent}}{{/if}}" on-click="selectDate(#day)">
+                {{#day.number}}
+                <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
+              </li>
+            {{/each}}
+          </ul>
         {{/each}}
       </div>
     </div>
