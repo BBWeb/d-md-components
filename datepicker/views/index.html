@@ -32,9 +32,9 @@
 <daypicker:>
   <div class="daypicker">
     <div class="monthswitch">
-      <div class="monthswitch---arrow monthswitch---arrow--left"><i class="material-icons">keyboard_arrow_left</i></div>
+      <div class="monthswitch---arrow monthswitch---arrow--left" on-click="flipMonth('left')"><i class="material-icons">keyboard_arrow_left</i></div>
       <div class="monthswitch---text">{{month}}</div>
-      <div class="monthswitch---arrow monthswitch---arrow--right"><i class="material-icons">keyboard_arrow_right</i></div> 
+      <div class="monthswitch---arrow monthswitch---arrow--right" on-click="flipMonth('right')"><i class="material-icons">keyboard_arrow_right</i></div> 
     </div>
     <div class="days">
       <ul class="days---days">
@@ -47,20 +47,26 @@
         <li class="days---header">L</li>
         <li class="days---header">S</li>
       </ul>
-      <div class="days---dates">
-        {{each weeks as #week}}
-          <ul class="days---week">
-            <li class="days---header days---header--week">{{#week.number}}</li>
-            {{each #week.days as #day}}
-              <li class="days---date{{if #day.date === selectedDate}} days---date--selected{{/if}}{{if #day.date === currentDate}} days---date--current{{/if}}" style="{{if accent && selectedDate !== currentDate && #day.date === currentDate}}color: {{accent}}{{/if}}" on-click="selectDate(#day)">
-                {{#day.number}}
-                <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
-              </li>
-            {{/each}}
-          </ul>
-        {{/each}}
+      <div as="$months">
+        <view is="days" month="{{monthOne}}" positionClass="{{monthOnePositionClass}}" />
+        <view is="days" month="{{monthTwo}}" positionClass="{{monthTwoPositionClass}}" />
       </div>
     </div>
+  </div>
+
+<days:>
+  <div class="days---dates {{@positionClass}}">
+    {{each @month as #week}}
+      <ul class="days---week">
+        <li class="days---header days---header--week">{{#week.number}}</li>
+        {{each #week.days as #day}}
+          <li class="days---date{{if #day.date === selectedDate}} days---date--selected{{/if}}{{if #day.date === currentDate}} days---date--current{{/if}}" style="{{if accent && selectedDate !== currentDate && #day.date === currentDate}}color: {{accent}}{{/if}}" on-click="selectDate(#day)">
+            {{#day.number}}
+            <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
+          </li>
+        {{/each}}
+      </ul>
+    {{/each}}
   </div>
 
 <monthpicker:>
