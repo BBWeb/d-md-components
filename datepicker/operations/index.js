@@ -11,10 +11,14 @@ Datepicker.prototype._showView = function(view) {
 };
 
 Datepicker.prototype._selectDate = function(day) {
+  if (day.date !== this.model.get('selectedDate')) this._animateText('date', this.model.getCopy('selectedDate'));
+
   this.model.set('selectedDate', day.date);
 };
 
 Datepicker.prototype._selectYear = function(year) {
+  if (year !== this.model.get('selectedYear')) this._animateText('year', this.model.getCopy('selectedYear'));
+
   this.model.set('selectedYear', year);
 
   // REVIEW: center on selection or only on view load?
@@ -26,6 +30,17 @@ Datepicker.prototype._selectMonth = function(month) {
   
   // REVIEW: center on selection or only on view load?
   this._scrollToSelected(this.$monthlist);
+
+  // REVIEW: close month on selection or have to click date
+};
+
+Datepicker.prototype._animateText = function(text, oldText) {
+  this.model.set('leaving.' + text, oldText);
+  this.model.set('animating.' + text, true);
+  // Force style recalculation for transitions to work. See http://stackoverflow.com/questions/18564942/clean-way-to-programmatically-use-css-transitions-from-js/31862081
+  window.getComputedStyle(this.$header).top;
+  console.log(this.model.get('animating'));
+  this.model.del('animating.' + text);
 };
 
 Datepicker.prototype._scrollToSelected = function($list) {
@@ -35,6 +50,8 @@ Datepicker.prototype._scrollToSelected = function($list) {
 };
 
 Datepicker.prototype._flipMonth = function(direction) {
+  this._animateText('month', this.model.getCopy('selectedMonth'));
+
   // Figure out which view is entering/leaving.
   var isFirstActive = this.model.set('isMonthViewOne', !this.model.get('isMonthViewOne'));
   var entering = (isFirstActive) ? 'monthTwo' : 'monthOne';
@@ -44,7 +61,7 @@ Datepicker.prototype._flipMonth = function(direction) {
   // Add next/prev month to entering view.
   var enteringMonth = this.getMonth(); // TODO: Monthbuilder.
   this.model.set(entering, enteringMonth.weeks);
-  this.model.set('month', enteringMonth.name);
+  this.model.set('selectedMonth', enteringMonth.name);
   
   // Set class to entering view so it repositions to correct location.
   this.model.set(entering + 'PositionClass', 'days---dates--' + direction + ' no-transition');

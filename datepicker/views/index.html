@@ -1,11 +1,15 @@
 <index: attributes="class">
   <div class="dmd-datepicker mdl-shadow--8dp">
-    <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
+    <header class="header" as="$header" style="{{if accent}}background-color: {{accent}}{{/if}}">
       <div class="header---year">
-        <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}" on-click="showView('year')">{{selectedYear}}</span>
+        <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: -21px{{/if}}" on-click="showView('year')">{{selectedYear}}</span>
+        <span class="header---yeartext header---yeartext--leaving{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: 0px{{/if}}" on-click="showView('year')">{{leaving.year}}</span>
       </div>
       <div class="header---date">
-        <span class="header---datetext{{if activeView === 'day'}} header---datetext--active{{/if}}" on-click="showView('day')">{{date}}</span>
+        <span class="header---datetext{{if activeView === 'day'}} header---datetext--active{{/if}}{{if animating.date}} no-transition{{/if}}" on-click="showView('day')" style="{{if animating.date}}top: -34px{{/if}}">{{getDateString(selectedDate)}}</span>
+        <span class="header---datetext header---datetext--leaving{{if animating.date}} no-transition{{/if}}" style="{{if animating.date}}top: 0px{{/if}}">
+          {{getDateString(leaving.date)}}
+        </span>
       </div>
     </header>
     {{if activeView === 'month'}}
@@ -33,7 +37,10 @@
   <div class="daypicker">
     <div class="monthswitch">
       <div class="monthswitch---arrow monthswitch---arrow--left" on-click="flipMonth('left')"><i class="material-icons">keyboard_arrow_left</i></div>
-      <div class="monthswitch---text" on-click="showView('month')">{{month}}</div>
+      <div class="monthswitch---text-container" on-click="showView('month')">
+        <span class="monthswitch---text{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: -48px{{/if}}">{{getMonthString(selectedMonth)}}</span>
+        <span class="monthswitch---text monthswitch---text--leaving{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: 0px{{/if}}">{{getMonthString(leaving.month)}}</span>
+      </div>
       <div class="monthswitch---arrow monthswitch---arrow--right" on-click="flipMonth('right')"><i class="material-icons">keyboard_arrow_right</i></div> 
     </div>
     <div class="days">
@@ -58,6 +65,7 @@
   <div class="days---dates {{@positionClass}}">
     {{each @month as #week}}
       <ul class="days---week">
+        <!-- REVIEW: week number + 'v' or some kind of header or is it implied that these numbers are weeks? -->
         <li class="days---header days---header--week">{{#week.number}}</li>
         {{each #week.days as #day}}
           <li class="days---date{{if #day.date === selectedDate}} days---date--selected{{/if}}{{if #day.date === currentDate}} days---date--current{{/if}}" style="{{if accent && selectedDate !== currentDate && #day.date === currentDate}}color: {{accent}}{{/if}}" on-click="selectDate(#day)">
