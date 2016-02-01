@@ -1,6 +1,7 @@
-<index: attributes="class">
-  <div class="dmd-datepicker mdl-shadow--8dp">
-    <header class="header" as="$header" style="{{if accent}}background-color: {{accent}}{{/if}}">
+<index: attributes="class inline">
+{{if show}}
+  <div as="$datepicker" on-create="addCloseListener()" on-destroy="removeCloseListener()" class="dmd-datepicker mdl-shadow--8dp{{if inline}} dmd-datepicker--inline{{else}} dmd-datepicker--dialog{{/if}}{{if hiding}} dmd-datepicker--hiding{{/if}}">
+    <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
       <div class="header---year">
         <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: -21px{{/if}}" on-click="showView('year')">{{selectedYear}}</span>
         <span class="header---yeartext header---yeartext--leaving{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: 0px{{/if}}" on-click="showView('year')">{{leaving.year}}</span>
@@ -32,6 +33,7 @@
       {{/unless}}
     </actionbar>
   </div>
+{{/if}}
 
 <daypicker:>
   <div class="daypicker">

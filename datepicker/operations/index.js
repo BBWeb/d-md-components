@@ -38,7 +38,7 @@ Datepicker.prototype._animateText = function(text, oldText) {
   this.model.set('leaving.' + text, oldText);
   this.model.set('animating.' + text, true);
   // Force style recalculation for transitions to work. See http://stackoverflow.com/questions/18564942/clean-way-to-programmatically-use-css-transitions-from-js/31862081
-  window.getComputedStyle(this.$header).top;
+  window.getComputedStyle(this.$datepicker).top;
   console.log(this.model.get('animating'));
   this.model.del('animating.' + text);
 };
@@ -81,4 +81,43 @@ Datepicker.prototype._setMonthMinHeight = function (childIndex) {
   var childHeight = children[childIndex].offsetHeight;
 
   this.$months.style.minHeight = childHeight + 'px';
+};
+
+Datepicker.prototype._show = function() {
+  if (!this.getAttribute('inline')) this.model.set('animating', true);
+
+  this.model.set('show', true);
+};
+
+Datepicker.prototype._hide = function() {
+  this.model.set('hiding', true);
+
+  setTimeout(function (self) {
+    self.model.setEach({
+      show: false,
+      hiding: false
+    });
+  }, 300, this);
+};
+
+Datepicker.prototype._addCloseListener = function () {
+  var self = this;
+
+  this.clickHandler = function (e) {
+    if (!self.$datepicker.contains(e.target)) {
+      self._hide();
+    }
+  };
+
+  this.keyupHandler = function (e) {
+    if (e.keyCode === 27) self._hide();
+  };
+
+  document.body.addEventListener('mouseup', this.clickHandler);
+  document.body.addEventListener('keyup', this.keyupHandler);
+};
+
+Datepicker.prototype._removeCloseListener = function () {
+  document.body.removeEventListener('mouseup', this.clickHandler);
+  document.body.removeEventListener('keyup', this.keyupHandler);
 };

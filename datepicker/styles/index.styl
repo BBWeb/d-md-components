@@ -4,11 +4,35 @@ mdl-light                     = rgb(182, 182, 182)
 default-accent                = #009688
 timing                        = 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
 
+@keyframes slideDown {
+  from                       { transform: translateY(-280px); opacity: 0 }
+  to                         { transform: translateY(-220px); opacity: 1 }
+}
+
 .dmd-datepicker
   color                       mdl-dark
+  background-color            #fff
   width                       360px
   max-height                  520px
   overflow                    hidden
+  margin-left                 auto
+  margin-right                auto
+  z-index                     9999
+    
+  &--dialog
+    position                  fixed
+    top                       50vh
+    left                      0
+    right                     0
+    transform                 translateY(-220px)
+    animation                 slideDown timing
+    
+  &--inline
+    position                  absolute
+    
+  &--hiding
+    opacity                   0
+    transition                opacity timing
   
   .no-transition
     transition                none !important
@@ -186,7 +210,7 @@ timing                        = 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
   .pickerlist
     position                  relative
     overflow                  auto
-    max-height                288px
+    height                    288px
     padding                   0
     margin                    0
     list-style-type           none
