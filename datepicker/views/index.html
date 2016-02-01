@@ -2,15 +2,15 @@
   <div class="dmd-datepicker mdl-shadow--8dp">
     <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
       <div class="header---year">
-        <span class="header---yeartext{{if pickingYear}} header---yeartext--active{{/if}}">{{year}}</span>
+        <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}" on-click="showView('year')">{{selectedYear}}</span>
       </div>
       <div class="header---date">
-        <span class="header---datetext{{if pickingDay}} header---datetext--active{{/if}}">{{date}}</span>
+        <span class="header---datetext{{if activeView === 'day'}} header---datetext--active{{/if}}" on-click="showView('day')">{{date}}</span>
       </div>
     </header>
-    {{if pickingMonth}}
+    {{if activeView === 'month'}}
       <view is="monthpicker" />
-    {{else if pickingYear}}
+    {{else if activeView === 'year'}}
       <view is="yearpicker" />
     {{else}}
       <view is="daypicker" />
@@ -33,7 +33,7 @@
   <div class="daypicker">
     <div class="monthswitch">
       <div class="monthswitch---arrow monthswitch---arrow--left" on-click="flipMonth('left')"><i class="material-icons">keyboard_arrow_left</i></div>
-      <div class="monthswitch---text">{{month}}</div>
+      <div class="monthswitch---text" on-click="showView('month')">{{month}}</div>
       <div class="monthswitch---arrow monthswitch---arrow--right" on-click="flipMonth('right')"><i class="material-icons">keyboard_arrow_right</i></div> 
     </div>
     <div class="days">
@@ -47,7 +47,7 @@
         <li class="days---header">L</li>
         <li class="days---header">S</li>
       </ul>
-      <div as="$months">
+      <div as="$months" class="days---months-container">
         <view is="days" month="{{monthOne}}" positionClass="{{monthOnePositionClass}}" />
         <view is="days" month="{{monthTwo}}" positionClass="{{monthTwoPositionClass}}" />
       </div>
@@ -71,14 +71,27 @@
 
 <monthpicker:>
   <div class="monthpicker">
-    <div>
-      
-    </div>
+    <ul class="pickerlist" as="$monthlist">
+      <li class="pickerlist---item{{if 'januari' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'januari' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('januari')">Januari</li>
+      <li class="pickerlist---item{{if 'februari' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'februari' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('februari')">Februari</li>
+      <li class="pickerlist---item{{if 'mars' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'mars' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('mars')">Mars</li>
+      <li class="pickerlist---item{{if 'april' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'april' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('april')">April</li>
+      <li class="pickerlist---item{{if 'maj' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'maj' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('maj')">Maj</li>
+      <li class="pickerlist---item{{if 'juni' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'juni' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('juni')">Juni</li>
+      <li class="pickerlist---item{{if 'juli' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'juli' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('juli')">Juli</li>
+      <li class="pickerlist---item{{if 'augusti' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'augusti' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('augusti')">Augusti</li>
+      <li class="pickerlist---item{{if 'september' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'september' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('september')">September</li>
+      <li class="pickerlist---item{{if 'oktober' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'oktober' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('oktober')">Oktober</li>
+      <li class="pickerlist---item{{if 'november' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'november' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('november')">November</li>
+      <li class="pickerlist---item{{if 'december' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'december' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('december')">December</li>
+    </ul>
   </div>
 
 <yearpicker:>
   <div class="yearpicker">
-    <div>
-    
-    </div>
+    <ul class="pickerlist" as="$yearlist">
+      {{each years as #year}}
+        <li class="pickerlist---item{{if #year === selectedYear}} pickerlist---item--selected{{/if}}" style="{{if accent && #year === selectedYear}}color:{{accent}}{{/if}}" on-click="selectYear(#year)">{{#year}}</li>
+      {{/each}}
+    </ul>
   </div>
