@@ -8,6 +8,25 @@ Datepicker.prototype.selectDate = Datepicker.prototype._selectDate;
 Datepicker.prototype.selectYear = Datepicker.prototype._selectYear;
 Datepicker.prototype.selectMonth = Datepicker.prototype._selectMonth;
 
-Datepicker.prototype.showView = Datepicker.prototype._showView;
+Datepicker.prototype.showView = function(view) {
+  this._showView(view);
 
-Datepicker.prototype.flipMonth = Datepicker.prototype._flipMonth;
+  switch (view) {
+    case 'day':
+      this._setMonthMinHeight();
+      break;
+    case 'year':
+      this._scrollToSelected(this.$yearlist);
+      break;
+    case 'month':
+      this._scrollToSelected(this.$monthlist);
+      break;
+  }
+};
+
+Datepicker.prototype.nextMonth = function () {
+  this._flipMonth('right', this._getNextMonth(this.model.get('currentDate')));
+};
+Datepicker.prototype.previousMonth = function () {
+  this._flipMonth('left', this._getPreviousMonth(this.model.get('currentDate')));
+};

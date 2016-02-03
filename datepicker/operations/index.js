@@ -1,56 +1,73 @@
+var moment = require('moment');
+var _ = require('lodash');
 var Datepicker = require('./../index');
 
 Datepicker.prototype._showView = function(view) {
   if (this.model.get('activeView') === view) return;
 
   this.model.set('activeView', view);
-
-  if (view === 'day') this._setMonthMinHeight(this.model.get('isMonthViewOne') ? 0 : 1);
-  if (view === 'year') this._scrollToSelected(this.$yearlist);
-  if (view === 'month') this._scrollToSelected(this.$monthlist);
 };
 
-Datepicker.prototype._selectDate = function(day) {
-  if (day.date !== this.model.get('selectedDate')) this._animateText('date', this.model.getCopy('selectedDate'));
+Datepicker.prototype._selectDate = function(momentDate) {
+  var selectedDate = this.model.get('selectedDate');
 
-  this.model.set('selectedDate', day.date);
+  if (!momentDate.isSame(selectedDate, 'day')) {
+    this._animateText('date', selectedDate);
+    if (!momentDate.isSame(selectedDate, 'year')) this._animateText('year', selectedDate);
+  }
+
+  this.model.set('selectedDate', momentDate);
 };
 
 Datepicker.prototype._selectYear = function(year) {
-  if (year !== this.model.get('selectedYear')) this._animateText('year', this.model.getCopy('selectedYear'));
+  var momentDate = this.model.get('selectedDate').clone();
+  momentDate.year(year);
 
-  this.model.set('selectedYear', year);
-
+  this._selectDate(momentDate);
+  this._setCurrentDate(momentDate);
+  this._flipMonth('right', this._getMonth(this.model.get('selectedDate')));
+  
   // REVIEW: center on selection or only on view load?
   this._scrollToSelected(this.$yearlist);
+  this._maybeHideList();
 };
 
-Datepicker.prototype._selectMonth = function(month) {
-  this.model.set('selectedMonth', month);
+Datepicker.prototype._selectMonth = function(monthIndex) {
+  var date = this.model.get('currentDate').clone();
+  date.month(monthIndex);
+
+  this._setCurrentDate(date);
+  this._flipMonth('right', this._getMonth(date));
   
   // REVIEW: center on selection or only on view load?
   this._scrollToSelected(this.$monthlist);
-
-  // REVIEW: close month on selection or have to click date
+  this._maybeHideList();
 };
 
-Datepicker.prototype._animateText = function(text, oldText) {
-  this.model.set('leaving.' + text, oldText);
+Datepicker.prototype._maybeHideList = function() {
+  var options = this.getAttribute('options');
+  if (!options || !options.disableAutoCloseLists) this._showView('day');
+};
+
+Datepicker.prototype._animateText = function(text, date) {
+  this.model.set('leaving.' + text, date);
   this.model.set('animating.' + text, true);
   // Force style recalculation for transitions to work. See http://stackoverflow.com/questions/18564942/clean-way-to-programmatically-use-css-transitions-from-js/31862081
   window.getComputedStyle(this.$datepicker).top;
-  console.log(this.model.get('animating'));
   this.model.del('animating.' + text);
 };
 
 Datepicker.prototype._scrollToSelected = function($list) {
   var $item = $list.querySelector('.pickerlist---item--selected');
 
+  if (!$item) return;
+
   $list.scrollTop = ($item.offsetTop) - (($list.clientHeight / 2) - ($item.clientHeight / 2));
 };
 
-Datepicker.prototype._flipMonth = function(direction) {
-  this._animateText('month', this.model.getCopy('selectedMonth'));
+Datepicker.prototype._flipMonth = function(direction, newMonth) {
+  var currentDate = this.model.get('currentDate').clone();
+  this._animateText('month', currentDate);
 
   // Figure out which view is entering/leaving.
   var isFirstActive = this.model.set('isMonthViewOne', !this.model.get('isMonthViewOne'));
@@ -59,9 +76,7 @@ Datepicker.prototype._flipMonth = function(direction) {
   var to = (direction === 'right') ? 'left' : 'right';
 
   // Add next/prev month to entering view.
-  var enteringMonth = this.getMonth(); // TODO: Monthbuilder.
-  this.model.set(entering, enteringMonth.weeks);
-  this.model.set('selectedMonth', enteringMonth.name);
+  this.model.set(entering, newMonth);
   
   // Set class to entering view so it repositions to correct location.
   this.model.set(entering + 'PositionClass', 'days---dates--' + direction + ' no-transition');
@@ -77,6 +92,8 @@ Datepicker.prototype._flipMonth = function(direction) {
 };
 
 Datepicker.prototype._setMonthMinHeight = function (childIndex) {
+  if (!childIndex) childIndex = this.model.get('isMonthViewOne') ? 0 : 1;
+
   var children = this.$months.childNodes;
   var childHeight = children[childIndex].offsetHeight;
 
@@ -84,9 +101,12 @@ Datepicker.prototype._setMonthMinHeight = function (childIndex) {
 };
 
 Datepicker.prototype._show = function() {
-  if (!this.getAttribute('inline')) this.model.set('animating', true);
+  this.model.setEach({ 
+    show: true,
+    activeView: 'day'
+  });
 
-  this.model.set('show', true);
+  this._setMonthMinHeight();
 };
 
 Datepicker.prototype._hide = function() {
@@ -120,4 +140,77 @@ Datepicker.prototype._addCloseListener = function () {
 Datepicker.prototype._removeCloseListener = function () {
   document.body.removeEventListener('mouseup', this.clickHandler);
   document.body.removeEventListener('keyup', this.keyupHandler);
+};
+
+Datepicker.prototype._setCurrentDate = function(momentDate) {
+  this.model.set('currentDate', momentDate.clone());
+};
+
+Datepicker.prototype._getNextMonth = function(momentDate) {
+  var nextMonth = momentDate.clone().add(1, 'month');
+  this._setCurrentDate(nextMonth);
+
+  return this._getMonth(nextMonth);
+};
+
+Datepicker.prototype._getPreviousMonth = function(momentDate) {
+  var previousMonth = momentDate.clone().subtract(1, 'month');
+  this._setCurrentDate(previousMonth);
+
+  return this._getMonth(previousMonth);
+};
+
+Datepicker.prototype._getMonth = function(momentDate) {
+  var month = this._getEmptyDaysBefore(momentDate).concat(this._getDaysInMonth(momentDate), this._getEmptyDaysAfter(momentDate));
+  var weeks = _.map(_.chunk(month, 7), function wrapInObject(week) {
+    return {
+      number: this._getWeekNumber(week),
+      days: week
+    };
+  }, this);
+
+  return weeks;
+};
+
+Datepicker.prototype._getDaysInMonth = function(momentDate) {
+  var date = this._getFirstDateOfMonth(momentDate);
+  var nrOfDays = momentDate.daysInMonth();
+  var days = _.times(nrOfDays, function addDate(index) {
+    return moment.utc(date.date(index + 1));
+  });
+
+  return days;
+};
+
+Datepicker.prototype._getEmptyDaysBefore = function(momentDate) {
+  var date = this._getFirstDateOfMonth(momentDate);
+  var dayNumber = date.isoWeekday();
+  
+  return this._getEmptyDays(dayNumber - 1);
+};
+
+Datepicker.prototype._getEmptyDaysAfter = function(momentDate) {
+  var date = this._getLastDateOfMonth(momentDate);
+  var dayNumber = date.isoWeekday();
+
+  return this._getEmptyDays(7 - dayNumber);
+};
+
+Datepicker.prototype._getEmptyDays = function(nrOfDays) {
+  return _.times(nrOfDays, _.constant({ noDate: true }));
+};
+
+Datepicker.prototype._getWeekNumber = function(week) {
+  if (week[0] instanceof moment) return week[0].isoWeek();
+  if (week[6] instanceof moment) return week[6].isoWeek();
+
+  throw new Error('Week is not constructed correctly');
+};
+
+Datepicker.prototype._getFirstDateOfMonth = function(momentDate) {
+  return momentDate.clone().date(1);
+};
+
+Datepicker.prototype._getLastDateOfMonth = function(momentDate) {
+  return momentDate.clone().date(momentDate.daysInMonth());
 };
