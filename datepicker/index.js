@@ -1,5 +1,3 @@
-var moment = require('moment');
-
 module.exports = Datepicker;
 
 /**
@@ -13,39 +11,21 @@ Datepicker.prototype.name = 'datepicker';
 Datepicker.prototype.components = [];
 
 require('./operations');
+require('./operations/builders');
 require('./actions');
 require('./viewhelpers');
 
 Datepicker.prototype.init = function(model) {
-  var initialDate = this.getAttribute('initialDate');
-  var today = moment.utc();
-  var selectedDate = moment.utc(initialDate);
-  var currentDate = selectedDate.clone();
-  var month = this._getMonth(selectedDate);
+  var options = this.getAttribute('options');
 
   model.setEach({
     isMonthViewOne: true,
-    monthTwoPositionClass: 'days---dates--right',
-    monthOne: month,
-    selectedDate: selectedDate,
-    currentDate: currentDate,
-    today: today
+    monthTwoPositionClass: 'days---dates--right'
   });
 
-  this._initYears();
-};
-
-Datepicker.prototype._initYears = function() {
-  var options = this.getAttribute('options');
-  var currentYear = this.model.get('currentDate').year();
-  var firstYear = (options && options.minDate) ? moment(options.minDate).year() : currentYear - 100;
-  var lastYear = (options && options.maxDate) ? moment(options.maxDate).year() : currentYear + 100;
-  var years = [];
-
-  while (firstYear <= lastYear) {
-    years.push(firstYear);
-    firstYear++;
+  if (options) {
+    if (options.autoOk) this.model.set('autoOk', options.autoOk);
+    if (options.disableCancel) this.model.set('disableCancel', options.disableCancel);
+    if (options.accent) this.model.set('accent', options.accent);
   }
-
-  this.model.set('years', years);
 };

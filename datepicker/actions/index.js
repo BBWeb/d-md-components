@@ -1,6 +1,7 @@
 var Datepicker = require('./../index');
 
 Datepicker.prototype.show = Datepicker.prototype._show;
+Datepicker.prototype.hide = Datepicker.prototype._hide;
 Datepicker.prototype.addCloseListener = Datepicker.prototype._addCloseListener;
 Datepicker.prototype.removeCloseListener = Datepicker.prototype._removeCloseListener;
 
@@ -30,3 +31,5 @@ Datepicker.prototype.nextMonth = function () {
 Datepicker.prototype.previousMonth = function () {
   this._flipMonth('left', this._getPreviousMonth(this.model.get('currentDate')));
 };
+
+Datepicker.prototype.setValue = Datepicker.prototype._setValue;

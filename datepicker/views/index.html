@@ -21,13 +21,13 @@
       <view is="daypicker" />
     {{/if}}
     <actionbar class="actionbar">
-      {{unless nocancel}}
-        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}">
+      {{unless disableCancel}}
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="hide()">
           {{cancelText || 'Cancel'}}
         </button>
       {{/unless}}
-      {{unless autoclose}}
-        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}">
+      {{unless autoOk}}
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="setValue(), hide()">
           Ok
         </button>
       {{/unless}}
@@ -73,7 +73,7 @@
           {{if #day.noDate}}
             <li class="days---date days---date--empty"></li>
           {{else}}
-            <li class="days---date{{if isEqualDates(#day, selectedDate, true)}} days---date--selected{{/if}}{{if isEqualDates(#day, today)}} days---date--current{{/if}}" style="{{if accent && !isEqualDates(#day, selectedDate) && isEqualDates(#day, today)}}color: {{accent}}{{/if}}" on-click="selectDate(#day)">
+            <li class="days---date{{if isEqualDates(#day, selectedDate, true)}} days---date--selected{{/if}}{{if isEqualDates(#day, today)}} days---date--current{{/if}}" style="{{if accent && !isEqualDates(#day, selectedDate) && isEqualDates(#day, today)}}color: {{accent}}{{/if}}" on-click="selectDate(#day, autoOk)">
             {{getDayNumber(#day)}}
               <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
             </li>

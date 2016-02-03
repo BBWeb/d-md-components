@@ -1,5 +1,4 @@
 var moment = require('moment');
-var _ = require('lodash');
 var Datepicker = require('./../index');
 
 Datepicker.prototype._showView = function(view) {
@@ -8,7 +7,7 @@ Datepicker.prototype._showView = function(view) {
   this.model.set('activeView', view);
 };
 
-Datepicker.prototype._selectDate = function(momentDate) {
+Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
   var selectedDate = this.model.get('selectedDate');
 
   if (!momentDate.isSame(selectedDate, 'day')) {
@@ -17,6 +16,11 @@ Datepicker.prototype._selectDate = function(momentDate) {
   }
 
   this.model.set('selectedDate', momentDate);
+
+  if (closeOnSelect) {
+    this.setValue();
+    this._hide();
+  }
 };
 
 Datepicker.prototype._selectYear = function(year) {
@@ -101,6 +105,8 @@ Datepicker.prototype._setMonthMinHeight = function (childIndex) {
 };
 
 Datepicker.prototype._show = function() {
+  this._initDates();
+
   this.model.setEach({ 
     show: true,
     activeView: 'day'
@@ -110,14 +116,15 @@ Datepicker.prototype._show = function() {
 };
 
 Datepicker.prototype._hide = function() {
+  var self = this;
   this.model.set('hiding', true);
 
-  setTimeout(function (self) {
+  setTimeout(function hideWhenFaded() {
     self.model.setEach({
       show: false,
       hiding: false
     });
-  }, 300, this);
+  }, 300);
 };
 
 Datepicker.prototype._addCloseListener = function () {
@@ -146,71 +153,27 @@ Datepicker.prototype._setCurrentDate = function(momentDate) {
   this.model.set('currentDate', momentDate.clone());
 };
 
-Datepicker.prototype._getNextMonth = function(momentDate) {
-  var nextMonth = momentDate.clone().add(1, 'month');
-  this._setCurrentDate(nextMonth);
-
-  return this._getMonth(nextMonth);
+Datepicker.prototype._setValue = function() {
+  this.model.set('value', this.model.get('selectedDate').format());
 };
 
-Datepicker.prototype._getPreviousMonth = function(momentDate) {
-  var previousMonth = momentDate.clone().subtract(1, 'month');
-  this._setCurrentDate(previousMonth);
+Datepicker.prototype._initDates = function() {
+  var input = this.getAttribute('value');
+  var today = moment.utc();
+  var initialDate = moment(input);
+  var selectedDate = initialDate.isValid() ? initialDate : today.clone();
+  var currentDate = selectedDate.clone();
+  var month = this._getMonth(selectedDate);
+  var years = this._getYears(selectedDate);
 
-  return this._getMonth(previousMonth);
-};
-
-Datepicker.prototype._getMonth = function(momentDate) {
-  var month = this._getEmptyDaysBefore(momentDate).concat(this._getDaysInMonth(momentDate), this._getEmptyDaysAfter(momentDate));
-  var weeks = _.map(_.chunk(month, 7), function wrapInObject(week) {
-    return {
-      number: this._getWeekNumber(week),
-      days: week
-    };
-  }, this);
-
-  return weeks;
-};
-
-Datepicker.prototype._getDaysInMonth = function(momentDate) {
-  var date = this._getFirstDateOfMonth(momentDate);
-  var nrOfDays = momentDate.daysInMonth();
-  var days = _.times(nrOfDays, function addDate(index) {
-    return moment.utc(date.date(index + 1));
+  this.model.setEach({
+    selectedDate: selectedDate,
+    currentDate: currentDate,
+    today: today,
+    years: years
   });
 
-  return days;
-};
+  var monthView = this.model.get('isMonthViewOne') ? 'monthOne' : 'monthTwo';
 
-Datepicker.prototype._getEmptyDaysBefore = function(momentDate) {
-  var date = this._getFirstDateOfMonth(momentDate);
-  var dayNumber = date.isoWeekday();
-  
-  return this._getEmptyDays(dayNumber - 1);
-};
-
-Datepicker.prototype._getEmptyDaysAfter = function(momentDate) {
-  var date = this._getLastDateOfMonth(momentDate);
-  var dayNumber = date.isoWeekday();
-
-  return this._getEmptyDays(7 - dayNumber);
-};
-
-Datepicker.prototype._getEmptyDays = function(nrOfDays) {
-  return _.times(nrOfDays, _.constant({ noDate: true }));
-};
-
-Datepicker.prototype._getWeekNumber = function(week) {
-  if (week[0] instanceof moment) return week[0].isoWeek();
-  if (week[6] instanceof moment) return week[6].isoWeek();
-
-  throw new Error('Week is not constructed correctly');
-};
-
-Datepicker.prototype._getFirstDateOfMonth = function(momentDate) {
-  return momentDate.clone().date(1);
-};
-
-Datepicker.prototype._getLastDateOfMonth = function(momentDate) {
-  return momentDate.clone().date(momentDate.daysInMonth());
+  this.model.set(monthView, month);
 };
