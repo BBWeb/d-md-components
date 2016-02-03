@@ -3,8 +3,8 @@
   <div as="$datepicker" on-create="addCloseListener()" on-destroy="removeCloseListener()" class="dmd-datepicker mdl-shadow--8dp{{if inline}} dmd-datepicker--inline{{else}} dmd-datepicker--dialog{{/if}}{{if hiding}} dmd-datepicker--hiding{{/if}}">
     <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
       <div class="header---year">
-        <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: -21px{{/if}}" on-click="showView('year')">{{selectedYear}}</span>
-        <span class="header---yeartext header---yeartext--leaving{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: 0px{{/if}}" on-click="showView('year')">{{leaving.year}}</span>
+        <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: -21px{{/if}}" on-click="showView('year')">{{getYearString(selectedDate)}}</span>
+        <span class="header---yeartext header---yeartext--leaving{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: 0px{{/if}}" on-click="showView('year')">{{getYearString(leaving.year)}}</span>
       </div>
       <div class="header---date">
         <span class="header---datetext{{if activeView === 'day'}} header---datetext--active{{/if}}{{if animating.date}} no-transition{{/if}}" on-click="showView('day')" style="{{if animating.date}}top: -34px{{/if}}">{{getDateString(selectedDate)}}</span>
@@ -38,12 +38,12 @@
 <daypicker:>
   <div class="daypicker">
     <div class="monthswitch">
-      <div class="monthswitch---arrow monthswitch---arrow--left" on-click="flipMonth('left')"><i class="material-icons">keyboard_arrow_left</i></div>
+      <div class="monthswitch---arrow monthswitch---arrow--left" on-click="previousMonth()"><i class="material-icons">keyboard_arrow_left</i></div>
       <div class="monthswitch---text-container" on-click="showView('month')">
-        <span class="monthswitch---text{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: -48px{{/if}}">{{getMonthString(selectedMonth)}}</span>
-        <span class="monthswitch---text monthswitch---text--leaving{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: 0px{{/if}}">{{getMonthString(leaving.month)}}</span>
+        <span class="monthswitch---text{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: -48px{{/if}}">{{getMonthYearString(currentDate)}}</span>
+        <span class="monthswitch---text monthswitch---text--leaving{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: 0px{{/if}}">{{getMonthYearString(leaving.month)}}</span>
       </div>
-      <div class="monthswitch---arrow monthswitch---arrow--right" on-click="flipMonth('right')"><i class="material-icons">keyboard_arrow_right</i></div> 
+      <div class="monthswitch---arrow monthswitch---arrow--right" on-click="nextMonth()"><i class="material-icons">keyboard_arrow_right</i></div> 
     </div>
     <div class="days">
       <ul class="days---days">
@@ -70,10 +70,14 @@
         <!-- REVIEW: week number + 'v' or some kind of header or is it implied that these numbers are weeks? -->
         <li class="days---header days---header--week">{{#week.number}}</li>
         {{each #week.days as #day}}
-          <li class="days---date{{if #day.date === selectedDate}} days---date--selected{{/if}}{{if #day.date === currentDate}} days---date--current{{/if}}" style="{{if accent && selectedDate !== currentDate && #day.date === currentDate}}color: {{accent}}{{/if}}" on-click="selectDate(#day)">
-            {{#day.number}}
-            <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
-          </li>
+          {{if #day.noDate}}
+            <li class="days---date days---date--empty"></li>
+          {{else}}
+            <li class="days---date{{if isEqualDates(#day, selectedDate, true)}} days---date--selected{{/if}}{{if isEqualDates(#day, today)}} days---date--current{{/if}}" style="{{if accent && !isEqualDates(#day, selectedDate) && isEqualDates(#day, today)}}color: {{accent}}{{/if}}" on-click="selectDate(#day)">
+            {{getDayNumber(#day)}}
+              <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
+            </li>
+          {{/if}}
         {{/each}}
       </ul>
     {{/each}}
@@ -82,18 +86,9 @@
 <monthpicker:>
   <div class="monthpicker">
     <ul class="pickerlist" as="$monthlist">
-      <li class="pickerlist---item{{if 'januari' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'januari' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('januari')">Januari</li>
-      <li class="pickerlist---item{{if 'februari' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'februari' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('februari')">Februari</li>
-      <li class="pickerlist---item{{if 'mars' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'mars' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('mars')">Mars</li>
-      <li class="pickerlist---item{{if 'april' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'april' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('april')">April</li>
-      <li class="pickerlist---item{{if 'maj' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'maj' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('maj')">Maj</li>
-      <li class="pickerlist---item{{if 'juni' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'juni' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('juni')">Juni</li>
-      <li class="pickerlist---item{{if 'juli' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'juli' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('juli')">Juli</li>
-      <li class="pickerlist---item{{if 'augusti' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'augusti' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('augusti')">Augusti</li>
-      <li class="pickerlist---item{{if 'september' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'september' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('september')">September</li>
-      <li class="pickerlist---item{{if 'oktober' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'oktober' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('oktober')">Oktober</li>
-      <li class="pickerlist---item{{if 'november' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'november' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('november')">November</li>
-      <li class="pickerlist---item{{if 'december' === selectedMonth}} pickerlist---item--selected{{/if}}" style="{{if accent && 'december' === selectedMonth}}color:{{accent}}{{/if}}" on-click="selectMonth('december')">December</li>
+      {{each [0,1,2,3,4,5,6,7,8,9,10,11] as #monthIndex}}
+        <li class="pickerlist---item{{if isEqualMonth(#monthIndex, currentDate)}} pickerlist---item--selected{{/if}}" style="{{if accent && isEqualMonth(#monthIndex, currentDate)}}color:{{accent}}{{/if}}" on-click="selectMonth(#monthIndex)">{{getMonthString(#monthIndex)}}</li>
+      {{/each}}
     </ul>
   </div>
 
@@ -101,7 +96,7 @@
   <div class="yearpicker">
     <ul class="pickerlist" as="$yearlist">
       {{each years as #year}}
-        <li class="pickerlist---item{{if #year === selectedYear}} pickerlist---item--selected{{/if}}" style="{{if accent && #year === selectedYear}}color:{{accent}}{{/if}}" on-click="selectYear(#year)">{{#year}}</li>
+        <li class="pickerlist---item{{if isEqualYear(#year, selectedDate)}} pickerlist---item--selected{{/if}}" style="{{if accent && isEqualYear(#year, selectedDate)}}color:{{accent}}{{/if}}" on-click="selectYear(#year)">{{#year}}</li>
       {{/each}}
     </ul>
   </div>
