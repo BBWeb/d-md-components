@@ -29,10 +29,16 @@ Datepicker.prototype._getMonth = function(momentDate) {
 };
 
 Datepicker.prototype._getDaysInMonth = function(momentDate) {
+  var self = this;
   var date = this._getFirstDateOfMonth(momentDate);
   var nrOfDays = momentDate.daysInMonth();
+
   var days = _.times(nrOfDays, function addDate(index) {
-    return moment.utc(date.date(index + 1));
+    var dateToAdd = moment.utc(date.date(index + 1));
+
+    if (self._isOutOfRange(dateToAdd)) dateToAdd.disable = true;
+
+    return dateToAdd;
   });
 
   return days;
@@ -71,11 +77,9 @@ Datepicker.prototype._getLastDateOfMonth = function(momentDate) {
   return momentDate.clone().date(momentDate.daysInMonth());
 };
 
-Datepicker.prototype._getYears = function(momentDate) {
-  var options = this.getAttribute('options');
-  var currentYear = momentDate.year();
-  var firstYear = (options && options.minDate) ? moment(options.minDate).year() : currentYear - 100;
-  var lastYear = (options && options.maxDate) ? moment(options.maxDate).year() : currentYear + 100;
+Datepicker.prototype._getYears = function() {
+  var firstYear = this.model.get('minDate').year();
+  var lastYear = this.model.get('maxDate').year();
   var years = [];
 
   while (firstYear <= lastYear) {
@@ -89,6 +93,5 @@ Datepicker.prototype._getYears = function(momentDate) {
 Datepicker.prototype._getMonths = function() {
   var months = moment.months();
 
-  console.log(months);
   return _.map(months, _.capitalize);
 };

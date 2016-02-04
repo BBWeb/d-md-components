@@ -42,6 +42,8 @@ Datepicker.prototype.init = function(model) {
   var options = this.getAttribute('options');
   var locale = ['en'];
   var months;
+  var minDate = (options && options.minDate) ? moment(options.minDate) : moment().subtract(100, 'years');
+  var maxDate = (options && options.maxDate) ? moment(options.maxDate) : moment().add(100, 'years');
   
   if (options) {
     if (options.autoOk) this.model.set('autoOk', options.autoOk);
@@ -56,6 +58,10 @@ Datepicker.prototype.init = function(model) {
   model.setEach({
     isMonthViewOne: true,
     monthTwoPositionClass: 'days---dates--right',
-    months: months
+    months: months,
+    minDate: minDate,
+    maxDate: maxDate
   });
+
+  model.set('years', this._getYears());
 };

@@ -8,6 +8,8 @@ Datepicker.prototype._showView = function(view) {
 };
 
 Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
+  if (this._isOutOfRange(momentDate)) return;
+
   var selectedDate = this.model.get('selectedDate');
 
   if (!momentDate.isSame(selectedDate, 'day')) {
@@ -38,7 +40,6 @@ Datepicker.prototype._selectYear = function(year) {
 
   this._selectDate(momentDate);
   this._setCurrentDate(momentDate);
-  this._flipMonth('right', this._getMonth(this.model.get('selectedDate')));
   
   // REVIEW: center on selection or only on view load?
   this._scrollToSelected(this.$yearlist);
@@ -49,9 +50,7 @@ Datepicker.prototype._selectMonth = function(monthIndex) {
   var date = this.model.get('currentDate').clone();
   date.month(monthIndex);
 
-  this._setCurrentDate(date);
-  this._flipMonth('right', this._getMonth(date));
-  
+  this._setCurrentDate(date);  
   // REVIEW: center on selection or only on view load?
   this._scrollToSelected(this.$monthlist);
   this._maybeHideList();
@@ -59,7 +58,11 @@ Datepicker.prototype._selectMonth = function(monthIndex) {
 
 Datepicker.prototype._maybeHideList = function() {
   var options = this.getAttribute('options');
-  if (!options || !options.disableAutoCloseLists) this._showView('day');
+
+  if (!options || !options.disableAutoCloseLists) {
+    this._showView('day');
+    this._flipMonth('right', this._getMonth(this.model.get('currentDate')));
+  }
 };
 
 Datepicker.prototype._animateText = function(text, date) {
@@ -89,8 +92,11 @@ Datepicker.prototype._flipMonth = function(direction, newMonth) {
   var to = (direction === 'right') ? 'left' : 'right';
 
   // Add next/prev month to entering view.
+  console.log(this.$months.childNodes[0].offsetHeight, this.$months.childNodes[1].offsetHeight);
+  console.log(newMonth);
+
   this.model.set(entering, newMonth);
-  
+
   // Set class to entering view so it repositions to correct location.
   this.model.set(entering + 'PositionClass', 'days---dates--' + direction + ' no-transition');
 
@@ -105,6 +111,8 @@ Datepicker.prototype._flipMonth = function(direction, newMonth) {
 };
 
 Datepicker.prototype._setMonthMinHeight = function (childIndex) {
+  window.getComputedStyle(this.$datepicker).top;
+
   if (!childIndex) childIndex = this.model.get('isMonthViewOne') ? 0 : 1;
 
   var children = this.$months.childNodes;
@@ -170,6 +178,13 @@ Datepicker.prototype._setValue = function() {
   this.model.set('value', this.model.get('selectedDate').format());
 };
 
+Datepicker.prototype._isOutOfRange = function(momentDate) {
+  var minDate = this.model.get('minDate');
+  var maxDate = this.model.get('maxDate');
+
+  return !momentDate.isBetween(minDate, maxDate);
+};
+
 Datepicker.prototype._initDates = function() {
   var input = this.getAttribute('value');
   var today = moment.utc();
@@ -177,13 +192,11 @@ Datepicker.prototype._initDates = function() {
   var selectedDate = initialDate.isValid() ? initialDate : today.clone();
   var currentDate = selectedDate.clone();
   var month = this._getMonth(selectedDate);
-  var years = this._getYears(selectedDate);
 
   this.model.setEach({
     selectedDate: selectedDate,
     currentDate: currentDate,
-    today: today,
-    years: years
+    today: today
   });
 
   var monthView = this.model.get('isMonthViewOne') ? 'monthOne' : 'monthTwo';

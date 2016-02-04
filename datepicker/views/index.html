@@ -76,8 +76,12 @@
         {{each #week.days as #day}}
           {{if #day.noDate}}
             <li class="days---date days---date--empty"></li>
+          {{else if #day.disable}}
+            <li class="days---date days---date--disabled">
+              {{getDayNumber(#day)}}
+            </li>
           {{else}}
-            <li class="days---date{{if isEqualDates(#day, selectedDate, true)}} days---date--selected{{/if}}{{if isEqualDates(#day, today)}} days---date--current{{/if}}" style="{{if accent && !isEqualDates(#day, selectedDate) && isEqualDates(#day, today)}}color: {{accent}}{{/if}}" on-click="selectDate(#day, autoOk)">
+            <li class="days---date{{if isEqualDates(#day, selectedDate)}} days---date--selected{{/if}}{{if isEqualDates(#day, today)}} days---date--current{{/if}}" style="{{if accent && !isEqualDates(#day, selectedDate) && isEqualDates(#day, today)}}color: {{accent}}{{/if}}" on-click="selectDate(#day, autoOk)">
             {{getDayNumber(#day)}}
               <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
             </li>
