@@ -49,7 +49,7 @@ Datepicker.prototype._selectMonth = function(monthIndex) {
   var date = this.model.get('currentDate').clone();
   date.month(monthIndex);
 
-  // this._setCurrentDate(date);
+  this._setCurrentDate(date);
   this._flipMonth('right', this._getMonth(date));
   
   // REVIEW: center on selection or only on view load?
