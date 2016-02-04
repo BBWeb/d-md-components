@@ -1,4 +1,4 @@
-var moment = require('moment');
+var moment = require('moment/min/moment-with-locales.min');
 var Datepicker = require('./../index');
 
 Datepicker.prototype._showView = function(view) {
@@ -16,11 +16,20 @@ Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
   }
 
   this.model.set('selectedDate', momentDate);
+  this.emit('selected', this.model.get('selectedDate').format());
 
   if (closeOnSelect) {
     this.setValue();
     this._hide();
   }
+};
+
+Datepicker.prototype.action = function(action) {
+  this.emit('action', action.text || action);
+
+  if (action.disableDismiss) return;
+
+  this._hide();
 };
 
 Datepicker.prototype._selectYear = function(year) {
@@ -40,7 +49,7 @@ Datepicker.prototype._selectMonth = function(monthIndex) {
   var date = this.model.get('currentDate').clone();
   date.month(monthIndex);
 
-  this._setCurrentDate(date);
+  // this._setCurrentDate(date);
   this._flipMonth('right', this._getMonth(date));
   
   // REVIEW: center on selection or only on view load?
@@ -105,6 +114,8 @@ Datepicker.prototype._setMonthMinHeight = function (childIndex) {
 };
 
 Datepicker.prototype._show = function() {
+  this.emit('show');
+
   this._initDates();
 
   this.model.setEach({ 
@@ -117,8 +128,10 @@ Datepicker.prototype._show = function() {
 
 Datepicker.prototype._hide = function() {
   var self = this;
-  this.model.set('hiding', true);
 
+  this.emit('hide');
+
+  this.model.set('hiding', true);
   setTimeout(function hideWhenFaded() {
     self.model.setEach({
       show: false,
@@ -160,7 +173,7 @@ Datepicker.prototype._setValue = function() {
 Datepicker.prototype._initDates = function() {
   var input = this.getAttribute('value');
   var today = moment.utc();
-  var initialDate = moment(input);
+  var initialDate = moment.utc(input);
   var selectedDate = initialDate.isValid() ? initialDate : today.clone();
   var currentDate = selectedDate.clone();
   var month = this._getMonth(selectedDate);

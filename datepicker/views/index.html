@@ -1,6 +1,6 @@
 <index: attributes="class inline">
 {{if show}}
-  <div as="$datepicker" on-create="addCloseListener()" on-destroy="removeCloseListener()" class="dmd-datepicker mdl-shadow--8dp{{if inline}} dmd-datepicker--inline{{else}} dmd-datepicker--dialog{{/if}}{{if hiding}} dmd-datepicker--hiding{{/if}}">
+  <div as="$datepicker" on-create="addCloseListener()" on-destroy="removeCloseListener()" class="dmd-datepicker mdl-shadow--8dp{{if inline}} dmd-datepicker--inline{{else}} dmd-datepicker--dialog{{/if}}{{if hiding}} dmd-datepicker--hiding{{/if}}{{if class}} {{class}}{{/if}}">
     <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
       <div class="header---year">
         <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: -21px{{/if}}" on-click="showView('year')">{{getYearString(selectedDate)}}</span>
@@ -21,14 +21,18 @@
       <view is="daypicker" />
     {{/if}}
     <actionbar class="actionbar">
+      {{each actions as #action}}
+        <button class="actionbar---button mdl-button {{typeof #action.class === 'string' ? #action.class : 'mdl-button--accent'}}" style="{{if !#action.class && accent}}color: {{accent}}{{/if}}" on-click="action(#action)">{{#action.text || #action}}
+        </button>
+      {{/each}}
       {{unless disableCancel}}
         <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="hide()">
-          {{cancelText || 'Cancel'}}
+          {{options.cancelText || 'Cancel'}}
         </button>
       {{/unless}}
       {{unless autoOk}}
         <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="setValue(), hide()">
-          Ok
+          {{options.okText || 'Ok'}}
         </button>
       {{/unless}}
     </actionbar>
@@ -86,8 +90,8 @@
 <monthpicker:>
   <div class="monthpicker">
     <ul class="pickerlist" as="$monthlist">
-      {{each [0,1,2,3,4,5,6,7,8,9,10,11] as #monthIndex}}
-        <li class="pickerlist---item{{if isEqualMonth(#monthIndex, currentDate)}} pickerlist---item--selected{{/if}}" style="{{if accent && isEqualMonth(#monthIndex, currentDate)}}color:{{accent}}{{/if}}" on-click="selectMonth(#monthIndex)">{{getMonthString(#monthIndex)}}</li>
+      {{each months as #month, #index}}
+        <li class="pickerlist---item{{if isEqualMonth(#index, currentDate)}} pickerlist---item--selected{{/if}}" style="{{if accent && isEqualMonth(#index, currentDate)}}color:{{accent}}{{/if}}" on-click="selectMonth(#index)">{{#month}}</li>
       {{/each}}
     </ul>
   </div>
