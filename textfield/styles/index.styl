@@ -1,15 +1,19 @@
-.mdl-textfield
-  >textarea
+.dmd-textfield
+  &---textarea
+    vertical-align                          top
     overflow                                hidden
     resize                                  none
+    
+    &--resizable
+      resize                                vertical
 
-  .mdl-textfield--floating-label.is-invalid .mdl-textfield__label
-    color                                   mdl-error
+  &.is-invalid .mdl-textfield__label
+    color                                   rgb(222, 50, 38)
 
-  .mdl-textfield__error
+  &---error
     display                                 block
     
-  &__helper
+  &---helper
     position                                absolute
     display                                 block
     color                                   rgba(97,97,97,0.9)
@@ -19,12 +23,9 @@
   :invalid
     box-shadow                              none
 
-  textarea
-    vertical-align                          top
-
-  &.disabled
+  &--disabled
     .mdl-textfield__label:after
       display                               none
     
     .mdl-textfield__input
-      color                                 mdl-light-full
+      color                                 rgba(0,0,0,0.26)
