@@ -1,26 +1,22 @@
-var moment = require('moment');
+var _ = require('lodash');
 var Datepicker = require('./../index');
 
 Datepicker.prototype.getDateString = function(momentDate) {
   if (!momentDate) return '';
 
-  return momentDate.format('ddd, D MMM');
+  return _.map(momentDate.format('ddd, D MMM').split(' '), _.capitalize).join(' ');
 };
 
 Datepicker.prototype.getMonthYearString = function(momentDate) {
   if (!momentDate) return '';
 
-  return momentDate.format('MMMM YYYY');  
+  return _.capitalize(momentDate.format('MMMM YYYY'));  
 };
 
 Datepicker.prototype.getYearString = function(momentDate) {
   if (!momentDate) return '';
   
   return momentDate.format('YYYY');  
-};
-
-Datepicker.prototype.getMonthString = function(monthIndex) {
-  return moment().month(monthIndex).format('MMMM');
 };
 
 Datepicker.prototype.getDayNumber = function(momentDate) {

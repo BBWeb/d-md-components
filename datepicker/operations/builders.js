@@ -1,4 +1,4 @@
-var moment = require('moment');
+var moment = require('moment/min/moment-with-locales.min');
 var _ = require('lodash');
 var Datepicker = require('./../index');
 
@@ -84,4 +84,11 @@ Datepicker.prototype._getYears = function(momentDate) {
   }
 
   return years;
+};
+
+Datepicker.prototype._getMonths = function() {
+  var months = moment.months();
+
+  console.log(months);
+  return _.map(months, _.capitalize);
 };
