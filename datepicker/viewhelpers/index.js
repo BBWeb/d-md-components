@@ -23,7 +23,7 @@ Datepicker.prototype.getDayNumber = function(momentDate) {
   return '' + momentDate.date();
 };
 
-Datepicker.prototype.isEqualDates = function(firstMomentDate, secondMomentDate, isSelected) {
+Datepicker.prototype.isEqualDates = function(firstMomentDate, secondMomentDate) {
   return firstMomentDate.isSame(secondMomentDate, 'day');
 };
 
