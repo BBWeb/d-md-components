@@ -26,11 +26,3 @@ Textfield.prototype.init = function(model) {
     model.ref('invalidMessage', errorMsg);
   }
 };
-
-Textfield.prototype.create = function(model) {
-  var type = model.get('type');
-
-  if (type === 'textarea') {
-    this._maybeExpand(this.textarea);
-  }
-};

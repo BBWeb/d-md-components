@@ -15,7 +15,12 @@ Textfield.prototype._removeInvalid = function () {
   this.model.set('invalid', false);
 };
 
-Textfield.prototype._maybeExpand = function (el) {
+Textfield.prototype._maybeExpand = function () {
+  var textareaOptions = this.getAttribute('textarea');
+
+  if (textareaOptions && textareaOptions.disableAutoResize) return;
+
+  var el = this.textarea;
   el.style.height = 'auto';
-  el.style.height = el.scrollHeight + 'px'
+  el.style.height = el.scrollHeight ? el.scrollHeight + 'px' : 'auto';
 };
