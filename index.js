@@ -7,6 +7,7 @@ module.exports = {
   Slider: require('./slider'),
   Snackbar: require('./snackbar'),
   Pagination: require('./pagination'),
+  Progress: require('./progress'),
   Tabs: require('./tabs'),
   Textfield: require('./textfield')
 };
