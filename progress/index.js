@@ -2,6 +2,9 @@ module.exports = Progress;
 
 /**
  * A component for mdl-styled progressbars.
+ *
+ * @param {String} [class]  - An extra class to add to the component.
+ * @param {String} [accent] - A css color string to paint the progress bar. Default is mdl blue.
  */
 function Progress() {}
 
