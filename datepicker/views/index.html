@@ -1,0 +1,110 @@
+<index: attributes="class inline">
+{{if show}}
+  <div as="$datepicker" on-create="addCloseListener()" on-destroy="removeCloseListener()" class="dmd-datepicker mdl-shadow--8dp{{if inline}} dmd-datepicker--inline{{else}} dmd-datepicker--dialog{{/if}}{{if hiding}} dmd-datepicker--hiding{{/if}}{{if class}} {{class}}{{/if}}">
+    <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
+      <div class="header---year">
+        <span class="header---yeartext{{if activeView === 'year'}} header---yeartext--active{{/if}}{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: -21px{{/if}}" on-click="showView('year')">{{getYearString(selectedDate)}}</span>
+        <span class="header---yeartext header---yeartext--leaving{{if animating.year}} no-transition{{/if}}" style="{{if animating.year}}top: 0px{{/if}}" on-click="showView('year')">{{getYearString(leaving.year)}}</span>
+      </div>
+      <div class="header---date">
+        <span class="header---datetext{{if activeView === 'day'}} header---datetext--active{{/if}}{{if animating.date}} no-transition{{/if}}" on-click="showView('day')" style="{{if animating.date}}top: -34px{{/if}}">{{getDateString(selectedDate)}}</span>
+        <span class="header---datetext header---datetext--leaving{{if animating.date}} no-transition{{/if}}" style="{{if animating.date}}top: 0px{{/if}}">
+          {{getDateString(leaving.date)}}
+        </span>
+      </div>
+    </header>
+    {{if activeView === 'month'}}
+      <view is="monthpicker" />
+    {{else if activeView === 'year'}}
+      <view is="yearpicker" />
+    {{else}}
+      <view is="daypicker" />
+    {{/if}}
+    <actionbar class="actionbar">
+      {{each actions as #action}}
+        <button class="actionbar---button mdl-button {{typeof #action.class === 'string' ? #action.class : 'mdl-button--accent'}}" style="{{if !#action.class && accent}}color: {{accent}}{{/if}}" on-click="action(#action)">{{#action.text || #action}}
+        </button>
+      {{/each}}
+      {{unless disableCancel}}
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="hide()">
+          {{options.cancelText || 'Cancel'}}
+        </button>
+      {{/unless}}
+      {{unless autoOk}}
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="setValue(), hide()">
+          {{options.okText || 'Ok'}}
+        </button>
+      {{/unless}}
+    </actionbar>
+  </div>
+{{/if}}
+
+<daypicker:>
+  <div class="daypicker">
+    <div class="monthswitch">
+      <div class="monthswitch---arrow monthswitch---arrow--left" on-click="previousMonth()"><i class="material-icons">keyboard_arrow_left</i></div>
+      <div class="monthswitch---text-container" on-click="showView('month')">
+        <span class="monthswitch---text{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: -48px{{/if}}">{{getMonthYearString(currentDate)}}</span>
+        <span class="monthswitch---text monthswitch---text--leaving{{if animating.month}} no-transition{{/if}}" style="{{if animating.month}}top: 0px{{/if}}">{{getMonthYearString(leaving.month)}}</span>
+      </div>
+      <div class="monthswitch---arrow monthswitch---arrow--right" on-click="nextMonth()"><i class="material-icons">keyboard_arrow_right</i></div> 
+    </div>
+    <div class="days">
+      <ul class="days---days">
+        <li class="days---header days---header--week"></li>
+        <li class="days---header">M</li>
+        <li class="days---header">T</li>
+        <li class="days---header">O</li>
+        <li class="days---header">T</li>
+        <li class="days---header">F</li>
+        <li class="days---header">L</li>
+        <li class="days---header">S</li>
+      </ul>
+      <div as="$months" class="days---months-container">
+        <view is="days" month="{{monthOne}}" positionClass="{{monthOnePositionClass}}" />
+        <view is="days" month="{{monthTwo}}" positionClass="{{monthTwoPositionClass}}" />
+      </div>
+    </div>
+  </div>
+
+<days:>
+  <div class="days---dates {{@positionClass}}">
+    {{each @month as #week}}
+      <ul class="days---week">
+        <!-- REVIEW: week number + 'v' or some kind of header or is it implied that these numbers are weeks? -->
+        <li class="days---header days---header--week">{{#week.number}}</li>
+        {{each #week.days as #day}}
+          {{if #day.noDate}}
+            <li class="days---date days---date--empty"></li>
+          {{else if #day.disable}}
+            <li class="days---date days---date--disabled">
+              {{getDayNumber(#day)}}
+            </li>
+          {{else}}
+            <li class="days---date{{if isEqualDates(#day, selectedDate)}} days---date--selected{{/if}}{{if isEqualDates(#day, today)}} days---date--current{{/if}}" style="{{if accent && !isEqualDates(#day, selectedDate) && isEqualDates(#day, today)}}color: {{accent}}{{/if}}" on-click="selectDate(#day, autoOk)">
+            {{getDayNumber(#day)}}
+              <pseudo class="days---date-circle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
+            </li>
+          {{/if}}
+        {{/each}}
+      </ul>
+    {{/each}}
+  </div>
+
+<monthpicker:>
+  <div class="monthpicker">
+    <ul class="pickerlist" as="$monthlist">
+      {{each months as #month, #index}}
+        <li class="pickerlist---item{{if isEqualMonth(#index, currentDate)}} pickerlist---item--selected{{/if}}" style="{{if accent && isEqualMonth(#index, currentDate)}}color:{{accent}}{{/if}}" on-click="selectMonth(#index)">{{#month}}</li>
+      {{/each}}
+    </ul>
+  </div>
+
+<yearpicker:>
+  <div class="yearpicker">
+    <ul class="pickerlist" as="$yearlist">
+      {{each years as #year}}
+        <li class="pickerlist---item{{if isEqualYear(#year, selectedDate)}} pickerlist---item--selected{{/if}}" style="{{if accent && isEqualYear(#year, selectedDate)}}color:{{accent}}{{/if}}" on-click="selectYear(#year)">{{#year}}</li>
+      {{/each}}
+    </ul>
+  </div>

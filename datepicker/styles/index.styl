@@ -1,0 +1,247 @@
+mdl-dark                      = rgb(34, 34, 34)
+mdl-medium                    = rgb(109, 109, 109)
+mdl-light                     = rgb(182, 182, 182)
+default-accent                = #009688
+timing                        = 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+
+@keyframes slideDown {
+  from                       { transform: translateY(-280px); opacity: 0 }
+  to                         { transform: translateY(-220px); opacity: 1 }
+}
+
+.dmd-datepicker
+  color                       mdl-dark
+  background-color            #fff
+  width                       360px
+  max-height                  520px
+  overflow                    hidden
+  margin-left                 auto
+  margin-right                auto
+  z-index                     9999
+    
+  &--dialog
+    position                  fixed
+    top                       50vh
+    left                      0
+    right                     0
+    transform                 translateY(-220px)
+    animation                 slideDown timing
+    
+  &--inline
+    position                  absolute
+    
+  &--hiding
+    opacity                   0
+    transition                opacity timing
+  
+  .no-transition
+    transition                none !important
+  
+  .header
+    padding                   18px 24px 24px
+    background-color          default-accent
+    
+    &---year
+    &---date
+      position                relative
+      overflow                hidden
+    
+    &---year
+      height                  21px
+      margin-bottom           4px
+      
+    &---date
+      height                  34px
+    
+    &---yeartext,
+    &---datetext
+      position                absolute
+      top                     0px   
+      display                 inline-block
+      color                   #fff
+      opacity                 0.7
+      cursor                  pointer
+      transition              top timing
+
+    &---yeartext
+      font-size               15px
+      
+      &--active
+        cursor                default
+        font-size             16px
+        opacity               1
+        
+      &--leaving
+        top                   21px
+        
+    &---datetext
+      font-size               34px
+      line-height             34px
+      
+      &--active
+        cursor                default
+        opacity               1
+        
+      &--leaving
+        top                   40px
+        
+  .monthswitch
+    height                    56px
+    margin-bottom             8px
+    display                   flex
+    justify-content           space-between
+    
+    &---text-container
+      position                relative
+      overflow                hidden
+      height                  48px
+      width                   100%
+    
+    &---arrow,
+    &---text
+      cursor                  pointer
+      display                 inline-block
+      
+    &---arrow
+      color                   mdl-medium
+      font-size               24px
+      padding                 12px
+      user-select             none
+      
+      &:hover
+        color                 mdl-dark
+      
+    &---text
+      width                   100%
+      text-align              center
+      line-height             48px
+      font-size               14px
+      font-weight             500
+      position                absolute
+      top                     0
+      transition              top timing
+      
+      &--leaving
+        top                   48px
+      
+  .days
+    cursor                    default
+    user-select               none
+    position                  relative
+    z-index                   1
+    left                      0
+
+    &---months-container
+      min-height              200px
+      transition              min-height timing
+          
+    &---dates
+      width                   100%
+      position                absolute
+      left                    0
+      transition              left timing
+      
+      &--right
+        left                  100%
+        transition            left timing
+        
+      &--left
+        left                  -100%
+        transition            left timing
+    
+    &---days
+    &---week
+      margin                  0
+      display                 flex
+      justify-content         space-between
+      list-style-type         none
+      padding                 0 12px
+      
+    &---header
+    &---date
+      font-size               12px
+      width                   40px
+      display                 flex
+      justify-content         center
+      align-items             center
+      
+    &---header
+      color                   mdl-light
+      font-weight             500
+    
+      &--week
+        width                 24px
+        text-align            right
+        
+    &---date
+      font-weight             500
+      position                relative
+      cursor                  pointer
+      height                  40px
+      transition              color timing;
+
+      &--empty
+        cursor                default
+        
+      &--current
+        color                 default-accent
+      
+      &:hover,
+      &--selected
+        color                 #fff
+
+      &--disabled,
+      &--disabled:hover
+        color                 mdl-light
+        cursor                default
+        
+      &:hover >.days---date-circle,
+      &--selected >.days---date-circle
+        transform             scale(1, 1)
+        
+      &--selected >.days---date-circle
+        opacity               1
+             
+    &---date-circle
+      position                absolute
+      height                  36px
+      width                   36px
+      top                     2px
+      left                    2px
+      z-index                 -1
+      transform               scale(0,0)
+      border-radius           20px
+      background-color        default-accent
+      transition              all timing;
+      opacity                 0.53
+
+  .pickerlist
+    position                  relative
+    overflow                  auto
+    height                    288px
+    padding                   0
+    margin                    0
+    list-style-type           none
+    
+    &---item
+      cursor                  pointer
+      text-align              center
+      line-height             44px
+      font-size               16px
+      font-weight             500
+      transition              all timing
+      
+      &:hover,
+      &--selected      
+        font-size             26px
+
+      &--selected
+        color                 default-accent
+
+  .actionbar
+    display                   block
+    padding                   0 8px 12px
+    text-align                right
+    
+    &---button
+      color                   default-accent
