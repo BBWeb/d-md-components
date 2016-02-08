@@ -1,0 +1,34 @@
+<index: attributes="class inline">
+  {{if show}}
+    <div as="$timepicker" on-create="addCloseListener()" on-destroy="removeCloseListener()" class="dmd-timepicker mdl-shadow--8dp{{if inline}} dmd-timepicker--inline{{else}} dmd-timepicker--dialog{{/if}}{{if hiding}} dmd-timepicker--hiding{{/if}}{{if class}} {{class}}{{/if}}">
+      <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
+      </header>
+      {{if activeView === 'minute'}}
+        <view is="minutepicker" />
+      {{else}}
+        <view is="hourpicker" />
+      {{/if}}
+      <actionbar class="actionbar">
+        {{unless disableCancel}}
+          <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="hide()">
+            {{options.cancelText || 'Cancel'}}
+          </button>
+        {{/unless}}
+        {{unless autoOk}}
+          <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="setValue(), hide()">
+            {{options.okText || 'Ok'}}
+          </button>
+        {{/unless}}
+      </actionbar>
+    </div>
+  {{/if}}
+
+<hourpicker:>
+  <div class="hourpicker">
+    
+  </div>
+
+<minutepicker:>
+  <div class="minutepicker">
+    
+  </div>
