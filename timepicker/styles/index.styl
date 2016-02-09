@@ -1,6 +1,7 @@
 mdl-dark                      = rgb(34, 34, 34)
 mdl-medium                    = rgb(109, 109, 109)
 mdl-light                     = rgb(182, 182, 182)
+mdl-light-light               = rgb(223, 223, 223)
 default-accent                = #009688
 timing                        = 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
 
@@ -12,3 +13,153 @@ timing                        = 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
 .dmd-timepicker
   color                       mdl-dark
   background-color            #fff
+  width                       330px
+  max-height                  520px
+  margin-left                 auto
+  margin-right                auto
+  min-height                  400px
+  z-index                     9999
+  
+  &--dialog
+    position                  fixed
+    top                       50vh    
+    transform                 translateY(-220px)
+    animation                 slideDown timing
+    left                      0
+    right                     0
+  
+  &--inline
+    position                  absolute
+    
+  &--hiding
+    opacity                   0
+    transition                opacity timing
+
+  .header
+    background-color          default-accent
+    padding                   21px 24px 18px
+    text-align                center
+    
+    &---text
+      color                   #fff
+      font-size               58px
+      line-height             58px
+      opacity                 0.7
+
+      &--active
+        opacity               1
+        
+      &--time
+        cursor                pointer
+        
+  .watchface
+    background-color          mdl-light-light
+    height                    296px
+    width                     296px
+    border-radius             100%
+    margin                    32px auto 12px auto
+    
+  .picker
+    height                    100%
+    width                     100%
+    position                  relative
+    transform                 rotate(-90deg)
+    
+    &---pointerbase,
+    &---pointer,
+    &---time
+      position                absolute
+      top                     50%
+      left                    50%
+      
+    &---pointerbase
+      height                  10px
+      width                   10px
+      margin-left             -5px
+      margin-top              -5px
+      background-color        default-accent
+      border-radius           100%
+      
+    &---pointer
+      height                  2px
+      margin-left             -1px
+      margin-top              -1px
+      width                   130px
+      transform-origin        left 50%
+      background-color        default-accent
+
+    &---time
+      font-size               15px
+      cursor                  pointer
+      margin-left             -20px
+      margin-top              -20px
+      height                  40px
+      width                   40px
+      display                 flex
+      justify-content         center
+      align-items             center
+      transition              color timing
+      
+      &--small,
+      &--nonumber
+        height                14px
+        width                 14px
+        top                   calc(50% + 14px)
+        left                  calc(50% + 14px)
+
+      &:hover,
+      &--selected
+        color                 #fff
+        
+      &--selected
+        z-index               1
+        
+      &:hover
+        z-index               2
+
+      &:hover >.picker---timecircle,
+      &--selected >.picker---timecircle
+        transform             scale(1, 1)
+        
+      &--selected >.picker---timecircle
+        opacity               1
+                
+    &---text
+      font-size                 
+    
+    &---timecircle
+      position                absolute
+      height                  36px
+      width                   36px
+      top                     2px
+      left                    2px
+      z-index                 -1
+      transform               scale(0,0)
+      border-radius           20px
+      background-color        default-accent
+      transition              all timing;
+      opacity                 0.53
+      
+      &--nonumber
+        top                   -50%
+        left                  -50%
+        height                28px
+        width                 28px
+        display               flex
+        justify-content       center
+        align-items           center
+        color                 #fff
+        
+      &--small
+        top                   -11px
+        left                  -11px
+        pointer-events        none
+        
+      
+  .actionbar
+    display                   block
+    padding                   0 8px 12px
+    text-align                right
+    
+    &---button
+      color                   default-accent
