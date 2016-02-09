@@ -27,10 +27,10 @@ app.component(mdlComponents.Timepicker);
     options="{{
       {
         accent: 'rgb(0, 188, 212)',
+        activeHour: '12'
+        activeMinute: '30'
         okText: 'Righty-O',
         cancelText: 'Forget it',
-        disableCancel: false,
-        autoOk: false,
       }
     }}" 
   />
