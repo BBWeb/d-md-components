@@ -8,6 +8,7 @@ module.exports = {
   Snackbar: require('./snackbar'),
   Spinner: require('./spinner'),
   Pagination: require('./pagination'),
+  Progress: require('./progress'),
   Tabs: require('./tabs'),
   Textfield: require('./textfield')
 };
