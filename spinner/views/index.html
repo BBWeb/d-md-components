@@ -1,0 +1,16 @@
+<index: attributes="accent class">
+  <div class="dmd-spinner mdl-spinner mdl-spinner--single-color{{if spinning}} is-active is-upgraded{{/if}}{{if class}} {{class}}{{/if}}">
+    {{each [1, 2, 3, 4]}}
+      <div class="mdl-spinner__layer mdl-spinner__layer-{{this}}" style="{{if accent}}border-color:{{accent}}{{/if}}">
+        <div class="mdl-spinner__circle-clipper mdl-spinner__left">
+          <div class="mdl-spinner__circle"></div>
+        </div>
+        <div class="mdl-spinner__gap-patch">
+          <div class="mdl-spinner__circle"></div>
+        </div>
+        <div class="mdl-spinner__circle-clipper mdl-spinner__right">
+          <div class="mdl-spinner__circle"></div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
