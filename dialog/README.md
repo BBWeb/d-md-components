@@ -30,8 +30,7 @@ app.component(mdlComponents.Dialog);
         clickToHide: true
       } 
     }}}">
-    <!-- Content is usually just a description but can hold anything and will take as much space as it needs. To handle width you have to provide your own styling or use a pre-defined class: d-md-dialog-narrow, d-md-dialog-medium, d-md-dialog-wide -->
-    <div class="d-md-dialog-narrow">
+    <div class="dmd-width--280">
       This action cannot be reversed. Are you sure you want to continue?
     </div>
   </view>
@@ -55,52 +54,58 @@ Component.prototype.dialogWillHide = function (action, cancel) {
 }
 ```
 
+
 Template attributes
 -------------------
-**title [{String}]**
+**{String} [title]**
 A title.
 
-**actions {Array}**
+**{String[]} [actions]**
 A list of {String} actions. Used as button text and passed in the hide-event so you can act accordingly. 
 
-**on-hide {Function}**
-A function to handle all action-button clicks. Will be passed {String} action that triggered the event, and {Function} cancel if you want to stop the dialog from hiding for any reason. If the event is cancelled, it has to be manually hidden with hide().
-
-**options {[Object]}**
+**{Object} [options]**
 An options object.
 
-**options.zIndex {[Number]}**
+**{Number} [options.zIndex]**
 A z-index for the dialog, default is 300.
 
-**options.overlay {[Object || Boolean]}**
+**{Object||Boolean} [options.overlay]**
 If present, will add a semi-transparent div over the screen, that may or may not be clicked to close the dialog.
 
-**options.overlay.clickTohide {[Boolean]}**
-If true, clicks on overlay emits hide event just as if user would have pressed a button, emit passes 'overlay' as action argument. Default clickToHide is false.
+**{Boolean} [options.overlay.clickTohide]**
+If true, clicks on overlay emits hide event just as if user would have pressed a button, emit passes 'overlay' as action argument. Default false.
 
-**options.overlay.closeAction {[String]}**
+**{String} [options.overlay.closeAction]**
 If provided, overwrites 'overlay' as action passed to it's listeners when closed by clicks on overlay.
 
-**options.overlay.class {[String]}**
-A class that will be assigned to the overlay. Default class is d-md-dialog-overlay.  
+**{String} [options.overlay.class]**
+A class that will be assigned to the overlay.  
+
+*Note:*
+
+The content can be styled however you like but there are three pre-defined max-width classes:  
+dmd-width--280: 280px  
+dmd-width--600: 600px  
+dmd-width--1240: 1240px  
+
+
+Events
+------
+@fires hide - When dialog is dismissed. Fired by all action buttons as well as by clicks on overlay.
+  @parameter {String} action   - The action that triggered the event
+  @parameter {Function} cancel - Call if you want to stop the dialog from hiding for any reason. Use hide() or triggered again with another button.
 
 
 Public methods
 --------------
-##### .show(e)
+### myDialog.show(e)
 Show the dialog.
 
-e {[Event]} - Animates from click coordinates instead of from screen middle if this argument is provided.
+@parameter {Event} [e] - Animates from click coordinates instead of from screen middle if this argument is provided.
 
-##### .maybeHide(action)
-Emits a cancellable event and hides the dialog if it isn't cancelled by a listener. Triggered by all 
-actionbuttons in the component.
+### myDialog.hide()
+Hide the dialog.
 
-action {String} - Represents the action (button) the user pressed to close the dialog. Is passed 
-through the emit event for any listeners to respond to accordingly.
-
-##### .hide()
-Hide the dialog. No event is emitted. Useful if you have cancelled the hide-event.
 
 TODO
 -----
