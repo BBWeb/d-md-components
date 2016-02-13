@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "lodash": "*",
+    "lodash": "^3.10.1",
     "derby-el-list": "^0.1.1"
   },
   "peerDependencies": {
