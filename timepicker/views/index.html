@@ -1,0 +1,62 @@
+<index: attributes="class inline">
+  {{if show}}
+    <div as="$timepicker" on-create="addCloseListener()" on-destroy="removeCloseListener()" class="dmd-timepicker mdl-shadow--8dp{{if inline}} dmd-timepicker--inline{{else}} dmd-timepicker--dialog{{/if}}{{if hiding}} dmd-timepicker--hiding{{/if}}{{if class}} {{class}}{{/if}}">
+      <header class="header" style="{{if accent}}background-color: {{accent}}{{/if}}">
+        <span class="header---text header---text--time{{unless activeView === 'minute'}} header---text--active{{/unless}}" on-click="selectView('hour')">
+          {{padNumber(activeHour)}}
+        </span>
+        <span class="header---text">:</span>
+        <span class="header---text header---text--time{{if activeView === 'minute'}} header---text--active{{/if}}" on-click="selectView('minute')">
+          {{padNumber(activeMinute)}}
+        </span>
+      </header>
+      <div class="watchface">
+        <div class="picker">
+          <div class="picker---pointerbase" style="{{if accent}}background-color:{{accent}}{{/if}}"></div>
+          {{if activeView === 'minute'}}
+            <view is="minutepicker" />
+          {{else}}
+            <view is="hourpicker" />
+          {{/if}}
+        </div>
+      </div>    
+      <actionbar class="actionbar">
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="hide()">
+          {{options.cancelText || 'Cancel'}}
+        </button>
+        <button class="actionbar---button mdl-button" style="{{if accent}}color: {{accent}}{{/if}}" on-click="setValue(), hide()">
+          {{options.okText || 'Ok'}}
+        </button>
+      </actionbar>
+    </div>
+  {{/if}}
+
+<hourpicker:>
+  <div class="picker---pointer" style="{{hourPointerStyles}}{{if accent}}background-color:{{accent}}{{/if}}"></div>
+  {{each hoursOuter as #hour, #index}}
+    <div class="picker---time{{if #hour === activeHour}} picker---time--selected{{/if}}" style="transform: {{getDegString(12, #index)}}" on-click="selectHour(#hour)">
+      {{#hour}}
+      <pseudo class="picker---timecircle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
+    </div>
+  {{/each}}
+  {{each hoursInner as #hour, #index}}
+    <div class="picker---time{{if #hour === activeHour}} picker---time--selected{{/if}}" style="transform: {{getDegString(12, #index, true)}}" on-click="selectHour(#hour)">
+      {{#hour}}
+      <pseudo class="picker---timecircle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
+    </div>
+  {{/each}}
+
+<minutepicker:>
+  <div class="picker---pointer" style="{{minutePointerStyles}}{{if accent}}background-color:{{accent}}{{/if}}"></div>
+  {{each minutes as #minute, #index}}
+    {{if #minute.nonumber}}
+      <div class="picker---time picker---time--nonumber{{if #minute.value === activeMinute}} picker---time--selected{{/if}}" style="transform: {{getDegString(60, #index)}}" on-click="selectMinute(#minute.value)">
+        <pseudo class="picker---timecircle picker---timecircle--nonumber" style="{{if accent}}background-color:{{accent}}{{/if}}">{{#minute.value}}</pseudo>
+      </div>
+    {{else}}
+      <div class="picker---time picker---time--small{{if #minute === activeMinute}} picker---time--selected{{/if}}" style="transform: {{getDegString(60, #index)}}" on-click="selectMinute(#minute)">
+        {{#minute}}
+        <pseudo class="picker---timecircle picker---timecircle--small" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
+      </div>
+    {{/if}}
+  {{/each}}
