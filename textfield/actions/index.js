@@ -8,4 +8,4 @@ Textfield.prototype.setInvalid = Textfield.prototype._setInvalid;
 
 Textfield.prototype.setCustomValidation = Textfield.prototype._setCustomValidation;
 
-Textfield.prototype.adjustTextarea = Textfield.prototype._maybeExpand;
+Textfield.prototype.updateHeight = Textfield.prototype._maybeExpand;

@@ -1,9 +1,9 @@
 <index: attributes="value validator fieldName disabled class textarea">
   <div class="dmd-textfield mdl-textfield mdl-textfield--floating-label{{if isFocused}} is-focused{{/if}}{{if value}} is-dirty{{/if}}{{if invalid}} is-invalid{{/if}}{{if disabled}} dmd-textfield--disabled{{/if}}{{if class}} {{class}}{{/if}}">
     {{if textarea || type === 'textarea'}}
-      <textarea as="textarea" class="mdl-textfield__input dmd-textfield---textarea{{if textarea && textarea.disableAutoResize}} dmd-textfield---textarea--resizable{{/if}}" type="{{type}}" name="{{fieldName}}" on-focus="toggleFocus()" on-blur="toggleFocus(), validate()" rows="{{textarea && textarea.rows ? textarea.rows : 1}}" on-input="adjustTextarea()" on-create="adjustTextarea()" disabled="{{disabled}}">{{value}}</textarea>
+      <textarea as="textarea" class="mdl-textfield__input dmd-textfield---textarea{{if textarea && textarea.disableAutoResize}} dmd-textfield---textarea--resizable{{/if}}" type="{{type}}" name="{{fieldName}}" on-focus="toggleFocus()" on-blur="toggleFocus(), validate()" rows="{{textarea && textarea.rows ? textarea.rows : 1}}" on-input="updateHeight()" on-create="updateHeight()" disabled="{{disabled}}">{{value}}</textarea>
     {{else}}
-      <input class="mdl-textfield__input" type="{{type}}" name="{{fieldName}}" value="{{value}}" on-focus="toggleFocus()" on-blur="toggleFocus(), validate()" disabled="{{disabled}}" />
+      <input as="textfield" class="mdl-textfield__input" type="{{type}}" name="{{fieldName}}" value="{{value}}" on-focus="toggleFocus()" on-blur="toggleFocus(), validate()" disabled="{{disabled}}" />
     {{/if}}
     {{if label}}<label class="mdl-textfield__label" for="{{fieldName}}">{{label}}</label>{{/if}}
     {{unless invalidMessage && invalid}}<span class="dmd-textfield---helper">{{helper}}</span>{{/unless}}

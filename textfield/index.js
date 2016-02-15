@@ -26,3 +26,9 @@ Textfield.prototype.init = function(model) {
     model.ref('invalidMessage', errorMsg);
   }
 };
+
+Textfield.prototype.destroy = function() {
+  var inputElement = this.textfield || this.textarea;
+
+  if (inputElement) inputElement.blur();
+};
