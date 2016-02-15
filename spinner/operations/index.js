@@ -1,9 +1,9 @@
 var Spinner = require('./../index');
 
-Spinner.prototype.show = function() {
+Spinner.prototype._show = function() {
   this.model.set('spinning', true);
 };
 
-Spinner.prototype.hide = function() {
+Spinner.prototype._hide = function() {
   this.model.set('spinning', false);
 };
