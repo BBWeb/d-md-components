@@ -2,27 +2,33 @@ var Dialog = require('./../index');
 var _ = require('lodash');
 
 Dialog.prototype._show = function(e) {
+  this.model.del('origin');
+
+  // Save params so we can return them in emit.
+  var args = Array.prototype.slice.call(arguments);
+
   // Animate from click if event is passed
   if (e && typeof e.pageX === 'number') {
+    args.shift();
     this.model.setEach('origin', { x: e.pageX, y: e.pageY });
   }
 
-  // Save params so we can return them in emit.
-  this.params = arguments;
+  this.params = args;
 
   var self = this;
   this._maybeShowOverlay();
   this.model.set('animating', true);
   _.delay(function () {
-    self.model.set('show', true)
+    self.model.set('show', true);
   }, 100);
 };
 
 Dialog.prototype._maybeHide = function(action) {
-  var cancelled = this.emitCancellable('hide', action, this.params);
+  var args = ['hide'].concat(action, this.params);
+  var cancelled = this.emitCancellable.apply(this, args);
   if (cancelled) return;
 
-  this._hide()
+  this._hide();
 };
 
 Dialog.prototype._hide = function() {
