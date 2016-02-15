@@ -19,7 +19,8 @@ app.component(mdlComponents.Spinner);
 ```html
   <view 
     is="spinner" 
-    as="$spinner" 
+    as="spinner" 
+    spinning="{{loading}}"
     class="extraClass" 
     accent="rgb(0, 188, 212)" />
   <button on-click="doSomeTimeConsumingTask()">Load spinner</button>
@@ -28,12 +29,22 @@ app.component(mdlComponents.Spinner);
 #### Controller
 ```javascript
 Component.prototype.doSomeTimeConsumingTask = function() {
-  this.$spinner.show();
+  this.spinner.show();
 
   // Simulate task with callback.
   var self = this;
   setTimeout(function () {
-    self.$spinner.hide();
+    self.spinner.hide();
+  }, 3000);
+}
+
+// Alternative implementeation using model variable.
+Component.prototype.doSomeTimeConsumingTask = function() {
+  this.model.set('loading', true);
+
+  var self = this;
+  setTimeout(function () {
+    self.model.del('loading');
   }, 3000);
 }
 ```

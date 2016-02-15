@@ -19,7 +19,8 @@ app.component(mdlComponents.Progress);
 ```html
   <view 
     is="progress"
-    as="$progress"
+    as="progress"
+    loading="{{loading}}"
     class="extraClass"
     accent="#FF0000"
      />
@@ -29,12 +30,22 @@ app.component(mdlComponents.Progress);
 #### Controller
 ```javascript
 Component.prototype.doTimeConsumingTask = function() {
-  this.$progress.show();
+  this.progress.show();
 
   // Simulate task with callback
   var self = this;
   setTimeout(function () {
-    self.$progress.hide();
+    self.progress.hide();
+  }, 3000);
+};
+
+// Alternative implementation using model variables instead of component methods.
+Component.prototype.doTimeConsumingTask = function() {
+  this.model.set('loading', true);
+
+  var self = this;
+  setTimeout(function () {
+    self.model.del('loading');
   }, 3000);
 };
 ```
