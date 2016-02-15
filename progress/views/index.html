@@ -1,8 +1,10 @@
 <index: attributes="accent class">
-  <div class="dmd-progress-container{{if loading}} dmd-progress-container--showing{{/if}}">
-    <div class="dmd-progress mdl-progress{{if loading}} mdl-progress__indeterminate{{/if}}{{if class}} {{class}}{{/if}}">
-      <div style="width: 0%;{{if accent}}background-color:{{accent}}{{/if}}" class="progressbar bar bar1"></div>
-      <div style="width: 100%;{{if accent}}background-color:{{accent}}{{/if}}" class="dmd-progress---bufferbar bar bar2"></div>
-      <div style="width: 0%;{{if accent}}background-color:{{accent}}{{/if}}" class="auxbar bar bar3"></div>  
-    </div>
+  <div as="progressContainer" class="dmd-progress-container{{if showing}} dmd-progress-container--showing{{/if}}{{if class}} {{class}}{{/if}}">
+    {{if loading}}
+      <div class="dmd-progress mdl-progress{{if loading}} mdl-progress__indeterminate{{/if}}">
+        <div style="width: 0%;{{if accent}}background-color:{{accent}}{{/if}}" class="progressbar bar bar1"></div>
+        <div style="width: 100%;{{if accent}}background-color:{{accent}}{{/if}}" class="dmd-progress---bufferbar bar bar2"></div>
+        <div style="width: 0%;{{if accent}}background-color:{{accent}}{{/if}}" class="auxbar bar bar3"></div>  
+      </div>
+    {{/if}}
   </div>
