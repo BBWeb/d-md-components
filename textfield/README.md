@@ -32,7 +32,7 @@ require('d-md-components/textfield');
         disabled="{{disabled}}" />
 ```
 
-### this.$myTextfield.adjustTextarea()
+### this.$myTextfield.updateHeight()
 
 The textfield is autoadjusting its height on creation as well as on any input to the field, including copy-paste/cut. However, if the component is created by Derby but not displayed for whatever reason, it's calculated height will be auto (meaning a fixed row-number that is 1 by default). When visible it will not get the correct height until it gets new input. You can call this method when the textarea becomes visible to adjust the height manually.
 
