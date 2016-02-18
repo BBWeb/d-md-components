@@ -11,8 +11,7 @@ Select.prototype._willSelect = function() {
   this.model.set('selectOptionsVisible', true);
 };
 
-Select.prototype._adjustDropdown = function() {
-  var index = this.model.get('selectedIndex');
+Select.prototype._adjustDropdown = function(index) {
   var ul = this.optionListDropdown;
   
   if (index > 2) {
@@ -25,16 +24,46 @@ Select.prototype._adjustDropdown = function() {
 
 Select.prototype._addCloseListener = function () {
   var self = this;
+  var lastIndex = this.optionListDropdown.children.length - 1;
+  this.model.set('focusedIndex', this.model.get('selectedIndex'));
 
-  this.listener = function (e) {
+  this.focusListener = function (e) {
+    if (e.target !== self.outputField) self._closeOptions();
+  };
+
+  this.clickListener = function (e) {
     if (!self.optionListDropdown.contains(e.target)) self._closeOptions();
-  }
+  };
 
-  document.body.addEventListener('mouseup', this.listener);
+  this.keyListener = function (e) {
+    if (e.keyCode === 27) return self._closeOptions();
+
+    if (e.keyCode === 13) {
+      e.stopPropagation();
+      var index = self.model.get('focusedIndex');
+      var option = self.model.get('optionList.' + index);
+
+      console.log(option);
+      return self._select(option, index);
+    }
+
+    if (e.keyCode === 37 || e.keyCode === 38 && 
+        self.model.get('focusedIndex') > 0) return self._adjustDropdown(self.model.increment('focusedIndex', -1));
+
+    if (e.keyCode === 39 || e.keyCode === 40 && 
+        self.model.get('focusedIndex') < lastIndex) return self._adjustDropdown(self.model.increment('focusedIndex'));
+
+  };
+
+  document.body.addEventListener('focusin', this.focusListener);
+  document.body.addEventListener('mouseup', this.clickListener);
+  document.body.addEventListener('keydown', this.keyListener);
 };
 
 Select.prototype._removeCloseListener = function() {
-  document.body.removeEventListener('mouseup', this.listener);
+  document.body.removeEventListener('focusin', this.focusListener);
+  document.body.removeEventListener('mouseup', this.clickListener);
+  document.body.removeEventListener('keydown', this.keyListener);
 };
 
 Select.prototype._validate = function () {
@@ -46,8 +75,4 @@ Select.prototype._validate = function () {
 
 Select.prototype._closeOptions = function () {
   this.model.set('selectOptionsVisible', false);
-};
-
-Select.prototype._takeFocus = function(el) {
-  if (el.classList.contains('d-md-select-option-selected')) el.focus();
 };
