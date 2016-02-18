@@ -38,8 +38,9 @@ Select.prototype._removeCloseListener = function() {
 };
 
 Select.prototype._validate = function () {
-  if(this.validator && typeof this.validator[this.fieldName].validate === 'function') {
-    this.validator[this.fieldName].validate();
+  if(this.validator) { 
+    var field = this.model.get('validator.' + this.fieldName);
+    if (typeof field.validate === 'function') field.validate();
   }
 };
 
