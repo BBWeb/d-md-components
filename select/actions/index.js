@@ -6,3 +6,4 @@ Select.prototype.removeCloseListener = Select.prototype._removeCloseListener;
 Select.prototype.select = Select.prototype._select;
 Select.prototype.validate = Select.prototype._validate;
 Select.prototype.closeOptions = Select.prototype._closeOptions;
+Select.prototype.takeFocus = Select.prototype._takeFocus;

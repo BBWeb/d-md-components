@@ -47,3 +47,7 @@ Select.prototype._validate = function () {
 Select.prototype._closeOptions = function () {
   this.model.set('selectOptionsVisible', false);
 };
+
+Select.prototype._takeFocus = function(el) {
+  if (el.classList.contains('d-md-select-option-selected')) el.focus();
+};
