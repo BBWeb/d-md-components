@@ -1,6 +1,8 @@
 <index: attributes="optionList value key text class">
-  <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty{{if invalid}} is-invalid{{/if}}{{if class}} {{class}}{{/if}}">
-    <input class="d-md-select-selected mdl-textfield__input" on-click="willSelect()" on-blur="validate()" value="{{selected[text]}}" />
+  <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty{{if invalid}} is-invalid{{/if}}{{if class}} {{class}}{{/if}}" on-focus="console.log(123);">
+    <span tabindex="0" on-focus="willSelect()" on-blur="closeOptions(), validate()" on-click="willSelect()">
+      <input class="d-md-select-selected mdl-textfield__input"  value="{{selected[text]}}" disabled/>
+    </span>
     <i class="material-icons d-md-select-icon">arrow_drop_down</i>
       {{if selectOptionsVisible}}
         <ul as="optionListDropdown" class="d-md-select-options-list mdl-shadow--2dp{{if selectOptionsVisible}} d-md-select-options-list--showing{{/if}}" 

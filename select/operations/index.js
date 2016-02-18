@@ -4,7 +4,7 @@ Select.prototype._select = function(option, index) {
   this.model.set('value', option[this.key]);
   this.model.set('selected', option);
   this.model.set('selectedIndex', index);
-  this.model.set('selectOptionsVisible', false);
+  this._closeOptions();
 };
 
 Select.prototype._willSelect = function() {  
@@ -27,9 +27,7 @@ Select.prototype._addCloseListener = function () {
   var self = this;
 
   this.listener = function (e) {
-    if (!self.optionListDropdown.contains(e.target)) {
-      self.model.set('selectOptionsVisible', false);
-    };
+    if (!self.optionListDropdown.contains(e.target)) self._closeOptions();
   }
 
   document.body.addEventListener('mouseup', this.listener);
@@ -40,7 +38,12 @@ Select.prototype._removeCloseListener = function() {
 };
 
 Select.prototype._validate = function () {
-  if(this.validator && typeof this.validator[this.fieldName].validate === 'function') {
-    this.validator[this.fieldName].validate();
+  if(this.validator) { 
+    var field = this.model.get('validator.' + this.fieldName);
+    if (typeof field.validate === 'function') field.validate();
   }
+};
+
+Select.prototype._closeOptions = function () {
+  this.model.set('selectOptionsVisible', false);
 };
