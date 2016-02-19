@@ -1,18 +1,16 @@
 <index: attributes="optionList value key text class">
-  <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty{{if invalid}} is-invalid{{/if}}{{if class}} {{class}}{{/if}}" on-focus="console.log(123);">
-    <span tabindex="0" on-focus="willSelect()" on-blur="closeOptions(), validate()" on-click="willSelect()">
-      <input class="d-md-select-selected mdl-textfield__input"  value="{{selected[text]}}" disabled/>
-    </span>
+  <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty{{if invalid}} is-invalid{{/if}}{{if class}} {{class}}{{/if}}">
+    <input as="outputField" class="d-md-select-selected mdl-textfield__input" on-click="willSelect()" on-focus="willSelect()" value="{{selected[text]}}" readonly />
     <i class="material-icons d-md-select-icon">arrow_drop_down</i>
       {{if selectOptionsVisible}}
         <ul as="optionListDropdown" class="d-md-select-options-list mdl-shadow--2dp{{if selectOptionsVisible}} d-md-select-options-list--showing{{/if}}" 
             style="{{if selectedIndex === 1 && optionList.length > 1}}top: -25px; transform-origin: 10px 40px{{/if}}
                    {{if selectedIndex > 1 && optionList.length > 2}}top: -65px; transform-origin: 10px 80px{{/if}}"
-            on-create="addCloseListener(), adjustDropdown()" 
+            on-create="addCloseListener(), adjustDropdown(selectedIndex)" 
             on-destroy="removeCloseListener()"
             >
           {{each optionList as #option, #index}}
-            <li class="d-md-select-option{{if #option[key] === selected[key]}} d-md-select-option-selected{{/if}}" on-click="select(#option, #index), validate()">{{#option[text]}}</li>
+            <li class="d-md-select-option{{if #option[key] === selected[key]}} d-md-select-option-selected{{/if}}{{if #index === focusedIndex}} options---option--focused{{/if}}" on-click="select(#option, #index), validate()">{{#option[text]}}</li>
           {{/each}}
         </ul>
       {{/if}}
