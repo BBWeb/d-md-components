@@ -43,7 +43,7 @@ Select.prototype._addCloseListener = function () {
       var index = self.model.get('focusedIndex');
       var option = self.model.get('optionList.' + index);
 
-      console.log(option);
+      self._validate();
       return self._select(option, index);
     }
 
