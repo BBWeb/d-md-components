@@ -24,7 +24,7 @@ app.component(mdlComponents.Datepicker);
     value="{{date}}" 
     inline="{{false}}" 
     actions="{{['Tomorrow', { text: 'Yesterday', class: 'blue', disableDismiss: true }]}}" 
-    on-select="foo()"
+    on-selected="foo()"
     on-action="bar(action)"
     on-show="baz()"
     on-hide="qux()" 
