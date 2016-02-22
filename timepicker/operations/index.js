@@ -60,6 +60,8 @@ Timepicker.prototype._selectMinute = function(minute) {
 
 Timepicker.prototype._setValue = function() {
   this.model.set('value', this.padNumber(this.model.get('activeHour')) + ':' + this.padNumber(this.model.get('activeMinute')));
+
+  this.emit('selected', this.model.get('value'));
 };
 
 Timepicker.prototype._getDegString = function(numbers, index, inner) {
