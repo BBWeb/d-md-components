@@ -92,9 +92,6 @@ Datepicker.prototype._flipMonth = function(direction, newMonth) {
   var to = (direction === 'right') ? 'left' : 'right';
 
   // Add next/prev month to entering view.
-  console.log(this.$months.childNodes[0].offsetHeight, this.$months.childNodes[1].offsetHeight);
-  console.log(newMonth);
-
   this.model.set(entering, newMonth);
 
   // Set class to entering view so it repositions to correct location.
