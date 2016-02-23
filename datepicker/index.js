@@ -12,6 +12,8 @@ module.exports = Datepicker;
  *
  * @param {Model||String}      [value]           - A path to write the selected value to or a date string to use as initial value.
  * @param {Boolean}            [inline]          - Default false. Decides whether the Datepicker displays in the middle of container (preferably body) or inline.
+ * @param {Object|String}      [minDate]         - Default value||today - 100 years. The beginning of a range of valid dates. The range includes the minDate.
+ * @param {Object|String}      [maxDate]         - Default value||today + 100 years. The end of a range of valid dates. The range includes the maxDate.
  * @param {Object[]||String[]} [actions]         - An array of actions displayed as buttons. Buttons emits the string back when pressed. Can also be an array of objects with options for the buttons.
  *   @param {String}           text              - Mandatory if actions are objects. Used as button text and passed in the event.
  *   @param {Boolean}          [disableDismiss]  - Default false. Actions dismiss the Datepicker by default. Set this true if that's not the desired behaviour.
@@ -23,8 +25,6 @@ module.exports = Datepicker;
  *   @param {String}           [cancelText]      - A string to replace the dismiss button text. Default is 'Cancel'.
  *   @param {Boolean}          [disableCancel]   - Default false. If true, removes the Cancel-button. Dismissal of the datepicker will still be possible by clicking outside or Ok/autoclose.
  *   @param {Boolean}          [autoOk]          - Default false. If true, removes the OK-button and selects date as soon as user clicks a date.
- *   @param {Object|String}    [minDate]         - Default value||today - 100 years. The beginning of a range of valid dates. The range includes the minDate.
- *   @param {Object|String}    [maxDate]         - Default value||today + 100 years. The end of a range of valid dates. The range includes the maxDate.
  */
 function Datepicker() {}
 
@@ -42,8 +42,6 @@ Datepicker.prototype.init = function(model) {
   var options = this.getAttribute('options');
   var locale = ['en'];
   var months;
-  var minDate = (options && options.minDate) ? moment(options.minDate) : moment().subtract(100, 'years');
-  var maxDate = (options && options.maxDate) ? moment(options.maxDate) : moment().add(100, 'years');
   
   if (options) {
     if (options.autoOk) this.model.set('autoOk', options.autoOk);
@@ -58,10 +56,6 @@ Datepicker.prototype.init = function(model) {
   model.setEach({
     isMonthViewOne: true,
     monthTwoPositionClass: 'days---dates--right',
-    months: months,
-    minDate: minDate,
-    maxDate: maxDate
+    months: months
   });
-
-  model.set('years', this._getYears());
 };

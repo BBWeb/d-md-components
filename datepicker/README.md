@@ -27,7 +27,9 @@ app.component(mdlComponents.Datepicker);
     on-selected="foo()"
     on-action="bar(action)"
     on-show="baz()"
-    on-hide="qux()" 
+    on-hide="qux()"
+    minDate="{{minDate}}"
+    maxDate="{{maxDate}}"
     options="{{
       {
         locale: 'sv',
@@ -35,9 +37,7 @@ app.component(mdlComponents.Datepicker);
         okText: 'Righty-O',
         cancelText: 'Forget it',
         disableCancel: false,
-        autoOk: false,
-        minDate: 2015-01-01,
-        maxDate: 2020-12-31
+        autoOk: false
       }
     }}" 
   />

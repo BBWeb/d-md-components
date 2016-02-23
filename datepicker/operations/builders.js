@@ -78,8 +78,9 @@ Datepicker.prototype._getLastDateOfMonth = function(momentDate) {
 };
 
 Datepicker.prototype._getYears = function() {
-  var firstYear = this.model.get('minDate').year();
-  var lastYear = this.model.get('maxDate').year();
+  var range = this._getMomentRange();
+  var firstYear = range.minDate.year();
+  var lastYear = range.maxDate.year();
   var years = [];
 
   while (firstYear <= lastYear) {

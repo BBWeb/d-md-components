@@ -124,6 +124,7 @@ Datepicker.prototype._show = function(caller) {
   this.emit('show', caller);
 
   this._initDates();
+  this.model.set('years', this._getYears());
 
   this.model.setEach({ 
     show: true,
@@ -181,10 +182,18 @@ Datepicker.prototype._setValue = function() {
 };
 
 Datepicker.prototype._isOutOfRange = function(momentDate) {
-  var minDate = this.model.get('minDate');
-  var maxDate = this.model.get('maxDate');
+  var range = this._getMomentRange();
 
-  return !momentDate.isBetween(minDate, maxDate);
+  return !momentDate.isBetween(range.minDate, range.maxDate);
+};
+
+Datepicker.prototype._getMomentRange = function() {
+  var minDateString = this.model.get('minDate');
+  var maxDateString = this.model.get('maxDate');
+  var minDate = (minDateString) ? moment(minDateString) : moment().subtract(100, 'years');
+  var maxDate = (maxDateString) ? moment(maxDateString) : moment().add(100, 'years');
+
+  return { minDate: minDate, maxDate: maxDate };
 };
 
 Datepicker.prototype._initDates = function() {
