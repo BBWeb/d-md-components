@@ -18,7 +18,7 @@ Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
   }
 
   this.model.set('selectedDate', momentDate);
-  this.emit('selected', this.model.get('selectedDate').format());
+  this.emit('selected', this.model.get('selectedDate').format(), this.caller);
 
   if (closeOnSelect) {
     this.setValue();
@@ -27,7 +27,7 @@ Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
 };
 
 Datepicker.prototype.action = function(action) {
-  this.emit('action', action.text || action);
+  this.emit('action', action.text || action, this.caller);
 
   if (action.disableDismiss) return;
 
@@ -118,8 +118,11 @@ Datepicker.prototype._setMonthMinHeight = function (childIndex) {
   this.$months.style.minHeight = childHeight + 'px';
 };
 
-Datepicker.prototype._show = function() {
-  this.emit('show');
+Datepicker.prototype._show = function(caller) {
+  if (this.model.get('show')) return;
+  
+  this.caller = caller;
+  this.emit('show', caller);
 
   this._initDates();
 
@@ -134,7 +137,7 @@ Datepicker.prototype._show = function() {
 Datepicker.prototype._hide = function() {
   var self = this;
 
-  this.emit('hide');
+  this.emit('hide', this.caller);
 
   this.model.set('hiding', true);
   setTimeout(function hideWhenFaded() {
