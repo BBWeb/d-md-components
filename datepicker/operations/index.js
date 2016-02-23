@@ -18,7 +18,6 @@ Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
   }
 
   this.model.set('selectedDate', momentDate);
-  this.emit('selected', this.model.get('selectedDate').format(), this.caller);
 
   if (closeOnSelect) {
     this.setValue();
@@ -175,7 +174,10 @@ Datepicker.prototype._setCurrentDate = function(momentDate) {
 };
 
 Datepicker.prototype._setValue = function() {
-  this.model.set('value', this.model.get('selectedDate').format());
+  var selectedValue = this.model.get('selectedDate').format();
+
+  this.model.set('value', selectedValue);
+  this.emit('selected', selectedValue, this.caller);
 };
 
 Datepicker.prototype._isOutOfRange = function(momentDate) {
