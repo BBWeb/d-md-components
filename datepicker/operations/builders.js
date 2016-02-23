@@ -34,7 +34,7 @@ Datepicker.prototype._getDaysInMonth = function(momentDate) {
   var nrOfDays = momentDate.daysInMonth();
 
   var days = _.times(nrOfDays, function addDate(index) {
-    var dateToAdd = moment.utc(date.date(index + 1));
+    var dateToAdd = moment(date.date(index + 1));
 
     if (self._isOutOfRange(dateToAdd)) dateToAdd.disable = true;
 

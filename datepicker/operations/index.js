@@ -184,8 +184,8 @@ Datepicker.prototype._isOutOfRange = function(momentDate) {
 
 Datepicker.prototype._initDates = function() {
   var input = this.getAttribute('value');
-  var today = moment.utc();
-  var initialDate = moment.utc(input);
+  var today = moment();
+  var initialDate = moment(input);
   var selectedDate = initialDate.isValid() ? initialDate : today.clone();
   var currentDate = selectedDate.clone();
   var month = this._getMonth(selectedDate);
