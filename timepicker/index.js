@@ -33,22 +33,15 @@ Timepicker.prototype.init = function(model) {
   var minutes = this._getMinutes();
   var hoursInner = this._getHoursInner();
   var hoursOuter = this._getHoursOuter();
-  var value = this.getAttribute('value');
-  var activeHour = this._getActiveHour(value);
-  var activeMinute = this._getActiveMinute(value);
 
-  if (options) {
-    if (options.accent) model.set('accent', options.accent);
-    if (options.activeHour) activeHour = options.activeHour;
-    if (options.activeMinute) activeMinute = options.activeMinute;
-  }
+  if (options && options.accent) model.set('accent', options.accent);
+
+  this._initTime();
 
   model.setEach({
     hoursOuter: hoursOuter,
     hoursInner: hoursInner,
-    minutes: minutes,
-    activeHour: activeHour,
-    activeMinute: activeMinute
+    minutes: minutes
   });
 
   model.start('hourPointerStyles', 'activeHour', function (hourString) {
@@ -68,3 +61,4 @@ Timepicker.prototype.init = function(model) {
     return 'transform: rotateZ(' + rotation +'deg);';    
   });
 };
+

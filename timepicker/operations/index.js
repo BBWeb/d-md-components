@@ -1,7 +1,12 @@
 var Timepicker = require('./../index');
 
-Timepicker.prototype._show = function() {
-  this.emit('show');
+Timepicker.prototype._show = function(caller) {
+  if (this.model.get('show')) return;
+  
+  this.caller = caller;
+  this.emit('show', caller);
+
+  this._initTime();
 
   this._selectView('hour');
 
@@ -10,7 +15,7 @@ Timepicker.prototype._show = function() {
 
 Timepicker.prototype._hide = function() {
   var self = this;
-  this.emit('hide');
+  this.emit('hide', this.caller);
 
   this.model.set('hiding', true);
   setTimeout(function hideWhenFaded() {
@@ -61,7 +66,7 @@ Timepicker.prototype._selectMinute = function(minute) {
 Timepicker.prototype._setValue = function() {
   this.model.set('value', this.padNumber(this.model.get('activeHour')) + ':' + this.padNumber(this.model.get('activeMinute')));
 
-  this.emit('selected', this.model.get('value'));
+  this.emit('selected', this.model.get('value'), this.caller);
 };
 
 Timepicker.prototype._getDegString = function(numbers, index, inner) {
@@ -76,3 +81,21 @@ Timepicker.prototype._getDegString = function(numbers, index, inner) {
   return 'rotate(' + rotateDeg + 'deg) translate(' + edge + 'px) rotate(' + rotateBackDeg + 'deg)';
 };
 
+Timepicker.prototype._initTime = function() {
+  var value = this.getAttribute('value');
+  var activeHour = this._getActiveHour(value);
+  var activeMinute = this._getActiveMinute(value);
+  var options = this.getAttribute('options');
+
+  if (options) {
+    if (options.activeHour) activeHour = options.activeHour;
+    if (options.activeMinute) activeMinute = options.activeMinute;
+  }
+
+  this.model.setEach({
+    activeHour: activeHour,
+    activeMinute: activeMinute
+  });
+
+  console.log(this.model.get());
+};
