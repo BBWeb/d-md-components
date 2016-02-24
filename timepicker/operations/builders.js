@@ -34,12 +34,11 @@ Timepicker.prototype._getStringRange = function(min, max) {
 Timepicker.prototype._getActiveHour = function(value) {
   if (!value) return '12';
 
-  return _.head(_.split(value, ':'));
+  return _.head(value.split(':'));
 };
 
 Timepicker.prototype._getActiveMinute = function(value) {
   if (!value) return '0';
 
-  return _.tail(_.split(value, ':'));
+  return _.last(value.split(':'));
 };
-

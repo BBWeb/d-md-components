@@ -18,7 +18,6 @@ Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
   }
 
   this.model.set('selectedDate', momentDate);
-  this.emit('selected', this.model.get('selectedDate').format());
 
   if (closeOnSelect) {
     this.setValue();
@@ -27,7 +26,7 @@ Datepicker.prototype._selectDate = function(momentDate, closeOnSelect) {
 };
 
 Datepicker.prototype.action = function(action) {
-  this.emit('action', action.text || action);
+  this.emit('action', action.text || action, this.caller);
 
   if (action.disableDismiss) return;
 
@@ -92,9 +91,6 @@ Datepicker.prototype._flipMonth = function(direction, newMonth) {
   var to = (direction === 'right') ? 'left' : 'right';
 
   // Add next/prev month to entering view.
-  console.log(this.$months.childNodes[0].offsetHeight, this.$months.childNodes[1].offsetHeight);
-  console.log(newMonth);
-
   this.model.set(entering, newMonth);
 
   // Set class to entering view so it repositions to correct location.
@@ -121,10 +117,14 @@ Datepicker.prototype._setMonthMinHeight = function (childIndex) {
   this.$months.style.minHeight = childHeight + 'px';
 };
 
-Datepicker.prototype._show = function() {
-  this.emit('show');
+Datepicker.prototype._show = function(caller) {
+  if (this.model.get('show')) return;
+  
+  this.caller = caller;
+  this.emit('show', caller);
 
   this._initDates();
+  this.model.set('years', this._getYears());
 
   this.model.setEach({ 
     show: true,
@@ -137,7 +137,7 @@ Datepicker.prototype._show = function() {
 Datepicker.prototype._hide = function() {
   var self = this;
 
-  this.emit('hide');
+  this.emit('hide', this.caller);
 
   this.model.set('hiding', true);
   setTimeout(function hideWhenFaded() {
@@ -175,20 +175,31 @@ Datepicker.prototype._setCurrentDate = function(momentDate) {
 };
 
 Datepicker.prototype._setValue = function() {
-  this.model.set('value', this.model.get('selectedDate').format());
+  var selectedValue = this.model.get('selectedDate').format();
+
+  this.model.set('value', selectedValue);
+  this.emit('selected', selectedValue, this.caller);
 };
 
 Datepicker.prototype._isOutOfRange = function(momentDate) {
-  var minDate = this.model.get('minDate');
-  var maxDate = this.model.get('maxDate');
+  var range = this._getMomentRange();
 
-  return !momentDate.isBetween(minDate, maxDate);
+  return !(momentDate.isSameOrAfter(range.minDate, 'day') && momentDate.isSameOrBefore(range.maxDate, 'day'));
+};
+
+Datepicker.prototype._getMomentRange = function() {
+  var minDateString = this.model.get('minDate');
+  var maxDateString = this.model.get('maxDate');
+  var minDate = (minDateString) ? moment(minDateString) : moment().subtract(100, 'years');
+  var maxDate = (maxDateString) ? moment(maxDateString) : moment().add(100, 'years');
+
+  return { minDate: minDate, maxDate: maxDate };
 };
 
 Datepicker.prototype._initDates = function() {
   var input = this.getAttribute('value');
-  var today = moment.utc();
-  var initialDate = moment.utc(input);
+  var today = moment();
+  var initialDate = (typeof input === 'string' || typeof input === 'number') ? moment(input) : today.clone();
   var selectedDate = initialDate.isValid() ? initialDate : today.clone();
   var currentDate = selectedDate.clone();
   var month = this._getMonth(selectedDate);

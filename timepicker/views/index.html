@@ -34,7 +34,7 @@
 <hourpicker:>
   <div class="picker---pointer" style="{{hourPointerStyles}}{{if accent}}background-color:{{accent}}{{/if}}"></div>
   {{each hoursOuter as #hour, #index}}
-    <div class="picker---time{{if #hour === activeHour}} picker---time--selected{{/if}}" style="transform: {{getDegString(12, #index)}}" on-click="selectHour(#hour)">
+    <div class="picker---time{{if padNumber(#hour) === padNumber(activeHour)}} picker---time--selected{{/if}}" style="transform: {{getDegString(12, #index)}}" on-click="selectHour(#hour)">
       {{#hour}}
       <pseudo class="picker---timecircle" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
     </div>
@@ -50,11 +50,11 @@
   <div class="picker---pointer" style="{{minutePointerStyles}}{{if accent}}background-color:{{accent}}{{/if}}"></div>
   {{each minutes as #minute, #index}}
     {{if #minute.nonumber}}
-      <div class="picker---time picker---time--nonumber{{if #minute.value === activeMinute}} picker---time--selected{{/if}}" style="transform: {{getDegString(60, #index)}}" on-click="selectMinute(#minute.value)">
+      <div class="picker---time picker---time--nonumber{{if padNumber(#minute.value) === padNumber(activeMinute)}} picker---time--selected{{/if}}" style="transform: {{getDegString(60, #index)}}" on-click="selectMinute(#minute.value)">
         <pseudo class="picker---timecircle picker---timecircle--nonumber" style="{{if accent}}background-color:{{accent}}{{/if}}">{{#minute.value}}</pseudo>
       </div>
     {{else}}
-      <div class="picker---time picker---time--small{{if #minute === activeMinute}} picker---time--selected{{/if}}" style="transform: {{getDegString(60, #index)}}" on-click="selectMinute(#minute)">
+      <div class="picker---time picker---time--small{{if padNumber(#minute) === padNumber(activeMinute)}} picker---time--selected{{/if}}" style="transform: {{getDegString(60, #index)}}" on-click="selectMinute(#minute)">
         {{#minute}}
         <pseudo class="picker---timecircle picker---timecircle--small" style="{{if accent}}background-color:{{accent}}{{/if}}"></pseudo>
       </div>

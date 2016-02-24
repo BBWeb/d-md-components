@@ -34,7 +34,7 @@ Datepicker.prototype._getDaysInMonth = function(momentDate) {
   var nrOfDays = momentDate.daysInMonth();
 
   var days = _.times(nrOfDays, function addDate(index) {
-    var dateToAdd = moment.utc(date.date(index + 1));
+    var dateToAdd = moment(date.date(index + 1));
 
     if (self._isOutOfRange(dateToAdd)) dateToAdd.disable = true;
 
@@ -78,8 +78,9 @@ Datepicker.prototype._getLastDateOfMonth = function(momentDate) {
 };
 
 Datepicker.prototype._getYears = function() {
-  var firstYear = this.model.get('minDate').year();
-  var lastYear = this.model.get('maxDate').year();
+  var range = this._getMomentRange();
+  var firstYear = range.minDate.year();
+  var lastYear = range.maxDate.year();
   var years = [];
 
   while (firstYear <= lastYear) {

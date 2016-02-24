@@ -21,7 +21,7 @@ app.component(mdlComponents.Timepicker);
     as="$timepicker" 
     value="{{time}}" 
     inline="{{false}}" 
-    on-select="foo()"
+    on-selected="foo()"
     on-show="bar()"
     on-hide="baz()" 
     options="{{
