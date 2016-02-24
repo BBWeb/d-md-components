@@ -184,7 +184,7 @@ Datepicker.prototype._setValue = function() {
 Datepicker.prototype._isOutOfRange = function(momentDate) {
   var range = this._getMomentRange();
 
-  return !momentDate.isBetween(range.minDate, range.maxDate);
+  return !(momentDate.isSameOrAfter(range.minDate, 'day') && momentDate.isSameOrBefore(range.maxDate, 'day'));
 };
 
 Datepicker.prototype._getMomentRange = function() {
@@ -199,7 +199,7 @@ Datepicker.prototype._getMomentRange = function() {
 Datepicker.prototype._initDates = function() {
   var input = this.getAttribute('value');
   var today = moment();
-  var initialDate = moment(input);
+  var initialDate = (typeof input === 'string' || typeof input === 'number') ? moment(input) : today.clone();
   var selectedDate = initialDate.isValid() ? initialDate : today.clone();
   var currentDate = selectedDate.clone();
   var month = this._getMonth(selectedDate);
