@@ -10,6 +10,7 @@ Tabs.prototype._selectTab = function (selectedIndex) {
   }
 
   this.model.set('selectedTab', selectedIndex);
+  this._setValid(selectedIndex);
 };
 
 Tabs.prototype._setTabUnderline = function (index) {
@@ -26,7 +27,7 @@ Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
   $leavingTab.style.maxHeight = leavingMax;
   $selectedTab.style.maxHeight = leavingMax;
   // Force style recalculation for transitions to work. See http://stackoverflow.com/questions/18564942/clean-way-to-programmatically-use-css-transitions-from-js/31862081
-  window.getComputedStyle($selectedTab).maxHeight
+  window.getComputedStyle($selectedTab).maxHeight;
   $selectedTab.classList.remove('no-transition');
 
   this._setAnimation();  
@@ -34,8 +35,8 @@ Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
 };
 
 Tabs.prototype._assignPositions = function (tabs) {
- var self = this;
- var offset = 100/tabs.length;
+  var self = this;
+  var offset = 100/tabs.length;
 
   _.each(tabs, function(tab, index) {
     var before = -(index * offset);
@@ -73,4 +74,26 @@ Tabs.prototype._setAnimation = function() {
   setTimeout(function(){
     self.model.set('animating', false);
   }, 300);
+};
+
+Tabs.prototype._isInvalid = function(errorList, index) {
+  return _.includes(errorList, index);
+};
+
+Tabs.prototype._setInvalid = function(index) {
+  var errorList = this.model.get('errorList');
+
+  if (!_.includes(errorList, index)) errorList.push(index);
+
+  this.model.set('errorList', errorList);
+};
+
+Tabs.prototype._setValid = function(tabIndex) {
+  var errorList = this.model.get('errorList');
+
+  _.remove(errorList, function (n) {
+    return n === tabIndex;
+  });
+
+  this.model.set('errorList', errorList);
 };

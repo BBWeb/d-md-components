@@ -11,6 +11,7 @@
     text-transform                uppercase
     opacity                       1
     transition                    opacity 0.2s ease-in-out
+    position                      relative
     
   .tab-header-selected
     color                         mdl-dark-full
@@ -58,3 +59,16 @@
 
   .invisible
     opacity                       0
+    
+  .tabs---header--error
+    color                         #d50000
+    
+  .tabs---header--error:after
+    content                       ''
+    position                      absolute
+    height                        2px
+    width                         100%
+    bottom                        11px
+    left                          0
+    background                    #d50000
+    z-index                       3
