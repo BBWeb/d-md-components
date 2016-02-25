@@ -27,7 +27,7 @@ Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
   $leavingTab.style.maxHeight = leavingMax;
   $selectedTab.style.maxHeight = leavingMax;
   // Force style recalculation for transitions to work. See http://stackoverflow.com/questions/18564942/clean-way-to-programmatically-use-css-transitions-from-js/31862081
-  window.getComputedStyle($selectedTab).maxHeight
+  window.getComputedStyle($selectedTab).maxHeight;
   $selectedTab.classList.remove('no-transition');
 
   this._setAnimation();  
@@ -35,8 +35,8 @@ Tabs.prototype._animateTab = function (selectedIndex, leavingIndex) {
 };
 
 Tabs.prototype._assignPositions = function (tabs) {
- var self = this;
- var offset = 100/tabs.length;
+  var self = this;
+  var offset = 100/tabs.length;
 
   _.each(tabs, function(tab, index) {
     var before = -(index * offset);

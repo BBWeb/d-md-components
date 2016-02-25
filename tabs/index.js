@@ -35,7 +35,7 @@ Tabs.prototype.init = function(model) {
         } else {
           model.set('tabs.' + index + '.hide', tab.hide);
         }
-      };
+      }
     });
   }
 
