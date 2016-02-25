@@ -10,6 +10,7 @@ Tabs.prototype._selectTab = function (selectedIndex) {
   }
 
   this.model.set('selectedTab', selectedIndex);
+  this._setValid(selectedIndex);
 };
 
 Tabs.prototype._setTabUnderline = function (index) {
@@ -73,4 +74,26 @@ Tabs.prototype._setAnimation = function() {
   setTimeout(function(){
     self.model.set('animating', false);
   }, 300);
+};
+
+Tabs.prototype._isInvalid = function(errorList, index) {
+  return _.includes(errorList, index);
+};
+
+Tabs.prototype._setInvalid = function(index) {
+  var errorList = this.model.get('errorList');
+
+  if (!_.includes(errorList, index)) errorList.push(index);
+
+  this.model.set('errorList', errorList);
+};
+
+Tabs.prototype._setValid = function(tabIndex) {
+  var errorList = this.model.get('errorList');
+
+  _.remove(errorList, function (n) {
+    return n === tabIndex;
+  });
+
+  this.model.set('errorList', errorList);
 };
