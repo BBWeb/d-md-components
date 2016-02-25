@@ -96,6 +96,4 @@ Timepicker.prototype._initTime = function() {
     activeHour: activeHour,
     activeMinute: activeMinute
   });
-
-  console.log(this.model.get());
 };
