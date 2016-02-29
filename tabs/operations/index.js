@@ -10,7 +10,6 @@ Tabs.prototype._selectTab = function (selectedIndex) {
   }
 
   this.model.set('selectedTab', selectedIndex);
-  this._setValid(selectedIndex);
 };
 
 Tabs.prototype._setTabUnderline = function (index) {
