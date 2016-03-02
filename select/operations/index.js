@@ -25,7 +25,7 @@ Select.prototype._adjustDropdown = function(index) {
 Select.prototype._addCloseListener = function () {
   var self = this;
   var lastIndex = this.optionListDropdown.children.length - 1;
-  this.model.set('focusedIndex', this.model.get('selectedIndex'));
+  this.model.set('focusedIndex', this.model.get('selectedIndex') || 0);
 
   this.focusListener = function (e) {
     if (e.target !== self.outputField) self._closeOptions();
@@ -47,10 +47,10 @@ Select.prototype._addCloseListener = function () {
       return self._select(option, index);
     }
 
-    if (e.keyCode === 37 || e.keyCode === 38 && 
+    if ((e.keyCode === 37 || e.keyCode === 38) && 
         self.model.get('focusedIndex') > 0) return self._adjustDropdown(self.model.increment('focusedIndex', -1));
 
-    if (e.keyCode === 39 || e.keyCode === 40 && 
+    if ((e.keyCode === 39 || e.keyCode === 40) && 
         self.model.get('focusedIndex') < lastIndex) return self._adjustDropdown(self.model.increment('focusedIndex'));
 
   };
