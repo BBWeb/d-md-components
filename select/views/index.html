@@ -1,6 +1,6 @@
-<index: attributes="optionList value key text class">
+<index: attributes="optionList value key text class empty">
   <div class="mdl-textfield mdl-textfield--floating-label d-md-select is-dirty{{if invalid}} is-invalid{{/if}}{{if class}} {{class}}{{/if}}">
-    <input as="outputField" class="d-md-select-selected mdl-textfield__input" on-click="willSelect()" on-focus="willSelect()" value="{{selected[text]}}" readonly />
+    <input as="outputField" class="d-md-select-selected mdl-textfield__input{{if !selected[text]}} d-md-select-selected--empty{{/if}}" on-click="willSelect()" on-focus="willSelect()" value="{{selected[text] || '-'}}" readonly />
     <i class="material-icons d-md-select-icon">arrow_drop_down</i>
       {{if selectOptionsVisible}}
         <ul as="optionListDropdown" class="d-md-select-options-list mdl-shadow--2dp{{if selectOptionsVisible}} d-md-select-options-list--showing{{/if}}" 
@@ -9,6 +9,9 @@
             on-create="addCloseListener(), adjustDropdown(selectedIndex)" 
             on-destroy="removeCloseListener()"
             >
+          {{if empty}}
+            <li class="d-md-select-option" on-click="select({ key: null, text: null}), validate()">-</li>
+          {{/if}}
           {{each optionList as #option, #index}}
             <li class="d-md-select-option{{if #option[key] === selected[key]}} d-md-select-option-selected{{/if}}{{if #index === focusedIndex}} options---option--focused{{/if}}" on-click="select(#option, #index), validate()">{{#option[text]}}</li>
           {{/each}}
