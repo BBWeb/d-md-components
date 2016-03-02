@@ -25,7 +25,7 @@ Select.prototype._adjustDropdown = function(index) {
 Select.prototype._addCloseListener = function () {
   var self = this;
   var lastIndex = this.optionListDropdown.children.length - 1;
-  this.model.set('focusedIndex', this.model.get('selectedIndex'));
+  this.model.set('focusedIndex', this.model.get('selectedIndex') || 0);
 
   this.focusListener = function (e) {
     if (e.target !== self.outputField) self._closeOptions();
