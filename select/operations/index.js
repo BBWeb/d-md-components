@@ -47,10 +47,10 @@ Select.prototype._addCloseListener = function () {
       return self._select(option, index);
     }
 
-    if (e.keyCode === 37 || e.keyCode === 38 && 
+    if ((e.keyCode === 37 || e.keyCode === 38) && 
         self.model.get('focusedIndex') > 0) return self._adjustDropdown(self.model.increment('focusedIndex', -1));
 
-    if (e.keyCode === 39 || e.keyCode === 40 && 
+    if ((e.keyCode === 39 || e.keyCode === 40) && 
         self.model.get('focusedIndex') < lastIndex) return self._adjustDropdown(self.model.increment('focusedIndex'));
 
   };
