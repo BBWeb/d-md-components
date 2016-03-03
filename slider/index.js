@@ -24,4 +24,8 @@ Slider.prototype.init = function(model) {
   model.start('steps', 'min', 'max', function (min, max) {
     return ((max - min) / self.step);
   });
+
+  model.on('change', 'value', function () {
+    if (model.get('invalid')) self._setValid();
+  });
 };
