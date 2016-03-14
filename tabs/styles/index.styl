@@ -1,3 +1,5 @@
+dmd-tabs-underline-top            = 60px
+
 .tabs
   width                           100%
   position                        relative
@@ -40,12 +42,12 @@
     width                         0px
     background                    #ff4081
     height                        2px
-    top                           60px
+    top                           dmd-tabs-underline-top
     left                          0
     transition                    left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     
   .tabs-border
-    top                           61px
+    top                           'calc(%s + 1px)' % dmd-tabs-underline-top
     width                         100%
     border-top                    1px solid mdl-light-light-full
     
@@ -68,7 +70,7 @@
     position                      absolute
     height                        2px
     width                         100%
-    bottom                        11px
+    top                           dmd-tabs-underline-top
     left                          0
     background                    #d50000
     z-index                       3
